@@ -244,8 +244,8 @@ svg.radar{width:100%;height:auto;display:block}
 #cl-mob-menu {
   display: none;
   position: fixed;
-  top: 72px; left: 0; right: 0;
-  background: rgba(11,15,13,0.94);
+  top: 72px; left: 0; right: 0; bottom: 0;
+  background: rgba(11,15,13,0.97);
   -webkit-backdrop-filter: blur(24px);
   backdrop-filter: blur(24px);
   border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -253,8 +253,10 @@ svg.radar{width:100%;height:auto;display:block}
   padding: 1.5rem 2rem;
   flex-direction: column;
   gap: 1.25rem;
+  overflow-y: auto;
 }
 #cl-mob-menu.open { display: flex; }
+body.cl-menu-open { overflow: hidden; }
 #cl-mob-menu a {
   color: #71717a !important;
   font-size: 11px; font-weight: 700;
@@ -817,8 +819,8 @@ render();
   window.addEventListener('scroll',upd,{passive:true}); upd();
   // Hamburger
   var h=document.getElementById('cl-hamburger'), m=document.getElementById('cl-mob-menu');
-  if(h){h.addEventListener('click',function(){var o=m.classList.toggle('open');h.classList.toggle('open',o);h.setAttribute('aria-expanded',String(o));});}
-  window.clCloseMob=function(){if(m)m.classList.remove('open');if(h){h.classList.remove('open');h.setAttribute('aria-expanded','false');}};
+  if(h){h.addEventListener('click',function(){var o=m.classList.toggle('open');h.classList.toggle('open',o);h.setAttribute('aria-expanded',String(o));document.body.classList.toggle('cl-menu-open',o);});}
+  window.clCloseMob=function(){if(m)m.classList.remove('open');if(h){h.classList.remove('open');h.setAttribute('aria-expanded','false');}document.body.classList.remove('cl-menu-open');};
   // reveal — точная копия с калькулятора
   var obs=new IntersectionObserver(function(es){
     es.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('in'); });
