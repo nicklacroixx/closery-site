@@ -553,10 +553,56 @@ html, body { background: #0B0F0D; }
 /* Магнитная кнопка */
 .cta-solid { will-change: transform; }
 
+/* ═══ ГЕРОЙ-ВИДЖЕТ «КОНСОЛЬ» (Workstream B) ═══ */
+.hero-grid { display: grid; grid-template-columns: minmax(0,1fr); gap: 3rem; align-items: center; }
+@media (min-width: 1024px) { .hero-grid { grid-template-columns: 1.1fr .9fr; gap: 4rem; } }
+.hero-widget {
+  position: relative; border-radius: 18px; padding: 26px 26px 22px;
+  background: linear-gradient(180deg, rgba(21,29,24,.85), rgba(11,15,13,.85));
+  border: 1px solid var(--cl-line);
+  box-shadow: 0 30px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.02) inset, 0 1px 0 rgba(255,255,255,.06) inset;
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+.hero-widget::before {
+  content: ''; position: absolute; width: 320px; height: 320px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(52,211,153,.10), transparent 68%);
+  top: -120px; right: -100px; pointer-events: none;
+}
+.hw-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; position: relative; }
+.hw-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--cl-faint); }
+.hw-live { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--cl-em); }
+.hw-live i { width: 6px; height: 6px; border-radius: 50%; background: var(--cl-em); box-shadow: 0 0 8px rgba(52,211,153,.8); animation: hw-pulse 1.6s infinite; }
+@keyframes hw-pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+.hw-gauge-row { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; position: relative; }
+.hw-gauge { position: relative; width: 116px; height: 116px; flex: none; }
+.hw-gauge svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.hw-gauge .hw-track { fill: none; stroke: rgba(255,255,255,.08); stroke-width: 9; }
+.hw-gauge .hw-val { fill: none; stroke: var(--cl-em); stroke-width: 9; stroke-linecap: round;
+  filter: drop-shadow(0 0 6px rgba(52,211,153,.5)); transition: stroke-dashoffset 1.6s cubic-bezier(.16,1,.3,1); }
+.hw-gnum { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.hw-gnum b { font-family: 'JetBrains Mono', monospace; font-size: 30px; font-weight: 700; color: #fff; line-height: 1; }
+.hw-gnum span { font-size: 8px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--cl-faint); margin-top: 4px; }
+.hw-loss { flex: 1; min-width: 0; }
+.hw-label { font-size: 9px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--cl-faint); }
+.hw-loss-num { font-family: 'JetBrains Mono', monospace; font-size: clamp(20px,2.4vw,27px); font-weight: 700; color: #F87171; letter-spacing: -.02em; line-height: 1.1; margin: 4px 0 3px; text-shadow: 0 0 22px rgba(248,113,113,.3); }
+.hw-label2 { font-size: 11px; color: var(--cl-muted); }
+.hw-bars { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.hw-bar { display: grid; grid-template-columns: 78px 1fr 30px; align-items: center; gap: 10px; }
+.hw-bar .n { font-size: 11px; color: var(--cl-muted); font-weight: 600; }
+.hw-bar .t { height: 5px; border-radius: 4px; background: rgba(255,255,255,.06); overflow: hidden; }
+.hw-bar .t i { display: block; height: 100%; width: 0; border-radius: 4px; background: linear-gradient(90deg, var(--cl-em-dim), var(--cl-em)); box-shadow: 0 0 8px rgba(52,211,153,.3); transition: width 1.3s cubic-bezier(.16,1,.3,1); }
+.hw-bar .v { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--cl-muted); text-align: right; }
+.hw-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px dashed var(--cl-line); padding-top: 16px; }
+.hw-note { font-size: 10px; color: var(--cl-faint); line-height: 1.4; }
+.hw-cta { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--cl-em) !important; white-space: nowrap; }
+.hw-cta:hover { color: #fff !important; }
+
 @media (prefers-reduced-motion: reduce) {
   #cl-aurora b { animation: none !important; }
   #cl-cursor { display: none !important; }
   .hero-line > span { transform: none !important; animation: none !important; }
+  .hw-live i { animation: none !important; }
 }
 </style>
 </head>
@@ -611,28 +657,64 @@ html, body { background: #0B0F0D; }
   <!-- ─── ГЛАВНЫЙ ЭКРАН ─── -->
   <section class="min-h-screen flex items-center pt-32 pb-20 px-4 md:px-8 relative overflow-hidden">
     <div class="hero-glow"></div>
-    <div class="max-w-6xl mr-auto relative z-10">
-      <div class="em-tag mb-8 reveal">Коммерческий блок под ключ · 90 дней</div>
-      <h1 class="text-5xl md:text-8xl font-extrabold leading-[1.06] mb-10 hero-headline">
-        <span class="hero-line"><span>Строим отдел продаж,</span></span>
-        <span class="hero-line"><span>который приносит прибыль —</span></span>
-        <span class="hero-line"><span>и работает без вас</span></span>
-      </h1>
-      <div class="text-lg md:text-xl text-[#9BA8A0] max-w-2xl mb-12 leading-relaxed reveal rd2 space-y-5">
-        <p>За 90 дней собираем систему: воронка и CRM, регламенты и мотивация, план и управление — и люди, отобранные на конкурсе вживую на вашем продукте.</p>
-        <p>Не советы в презентации. Каждый этап сдаём по чек-листу приёмки: <span class="text-[#E8EFEA] font-semibold">этап не принят — не оплачен</span>.</p>
-        <p>Людей страхуем: не подошёл — заменим бесплатно.</p>
+    <div class="max-w-7xl mx-auto relative z-10 w-full hero-grid">
+
+      <div>
+        <div class="em-tag mb-8 reveal">Коммерческий блок под ключ · 90 дней</div>
+        <h1 class="text-5xl md:text-6xl font-extrabold leading-[1.08] mb-10 hero-headline">
+          <span class="hero-line"><span>Строим отдел продаж,</span></span>
+          <span class="hero-line"><span>который приносит прибыль —</span></span>
+          <span class="hero-line"><span>и работает без вас</span></span>
+        </h1>
+        <div class="text-lg text-[#9BA8A0] max-w-xl mb-12 leading-relaxed reveal rd2 space-y-5">
+          <p>За 90 дней собираем систему: воронка и CRM, регламенты и мотивация, план и управление — и люди, отобранные на конкурсе вживую на вашем продукте.</p>
+          <p>Не советы в презентации. Каждый этап сдаём по чек-листу приёмки: <span class="text-[#E8EFEA] font-semibold">этап не принят — не оплачен</span>.</p>
+          <p>Людей страхуем: не подошёл — заменим бесплатно.</p>
+        </div>
+        <div class="reveal rd3 flex flex-wrap items-center gap-4">
+          <a href="#cta"
+             class="cta-primary cta-solid bg-emerald-500 px-10 py-5 font-bold uppercase tracking-widest text-[11px] hover:bg-white transition-all">
+            Получить разбор от основателя
+          </a>
+          <a href="/diagnostic"
+             class="cta-primary cta-ghost px-8 py-5 border border-white/20 font-bold uppercase tracking-widest text-[11px] hover:bg-emerald-500 hover:border-emerald-500 transition-all">
+            Пройти диагностику потерь →
+          </a>
+        </div>
       </div>
-      <div class="reveal rd3 flex flex-wrap items-center gap-4">
-        <a href="#cta"
-           class="cta-primary cta-solid bg-emerald-500 px-10 py-5 font-bold uppercase tracking-widest text-[11px] hover:bg-white transition-all">
-          Получить разбор от основателя
-        </a>
-        <a href="/diagnostic"
-           class="cta-primary cta-ghost px-8 py-5 border border-white/20 font-bold uppercase tracking-widest text-[11px] hover:bg-emerald-500 hover:border-emerald-500 transition-all">
-          Пройти диагностику потерь →
-        </a>
+
+      <!-- Живой виджет-«консоль» (эхо диагностики, иллюстративные цифры) -->
+      <div class="hero-widget reveal rd2" id="heroWidget">
+        <div class="hw-head">
+          <span class="hw-title">Коммерческий МРТ</span>
+          <span class="hw-live"><i></i>live</span>
+        </div>
+        <div class="hw-gauge-row">
+          <div class="hw-gauge">
+            <svg viewBox="0 0 120 120">
+              <circle class="hw-track" cx="60" cy="60" r="52"></circle>
+              <circle class="hw-val" cx="60" cy="60" r="52" id="hwGauge"></circle>
+            </svg>
+            <div class="hw-gnum"><b id="hwIndex">—</b><span>индекс / 100</span></div>
+          </div>
+          <div class="hw-loss">
+            <div class="hw-label">Потенциально теряете</div>
+            <div class="hw-loss-num" id="hwLoss">— ₽</div>
+            <div class="hw-label2">в год — оценка по модели</div>
+          </div>
+        </div>
+        <div class="hw-bars" id="hwBars">
+          <div class="hw-bar"><span class="n">Маркетинг</span><span class="t"><i data-w="58"></i></span><span class="v" data-target="58">0</span></div>
+          <div class="hw-bar"><span class="n">Продажи</span><span class="t"><i data-w="41"></i></span><span class="v" data-target="41">0</span></div>
+          <div class="hw-bar"><span class="n">Управление</span><span class="t"><i data-w="35"></i></span><span class="v" data-target="35">0</span></div>
+          <div class="hw-bar"><span class="n">Экономика</span><span class="t"><i data-w="62"></i></span><span class="v" data-target="62">0</span></div>
+        </div>
+        <div class="hw-foot">
+          <span class="hw-note">Пример. Ваши цифры<br>считает диагностика</span>
+          <a href="/diagnostic" class="hw-cta">Запустить сканер →</a>
+        </div>
       </div>
+
     </div>
   </section>
 
@@ -1138,6 +1220,43 @@ html, body { background: #0B0F0D; }
       btn.addEventListener('mouseleave', function () { btn.style.transform = ''; });
     });
   }
+
+  /* ─── ГЕРОЙ-ВИДЖЕТ: анимация «сканирования» (Workstream B) ─── */
+  (function () {
+    var widget = document.getElementById('heroWidget');
+    if (!widget) return;
+    var IDX = 47, LOSS = 4200000;
+    var gauge = document.getElementById('hwGauge');
+    var idxEl = document.getElementById('hwIndex');
+    var lossEl = document.getElementById('hwLoss');
+    var C = 2 * Math.PI * 52;
+    if (gauge) { gauge.style.strokeDasharray = C; gauge.style.strokeDashoffset = C; }
+    var fmt = function (n) { return new Intl.NumberFormat('ru-RU').format(Math.round(n)) + ' ₽'; };
+
+    function run() {
+      // бары
+      widget.querySelectorAll('.hw-bar .t i').forEach(function (i) { i.style.width = i.dataset.w + '%'; });
+      if (reduceMotion) {
+        if (gauge) gauge.style.strokeDashoffset = C * (1 - IDX / 100);
+        if (idxEl) idxEl.textContent = IDX;
+        if (lossEl) lossEl.textContent = fmt(LOSS);
+        return;
+      }
+      if (gauge) gauge.style.strokeDashoffset = C * (1 - IDX / 100);
+      var t0 = null, dur = 1600;
+      requestAnimationFrame(function tick(ts) {
+        if (!t0) t0 = ts;
+        var p = Math.min((ts - t0) / dur, 1), e = 1 - Math.pow(1 - p, 4);
+        if (idxEl) idxEl.textContent = Math.round(IDX * e);
+        if (lossEl) lossEl.textContent = fmt(LOSS * e);
+        if (p < 1) requestAnimationFrame(tick);
+      });
+    }
+    var obs = new IntersectionObserver(function (ents) {
+      ents.forEach(function (en) { if (en.isIntersecting) { run(); obs.disconnect(); } });
+    }, { threshold: 0.35 });
+    obs.observe(widget);
+  })();
 
 
   /* ─── ФОРМА → MAKE → TELEGRAM ─── */
