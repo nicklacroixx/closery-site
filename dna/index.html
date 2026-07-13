@@ -10,8 +10,8 @@
 
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#050505; --panel:#0b0b0b; --line:#1c1c1c; --line2:#161616;
-  --em:#10b981; --em-dim:rgba(16,185,129,.4); --em-glow:rgba(16,185,129,.14);
+  --bg:#0B0F0D; --panel:#111713; --line:#1c1c1c; --line2:#161616;
+  --em:#34D399; --em-dim:rgba(52,211,153,.4); --em-glow:rgba(52,211,153,.14);
   --txt:#fff; --muted:#71717a; --muted2:#3f3f46;
 }
 html,body{background:var(--bg);font-family:'Plus Jakarta Sans',sans-serif;color:var(--txt);-webkit-font-smoothing:antialiased}
@@ -27,7 +27,7 @@ html,body{background:var(--bg);font-family:'Plus Jakarta Sans',sans-serif;color:
 .brandrow .nm{font-size:12px;font-weight:700;letter-spacing:.3em}
 .eyebrow{
   display:inline-block;
-  border:1px solid rgba(16,185,129,.28);
+  border:1px solid rgba(52,211,153,.28);
   padding:5px 14px;
   font-size:10px;font-weight:700;letter-spacing:.3em;
   text-transform:uppercase;color:var(--em);
@@ -36,7 +36,7 @@ html,body{background:var(--bg);font-family:'Plus Jakarta Sans',sans-serif;color:
 }
 @keyframes tag-pulse{
   0%,100%{box-shadow:none}
-  50%{box-shadow:0 0 14px rgba(16,185,129,.18)}
+  50%{box-shadow:0 0 14px rgba(52,211,153,.18)}
 }
 h1 .g{background:none;-webkit-text-fill-color:var(--em);color:var(--em)}
 h1 .g{color:var(--em)}
@@ -72,7 +72,7 @@ svg.radar{width:100%;height:auto;display:block}
 .rarity{margin-top:18px;border-top:1px solid var(--line);padding-top:18px}
 .rarity .rl{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
 .rbar{height:9px;border-radius:6px;background:#16181a;overflow:hidden;position:relative}
-.rbar .fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#10b981,#34d399);transition:width .5s ease}
+.rbar .fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#34D399,#6EE7B7);transition:width .5s ease}
 .rarity .rv{display:flex;justify-content:space-between;align-items:baseline;margin-top:10px}
 .rarity .rv .lab{font-size:18px;font-weight:800;color:var(--em)}
 .rarity .rv .pct{font-size:12px;color:var(--muted)}
@@ -109,12 +109,12 @@ svg.radar{width:100%;height:auto;display:block}
 .fstage .flabel{flex:0 0 200px;font-size:13px;font-weight:600;color:#d4d4d8;text-align:right}
 @media(max-width:600px){.fstage .flabel{flex-basis:120px;font-size:11.5px}}
 .fstage .fbarwrap{flex:1;display:flex;align-items:center;gap:12px}
-.fstage .fbar{height:38px;border-radius:8px;background:linear-gradient(90deg,rgba(16,185,129,.85),rgba(16,185,129,.35));
+.fstage .fbar{height:38px;border-radius:8px;background:linear-gradient(90deg,rgba(52,211,153,.85),rgba(52,211,153,.35));
   min-width:56px;transition:width .6s cubic-bezier(.2,.7,.2,1);display:flex;align-items:center;justify-content:center;}
-.fstage:first-child .fbar{background:linear-gradient(90deg,#10b981,#34d399)}
-.fstage:last-child .fbar{background:linear-gradient(90deg,#34d399,#10b981)}
+.fstage:first-child .fbar{background:linear-gradient(90deg,#34D399,#6EE7B7)}
+.fstage:last-child .fbar{background:linear-gradient(90deg,#6EE7B7,#34D399)}
 .fstage .fnum{font-size:15px;font-weight:800;color:#04150f}
-.fstage.muted .fbar{background:linear-gradient(90deg,rgba(16,185,129,.45),rgba(16,185,129,.18))}
+.fstage.muted .fbar{background:linear-gradient(90deg,rgba(52,211,153,.45),rgba(52,211,153,.18))}
 .fb-foot{margin-top:22px;font-size:15px;line-height:1.6;color:#e4e4e7;border-left:2px solid var(--em);padding-left:16px}
 .fb-foot b{color:var(--em);font-weight:800}
 
@@ -137,8 +137,8 @@ svg.radar{width:100%;height:auto;display:block}
 .fcard .scorewrap{flex:0 0 180px;display:flex;align-items:center;gap:12px}
 @media(max-width:620px){.fcard .scorewrap{flex-basis:96px}.fcard .arch{display:none}.fcard .track{display:none}}
 .fcard .track{flex:1;height:8px;border-radius:5px;background:#16181a;overflow:hidden}
-.fcard .track i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,#0e7a5a,#10b981);transition:width .55s ease}
-.fcard.win .track i{background:linear-gradient(90deg,#10b981,#34d399)}
+.fcard .track i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,#0e7a5a,#34D399);transition:width .55s ease}
+.fcard.win .track i{background:linear-gradient(90deg,#34D399,#6EE7B7)}
 .fcard .num{font-size:20px;font-weight:800;width:42px;text-align:right;flex:none;color:#d4d4d8}
 .fcard.win .num{color:var(--em)}
 .fcard .fchev{width:15px;height:15px;flex:none;color:var(--muted2);transition:transform .25s}
@@ -162,7 +162,7 @@ svg.radar{width:100%;height:auto;display:block}
 .pcols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 @media(max-width:720px){.pcols{grid-template-columns:1fr}}
 .pcol{border:1px solid var(--line);border-radius:16px;padding:26px 24px;background:var(--panel)}
-.pcol.best{border-color:var(--em-dim);background:linear-gradient(180deg,var(--em-glow),rgba(16,185,129,.02))}
+.pcol.best{border-color:var(--em-dim);background:linear-gradient(180deg,var(--em-glow),rgba(52,211,153,.02))}
 .pcol-h{font-size:16px;font-weight:800;letter-spacing:.01em;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--line)}
 .pcol.diy .pcol-h{color:#a1a1aa}
 .pcol.best .pcol-h{color:var(--em)}
@@ -171,7 +171,7 @@ svg.radar{width:100%;height:auto;display:block}
 .plist li b{color:#fff;font-weight:700}
 .plist .x,.plist .v{flex:none;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-top:1px}
 .plist .x{background:rgba(248,113,113,.14);color:#f87171}
-.plist .v{background:rgba(16,185,129,.16);color:var(--em)}
+.plist .v{background:rgba(52,211,153,.16);color:var(--em)}
 .pcol.diy .plist li{color:var(--muted)}
 
 /* OFFER / CTA */
@@ -185,7 +185,7 @@ svg.radar{width:100%;height:auto;display:block}
 .pillar .pt{font-size:16px;font-weight:700;margin-bottom:9px;line-height:1.25}
 .pillar .pd{font-size:13px;color:var(--muted);line-height:1.55}
 .cta{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
-  border:1px solid var(--em-dim);background:linear-gradient(135deg,var(--em-glow),rgba(16,185,129,.03));
+  border:1px solid var(--em-dim);background:linear-gradient(135deg,var(--em-glow),rgba(52,211,153,.03));
   border-radius:18px;padding:30px 32px}
 .cta-text{flex:1;min-width:240px}
 .cta-h{font-size:20px;font-weight:800;letter-spacing:-.01em;margin-bottom:7px}
@@ -193,8 +193,8 @@ svg.radar{width:100%;height:auto;display:block}
 .cta-btn,.cta-btn:link,.cta-btn:visited,.cta-btn:hover,.cta-btn:active{
   flex:none;background:var(--em);color:#04150f !important;font-family:inherit;font-size:16px;font-weight:800;
   text-decoration:none !important;padding:17px 34px;border-radius:12px;transition:.18s;white-space:nowrap;
-  box-shadow:0 8px 30px rgba(16,185,129,.25);display:inline-block}
-.cta-btn:hover{background:#fff;transform:translateY(-2px);box-shadow:0 12px 38px rgba(16,185,129,.35)}
+  box-shadow:0 8px 30px rgba(52,211,153,.25);display:inline-block}
+.cta-btn:hover{background:#fff;transform:translateY(-2px);box-shadow:0 12px 38px rgba(52,211,153,.35)}
 .cta-contact{text-align:center;font-size:13px;color:var(--muted);margin-top:22px;letter-spacing:.02em}
 .cta-contact .g{color:var(--em);font-weight:700}
 
@@ -211,22 +211,22 @@ svg.radar{width:100%;height:auto;display:block}
   color: #71717a !important;
   transition: color .2s !important;
 }
-.nav-lnk:hover { color: #10b981 !important; }
-.nav-dna { color: #10b981 !important; }
-.nav-dna:hover { color: #34d399 !important; }
+.nav-lnk:hover { color: #34D399 !important; }
+.nav-dna { color: #34D399 !important; }
+.nav-dna:hover { color: #6EE7B7 !important; }
 .logo-btn {
   cursor: pointer;
   color: #fff !important;
   letter-spacing: .2em;
   transition: letter-spacing .35s ease, color .2s !important;
 }
-.logo-btn:hover { color: #10b981 !important; letter-spacing: .3em; }
+.logo-btn:hover { color: #34D399 !important; letter-spacing: .3em; }
 
 #cl-mob-menu {
   display: none;
   position: fixed;
   top: 72px; left: 0; right: 0;
-  background: rgba(0,0,0,0.92);
+  background: rgba(11,15,13,0.94);
   -webkit-backdrop-filter: blur(24px);
   backdrop-filter: blur(24px);
   border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -245,8 +245,8 @@ svg.radar{width:100%;height:auto;display:block}
   border-bottom: 1px solid rgba(255,255,255,0.05);
   transition: color .2s !important;
 }
-#cl-mob-menu a:hover { color: #10b981 !important; }
-#cl-mob-menu a.nav-dna { color: #10b981 !important; }
+#cl-mob-menu a:hover { color: #34D399 !important; }
+#cl-mob-menu a.nav-dna { color: #34D399 !important; }
 #cl-hamburger {
   display: none; flex-direction: column;
   gap: 5px; cursor: pointer; padding: 4px;
@@ -266,7 +266,7 @@ svg.radar{width:100%;height:auto;display:block}
 /* Liquid Glass навбар */
 #cl-nav {
   position: fixed !important;
-  background: rgba(0,0,0,0.18);
+  background: rgba(11,15,13,0.2);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -281,32 +281,34 @@ svg.radar{width:100%;height:auto;display:block}
   background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 40%);
 }
 #cl-nav.cl-scrolled {
-  background: rgba(0,0,0,0.55);
+  background: rgba(11,15,13,0.6);
   -webkit-backdrop-filter: blur(28px) saturate(200%);
   backdrop-filter: blur(28px) saturate(200%);
-  border-bottom-color: rgba(16,185,129,0.18);
+  border-bottom-color: rgba(52,211,153,0.2);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.1),
     inset 0 -1px 0 rgba(255,255,255,0.03),
     0 8px 32px rgba(0,0,0,0.5);
 }
+.brand-mark{width:9px;height:9px;border-radius:2px;flex:none;background:var(--em);box-shadow:0 0 14px rgba(52,211,153,.55)}
+.logo-btn{display:inline-flex;align-items:center;gap:10px}
 </style>
 </head>
-<body style="background:#050505;margin:0">
+<body style="background:#0B0F0D;margin:0">
 
-<!-- ─── НАВИГАЦИЯ (Liquid Glass, байт-в-байт с главной) ─── -->
+<!-- ─── НАВИГАЦИЯ (байт-в-байт с главной) ─── -->
 <nav id="cl-nav" class="w-full z-50 px-8 py-6 flex justify-between items-center">
   <a href="/"
-     class="logo-btn font-bold uppercase text-sm select-none">Closery</a>
+     class="logo-btn font-bold uppercase text-sm select-none"><span class="brand-mark"></span>Closery</a>
 
   <div class="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-[.2em]">
     <a href="/#method"     class="nav-lnk">Технология</a>
-    <a href="/#comparison" class="nav-lnk">Сравнение</a>
-    <a href="/dna"         class="nav-lnk nav-dna">ДНК</a>
+    <a href="/#formats"    class="nav-lnk">Форматы</a>
+    <a href="/dna"         class="nav-lnk">ДНК</a>
     <a href="/#guarantee"  class="nav-lnk">Гарантия</a>
     <a href="/#cases"      class="nav-lnk">Опыт</a>
     <a href="/#founder"    class="nav-lnk">Основатель</a>
-    <a href="/calculator"  class="nav-lnk">Калькулятор</a>
+    <a href="/diagnostic"  class="nav-lnk nav-dna">Диагностика</a>
   </div>
 
   <div class="flex items-center gap-4">
@@ -324,12 +326,12 @@ svg.radar{width:100%;height:auto;display:block}
 
 <div id="cl-mob-menu" role="navigation">
   <a href="/#method"     onclick="clCloseMob()">Технология</a>
-  <a href="/#comparison" onclick="clCloseMob()">Сравнение</a>
-  <a href="/dna"         class="nav-dna" onclick="clCloseMob()">ДНК</a>
+  <a href="/#formats"    onclick="clCloseMob()">Форматы</a>
+  <a href="/dna"         onclick="clCloseMob()">ДНК</a>
   <a href="/#guarantee"  onclick="clCloseMob()">Гарантия</a>
   <a href="/#cases"      onclick="clCloseMob()">Опыт</a>
   <a href="/#founder"    onclick="clCloseMob()">Основатель</a>
-  <a href="/calculator"  onclick="clCloseMob()">Калькулятор</a>
+  <a href="/diagnostic"  class="nav-dna" onclick="clCloseMob()">Диагностика</a>
 </div>
 
 <div class="wrap">
@@ -563,8 +565,8 @@ function drawRadar(w){
   }
   // data polygon
   var dp=[];for(var i=0;i<N;i++){var p=pt(i,w[COMPS[i].id]);dp.push(p[0].toFixed(1)+','+p[1].toFixed(1))}
-  s+='<polygon points="'+dp.join(' ')+'" fill="rgba(16,185,129,.18)" stroke="#10b981" stroke-width="2" stroke-linejoin="round"/>';
-  for(var i=0;i<N;i++){var p=pt(i,w[COMPS[i].id]);s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3" fill="#10b981"/>';}
+  s+='<polygon points="'+dp.join(' ')+'" fill="rgba(52,211,153,.18)" stroke="#34D399" stroke-width="2" stroke-linejoin="round"/>';
+  for(var i=0;i<N;i++){var p=pt(i,w[COMPS[i].id]);s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3" fill="#34D399"/>';}
   svg.innerHTML=s;
 }
 

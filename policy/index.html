@@ -1,12 +1,38 @@
-<!-- CLOSERY — Политика обработки персональных данных -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Closery — Политика конфиденциальности</title>
+<script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
 <style>
+body{margin:0;background:#0B0F0D}
+.nav-lnk{color:#5F6B64 !important;transition:color .2s !important;text-decoration:none !important}
+.nav-lnk:hover{color:#34D399 !important}
+.nav-dna{color:#34D399 !important}
+.nav-dna:hover{color:#6EE7B7 !important}
+.logo-btn{cursor:pointer;color:#fff !important;letter-spacing:.2em;display:inline-flex;align-items:center;gap:10px;transition:letter-spacing .35s ease,color .2s !important;text-decoration:none !important}
+.logo-btn:hover{color:#34D399 !important;letter-spacing:.3em}
+.brand-mark{width:9px;height:9px;border-radius:2px;flex:none;background:#34D399;box-shadow:0 0 14px rgba(52,211,153,.55)}
+#cl-nav{position:sticky;top:0;z-index:60;background:rgba(11,15,13,.2);-webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);border-bottom:1px solid rgba(255,255,255,.07);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 4px 24px rgba(0,0,0,.25);transition:background .4s,box-shadow .4s,border-color .4s}
+#cl-nav.cl-scrolled{background:rgba(11,15,13,.6);-webkit-backdrop-filter:blur(28px) saturate(200%);backdrop-filter:blur(28px) saturate(200%);border-bottom-color:rgba(52,211,153,.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 8px 32px rgba(0,0,0,.5)}
+#cl-mob-menu{display:none;position:fixed;top:70px;left:0;right:0;background:rgba(11,15,13,.94);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,.08);z-index:59;padding:1.5rem 2rem;flex-direction:column;gap:1.25rem}
+#cl-mob-menu.open{display:flex}
+#cl-mob-menu a{color:#5F6B64 !important;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.05);transition:color .2s !important}
+#cl-mob-menu a:hover{color:#34D399 !important}
+#cl-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none}
+#cl-hamburger span{display:block;width:22px;height:2px;background:#e4e4e7;border-radius:2px;transition:transform .3s ease,opacity .3s ease}
+#cl-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+#cl-hamburger.open span:nth-child(2){opacity:0}
+#cl-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:768px){#cl-hamburger{display:flex}}
+@media(max-width:400px){#cl-nav-cta{display:none !important}}
 .pd-page {
-  background: #000;
+  background: #0B0F0D;
   color: #d4d4d8;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  padding: 90px 24px 110px;
+  padding: 50px 24px 110px;
   min-height: 100vh;
 }
 .pd-wrap { max-width: 760px; margin: 0 auto; }
@@ -16,21 +42,49 @@
   color: #71717a !important; text-decoration: none !important;
   margin-bottom: 40px; transition: color .2s;
 }
-.pd-back:hover { color: #10b981 !important; }
+.pd-back:hover { color: #34D399 !important; }
 .pd-h1 { font-size: 32px; font-weight: 800; letter-spacing: -.02em; color: #fff; line-height: 1.15; margin: 0 0 12px; }
 .pd-date { font-size: 12px; color: #52525b; margin-bottom: 48px; display: block; }
 .pd-h2 { font-size: 18px; font-weight: 700; color: #fff; margin: 44px 0 16px; padding-top: 28px; border-top: 1px solid #1c1c1c; }
 .pd-h2:first-of-type { border-top: none; padding-top: 0; }
-.pd-h3 { font-size: 14px; font-weight: 700; color: #10b981; margin: 28px 0 12px; text-transform: uppercase; letter-spacing: .08em; }
+.pd-h3 { font-size: 14px; font-weight: 700; color: #34D399; margin: 28px 0 12px; text-transform: uppercase; letter-spacing: .08em; }
 .pd-page p { font-size: 14.5px; line-height: 1.75; color: #a1a1aa; margin: 0 0 14px; }
 .pd-page ul { margin: 0 0 14px; padding-left: 20px; }
 .pd-page li { font-size: 14.5px; line-height: 1.7; color: #a1a1aa; margin-bottom: 8px; }
-.pd-page a { color: #10b981 !important; text-decoration: underline !important; }
+.pd-page a { color: #34D399 !important; text-decoration: underline !important; }
 .pd-page strong { color: #e4e4e7; font-weight: 600; }
-.pd-callout { background: rgba(16,185,129,.04); border: 1px solid rgba(16,185,129,.18); border-radius: 12px; padding: 22px 24px; margin: 28px 0; }
+.pd-callout { background: rgba(52,211,153,.04); border: 1px solid rgba(52,211,153,.18); border-radius: 12px; padding: 22px 24px; margin: 28px 0; }
 .pd-callout p:last-child { margin-bottom: 0; }
 .pd-foot { margin-top: 56px; padding-top: 28px; border-top: 1px solid #1c1c1c; font-size: 13px; color: #71717a; line-height: 1.8; }
 </style>
+</head>
+<body>
+
+<nav id="cl-nav" class="w-full px-8 py-6 flex justify-between items-center">
+  <a href="/" class="logo-btn font-bold uppercase text-sm select-none"><span class="brand-mark"></span>Closery</a>
+  <div class="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-[.2em]">
+    <a href="/#method"     class="nav-lnk">Технология</a>
+    <a href="/#formats"    class="nav-lnk">Форматы</a>
+    <a href="/dna"         class="nav-lnk">ДНК</a>
+    <a href="/#guarantee"  class="nav-lnk">Гарантия</a>
+    <a href="/#cases"      class="nav-lnk">Опыт</a>
+    <a href="/#founder"    class="nav-lnk">Основатель</a>
+    <a href="/diagnostic"  class="nav-lnk nav-dna">Диагностика</a>
+  </div>
+  <div class="flex items-center gap-4">
+    <a id="cl-nav-cta" href="/#cta" class="px-6 py-2 border border-white/20 text-[10px] font-bold uppercase tracking-widest text-[#e4e4e7] hover:bg-emerald-500 hover:border-emerald-500 hover:text-black transition-all" style="text-decoration:none;color:#e4e4e7">Заявка</a>
+    <button id="cl-hamburger" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div id="cl-mob-menu" role="navigation">
+  <a href="/#method"     onclick="clCloseMob()">Технология</a>
+  <a href="/#formats"    onclick="clCloseMob()">Форматы</a>
+  <a href="/dna"         onclick="clCloseMob()">ДНК</a>
+  <a href="/#guarantee"  onclick="clCloseMob()">Гарантия</a>
+  <a href="/#cases"      onclick="clCloseMob()">Опыт</a>
+  <a href="/#founder"    onclick="clCloseMob()">Основатель</a>
+  <a href="/diagnostic"  class="nav-dna" onclick="clCloseMob()">Диагностика</a>
+</div>
 
 <div class="pd-page">
   <div class="pd-wrap">
@@ -137,3 +191,16 @@
 
   </div>
 </div>
+
+<script>
+(function(){
+  var nav=document.getElementById('cl-nav');
+  function upd(){if(nav)nav.classList.toggle('cl-scrolled',window.scrollY>40);}
+  window.addEventListener('scroll',upd,{passive:true}); upd();
+  var h=document.getElementById('cl-hamburger'), m=document.getElementById('cl-mob-menu');
+  if(h){h.addEventListener('click',function(){var o=m.classList.toggle('open');h.classList.toggle('open',o);h.setAttribute('aria-expanded',String(o));});}
+  window.clCloseMob=function(){if(m)m.classList.remove('open');if(h){h.classList.remove('open');h.setAttribute('aria-expanded','false');}};
+})();
+</script>
+</body>
+</html>
