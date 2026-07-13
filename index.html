@@ -285,11 +285,21 @@ body.cl-menu-open { overflow: hidden; }
   border-radius: 14px;
   background: linear-gradient(180deg, rgba(52,211,153,.07), rgba(52,211,153,.02)) !important;
   transition: box-shadow .35s ease, border-color .35s ease, transform .35s ease;
+  position: relative;
+  box-shadow: 0 24px 60px rgba(0,0,0,.45), 0 1px 0 rgba(255,255,255,.08) inset, 0 0 34px rgba(52,211,153,.06);
+}
+/* Люксовая градиентная рамка */
+.our-side::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; z-index: 0;
+  background: linear-gradient(140deg, rgba(52,211,153,.65), rgba(52,211,153,.06) 42%, rgba(52,211,153,.4));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none;
 }
 .our-side:hover {
-  box-shadow: 0 0 50px rgba(52,211,153,.12);
+  box-shadow: 0 30px 70px rgba(0,0,0,.5), 0 0 60px rgba(52,211,153,.16), 0 1px 0 rgba(255,255,255,.1) inset;
   border-color: rgba(52,211,153,.55) !important;
-  transform: translateY(-3px);
+  transform: translateY(-4px);
 }
 
 /* ─── СЧЁТЧИКИ / СТАТИСТИКА ─── */
@@ -640,6 +650,21 @@ html, body { background: #0B0F0D; }
 }
 .result-num .pre { font-size: .6em; color: var(--cl-em); opacity: .7; }
 .result-cap { font-size: 12.5px; color: var(--cl-muted); line-height: 1.5; max-width: 220px; margin: 0 auto; }
+
+/* ═══ ПОРТРЕТ ОСНОВАТЕЛЯ (Workstream E) ═══ */
+.founder-wrap::before {
+  content: ''; position: absolute; inset: -14px; border-radius: 22px; z-index: 0; pointer-events: none;
+  background: radial-gradient(60% 60% at 70% 20%, rgba(52,211,153,.18), transparent 70%);
+  filter: blur(8px);
+}
+.founder-frame { position: relative; z-index: 1; border-radius: 16px;
+  box-shadow: 0 30px 70px rgba(0,0,0,.5), 0 0 40px rgba(52,211,153,.08); }
+.founder-frame::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; z-index: 2;
+  background: linear-gradient(150deg, rgba(52,211,153,.6), rgba(52,211,153,.05) 45%, rgba(52,211,153,.35));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+}
 </style>
 </head>
 <body>
@@ -1079,13 +1104,13 @@ html, body { background: #0B0F0D; }
             <div class="text-[#5F6B64] text-[10px] uppercase tracking-wider leading-snug">Отделов продаж<br>построено</div>
           </div>
           <div>
-            <div class="stat-num text-3xl md:text-4xl mb-1 whitespace-nowrap">5 лет</div>
+            <div class="stat-num text-3xl md:text-4xl mb-1 whitespace-nowrap stat-val" data-target="5" data-suffix=" лет">5 лет</div>
             <div class="text-[#5F6B64] text-[10px] uppercase tracking-wider leading-snug">Системно строю<br>команды</div>
           </div>
         </div>
       </div>
-      <div class="relative reveal rd2">
-        <div class="glass overflow-hidden p-3">
+      <div class="relative reveal rd2 founder-wrap">
+        <div class="glass overflow-hidden p-3 founder-frame">
           <img
             src="https://optim.tildacdn.com/tild3831-3335-4039-a164-623864323233/-/format/webp/photo_2026-06-03_012.jpeg.webp"
             alt="Николай Клименко, основатель Closery"
