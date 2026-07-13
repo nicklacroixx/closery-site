@@ -615,18 +615,25 @@ html, body { background: #0B0F0D; }
   .hw-live i { animation: none !important; }
 }
 
-/* ═══ ЛОГОТИПЫ КЛИЕНТОВ (Workstream C) ═══ */
-.logo-strip { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 18px 40px; }
+/* ═══ ЛОГОТИПЫ КЛИЕНТОВ (Workstream C) — единая «стена логотипов» ═══ */
+.logo-strip { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 16px; }
 .logo-item {
-  font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(15px,2vw,20px);
-  letter-spacing: .04em; color: var(--cl-muted); opacity: .55;
-  filter: grayscale(1); transition: opacity .3s, color .3s, transform .3s;
+  display: flex; align-items: center; justify-content: center;
+  height: 72px; min-width: 150px; padding: 0 26px; border-radius: 14px;
+  background: rgba(255,255,255,.95);
+  box-shadow: 0 12px 30px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.6);
+  filter: grayscale(1); opacity: .8;
+  transition: filter .35s ease, opacity .35s ease, transform .35s ease, box-shadow .35s ease;
 }
-.logo-item:hover { opacity: 1; color: var(--cl-em); transform: translateY(-2px); }
-.logo-item .seg { display: block; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;
-  font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--cl-faint); margin-top: 4px; }
-.logo-sep { width: 1px; height: 34px; background: var(--cl-line); flex: none; }
-@media (max-width: 640px) { .logo-sep { display: none; } }
+.logo-item:hover {
+  filter: none; opacity: 1; transform: translateY(-4px);
+  box-shadow: 0 18px 44px rgba(0,0,0,.5), 0 0 30px rgba(52,211,153,.1), inset 0 0 0 1px rgba(52,211,153,.35);
+}
+.logo-item img { height: 34px; width: auto; max-width: 160px; object-fit: contain; display: block; }
+.logo-item.lg-dark { background: rgba(255,255,255,.06); box-shadow: 0 12px 30px rgba(0,0,0,.35), inset 0 0 0 1px var(--cl-line); }
+.logo-item.lg-dark:hover { box-shadow: 0 18px 44px rgba(0,0,0,.5), 0 0 30px rgba(52,211,153,.12), inset 0 0 0 1px rgba(52,211,153,.4); }
+.logo-item.lg-dark img { height: 52px; max-width: 190px; }
+@media (max-width: 640px) { .logo-item { height: 60px; min-width: 130px; padding: 0 18px; } .logo-item img { height: 28px; } .logo-item.lg-dark img { height: 44px; } }
 
 /* ═══ СТЕНА РЕЗУЛЬТАТОВ (Workstream C) ═══ */
 .results-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
@@ -796,11 +803,9 @@ html, body { background: #0B0F0D; }
     <div class="max-w-6xl mx-auto">
       <div class="text-center text-[10px] uppercase tracking-[.24em] text-[#5F6B64] mb-8 reveal">Строили и разгоняли продажи для</div>
       <div class="logo-strip reveal rd1">
-        <span class="logo-item">CDEK<span class="seg">Логистика</span></span>
-        <span class="logo-sep"></span>
-        <span class="logo-item">MarketGuru<span class="seg">SaaS для селлеров</span></span>
-        <span class="logo-sep"></span>
-        <span class="logo-item">UniBox<span class="seg">E-com · фулфилмент</span></span>
+        <span class="logo-item lg-dark"><img src="/clients/marketguru.jpeg" alt="MarketGuru" loading="lazy"></span>
+        <span class="logo-item"><img src="/clients/cdek.svg" alt="CDEK" loading="lazy"></span>
+        <span class="logo-item"><img src="/clients/unibox.png" alt="UniBox" loading="lazy"></span>
       </div>
     </div>
   </section>
