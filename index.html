@@ -1,0 +1,1109 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     CLOSERY v10 — ДИЗАЙН-СИСТЕМА «CASES»
+     Палитра: фон #0B0F0D, изумруд #34D399, поверхности #111713/#151D18.
+     Типографика: Plus Jakarta Sans (текст/заголовки) + JetBrains Mono
+     (все цифры, индексы, служебные подписи — фирменный приём).
+     Смысловые правки: кейсы синхронизированы с one-pager'ом,
+     починена ссылка мобильного меню (/calculator → /diagnostic),
+     сжаты заголовки. Форма, вебхук, JS-логика — без изменений.
+═══════════════════════════════════════════════════════════════ -->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: { colors: {
+    emerald: { 400:'#6EE7B7', 500:'#34D399', 600:'#1E7A57' }
+  } } }
+};
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ─── ТОКЕНЫ (из cases) ─── */
+:root{
+  --cl-bg:#0B0F0D;
+  --cl-surface:#111713;
+  --cl-surface2:#151D18;
+  --cl-line:rgba(80,220,160,.14);
+  --cl-line-soft:rgba(255,255,255,.07);
+  --cl-em:#34D399;
+  --cl-em-dim:#1E7A57;
+  --cl-text:#E8EFEA;
+  --cl-muted:#9BA8A0;
+  --cl-faint:#5F6B64;
+  --cl-ink:#07110C;
+}
+
+/* ─── БАЗОВЫЙ СБРОС ─── */
+html { scroll-padding-top: 80px; }
+
+.closery-land a { color: inherit !important; text-decoration: none !important; }
+.closery-land a.cta-solid       { color: var(--cl-ink) !important; }
+.closery-land a.cta-ghost       { color: var(--cl-text) !important; }
+.closery-land a.cta-ghost:hover { color: var(--cl-ink) !important; }
+.closery-land a.cl-foot         { color: var(--cl-faint) !important; }
+.closery-land a.cl-foot:hover   { color: var(--cl-em) !important; }
+
+.closery-land,
+.closery-land *,
+.closery-land p,
+.closery-land h1,
+.closery-land h2,
+.closery-land h3,
+.closery-land a,
+.closery-land text {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  box-sizing: border-box;
+}
+/* фирменный приём: все цифры и служебные подписи — моно */
+.closery-land .mono,
+.closery-land .em-tag,
+.closery-land .step-week,
+.closery-land .fmt-badge,
+.closery-land .stat-val,
+.closery-land .case-index,
+.closery-land .num-mono {
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* ─── КАРТОЧКИ (стиль cases: поверхность → фон) ─── */
+.glass {
+  background: linear-gradient(180deg, var(--cl-surface) 0%, var(--cl-bg) 100%);
+  border: 1px solid var(--cl-line);
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .35s ease, transform .35s ease, box-shadow .35s ease;
+}
+.glass:hover {
+  border-color: rgba(52,211,153,.38);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 44px rgba(0,0,0,.45), 0 0 30px rgba(52,211,153,.07);
+}
+.glass::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -80%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(232,239,234,.035), transparent);
+  transition: left .55s ease;
+  pointer-events: none;
+}
+.glass:hover::before { left: 150%; }
+@media (hover: none) { .glass::before { display: none; } }
+
+.gradient-text {
+  background: linear-gradient(135deg, #FFFFFF 0%, #9BA8A0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: 0 .08em; margin: 0 -.08em;
+}
+
+/* ─── ОТСТУПЫ И ЗАГОЛОВКИ ─── */
+.section-padding { padding-top: 4.5rem; padding-bottom: 4.5rem; }
+.closery-land .cl-h2 { font-size: 1.5rem; line-height: 1.15; font-weight: 800; letter-spacing: -.02em; margin-bottom: 3rem; }
+@media (min-width: 768px) { .closery-land .cl-h2 { font-size: 2.25rem; } }
+.closery-land .cl-h2.has-sub { margin-bottom: 1.25rem; }
+.closery-land .cl-sub { margin-bottom: 3rem; }
+.closery-land .cl-center .cl-h2, .closery-land .cl-center .cl-sub { text-align: center; }
+.closery-land .cl-center .cl-sub { margin-left: auto; margin-right: auto; }
+@media (max-width: 640px) {
+  .section-padding { padding-top: 3rem; padding-bottom: 3rem; }
+  .px-mob { padding-left: 1rem !important; padding-right: 1rem !important; }
+}
+
+.closery-land { padding-bottom: env(safe-area-inset-bottom); }
+.closery-land #cl-nav { padding-top: max(1.5rem, env(safe-area-inset-top)); }
+
+/* ─── PROGRESS BAR ─── */
+#cl-progress {
+  position: fixed; top: 0; left: 0;
+  height: 2px; width: 0%;
+  background: linear-gradient(90deg, #1E7A57, #34D399);
+  z-index: 2000;
+  transition: width .07s linear;
+  box-shadow: 0 0 8px rgba(52,211,153,.55);
+}
+
+/* ─── GRAIN ─── */
+#cl-grain {
+  position: fixed; inset: 0; pointer-events: none; z-index: 1999; opacity: .03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* ─── HERO GLOW ─── */
+.hero-glow {
+  position: absolute;
+  width: 720px; height: 720px;
+  background: radial-gradient(circle, rgba(52,211,153,.12) 0%, transparent 66%);
+  pointer-events: none;
+  top: -90px; left: -190px;
+  border-radius: 50%;
+  animation: glow-breathe 6s ease-in-out infinite;
+}
+@keyframes glow-breathe {
+  0%,100% { transform: scale(1);    opacity: .5; }
+  50%      { transform: scale(1.1); opacity: 1;  }
+}
+
+/* ─── REVEAL ─── */
+.reveal { opacity: 0; transform: translateY(26px);
+  transition: opacity .72s cubic-bezier(.16,1,.3,1), transform .72s cubic-bezier(.16,1,.3,1); }
+.reveal.in { opacity: 1; transform: none; }
+.rd1 { transition-delay: .1s; } .rd2 { transition-delay: .2s; }
+.rd3 { transition-delay: .3s; } .rd4 { transition-delay: .4s; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .hero-glow, .em-tag, .fmt-badge { animation: none !important; }
+}
+
+/* ─── НАВИГАЦИЯ ─── */
+.nav-lnk { color: var(--cl-faint) !important; transition: color .2s !important; }
+.nav-lnk:hover { color: var(--cl-em) !important; }
+.closery-land .nav-dna { color: var(--cl-em) !important; }
+.closery-land .nav-dna:hover { color: #6EE7B7 !important; }
+#cl-mob-menu .nav-dna { color: var(--cl-em) !important; }
+
+.logo-btn {
+  cursor: pointer;
+  color: #fff !important;
+  letter-spacing: .2em;
+  display: inline-flex; align-items: center; gap: 10px;
+  transition: letter-spacing .35s ease, color .2s !important;
+}
+.logo-btn:hover { color: var(--cl-em) !important; letter-spacing: .3em; }
+.brand-mark {
+  width: 9px; height: 9px; border-radius: 2px; flex: none;
+  background: var(--cl-em);
+  box-shadow: 0 0 14px rgba(52,211,153,.55);
+}
+
+/* ─── МОБИЛЬНОЕ МЕНЮ ─── */
+#cl-mob-menu {
+  display: none;
+  position: fixed;
+  top: 72px; left: 0; right: 0;
+  background: rgba(11,15,13,0.94);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--cl-line);
+  z-index: 49;
+  padding: 1.5rem 2rem;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+#cl-mob-menu.open { display: flex; }
+#cl-mob-menu a {
+  color: var(--cl-faint) !important;
+  font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  padding: .75rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: color .2s !important;
+}
+#cl-mob-menu a:hover { color: var(--cl-em) !important; }
+#cl-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+#cl-hamburger span { display: block; width: 22px; height: 2px; background: var(--cl-text); border-radius: 2px; transition: transform .3s ease, opacity .3s ease; }
+#cl-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+#cl-hamburger.open span:nth-child(2) { opacity: 0; }
+#cl-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+@media (max-width: 768px) { #cl-hamburger { display: flex; } }
+@media (max-width: 400px) { #cl-nav-cta { display: none !important; } }
+
+/* ─── EM TAG (моно-индекс, как в cases) ─── */
+.em-tag {
+  display: inline-block;
+  border: 1px solid rgba(52,211,153,.3);
+  border-radius: 6px;
+  padding: 5px 13px;
+  font-size: 10px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--cl-em);
+  animation: tag-pulse 3s ease-in-out infinite;
+}
+@keyframes tag-pulse {
+  0%,100% { box-shadow: none; }
+  50%      { box-shadow: 0 0 14px rgba(52,211,153,.18); }
+}
+
+/* ─── CTA КНОПКИ ─── */
+.cta-primary { position: relative; overflow: hidden; display: inline-block; border-radius: 8px; }
+.cta-primary::after {
+  content: ''; position: absolute; top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
+  transition: left .5s ease;
+}
+.cta-primary:hover::after { left: 100%; }
+@media (hover: none) { .cta-primary::after { display: none; } }
+.cta-solid { box-shadow: 0 0 26px rgba(52,211,153,.25); }
+
+/* ─── OUR-SIDE КАРТОЧКИ ─── */
+.our-side {
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(52,211,153,.07), rgba(52,211,153,.02)) !important;
+  transition: box-shadow .35s ease, border-color .35s ease, transform .35s ease;
+}
+.our-side:hover {
+  box-shadow: 0 0 50px rgba(52,211,153,.12);
+  border-color: rgba(52,211,153,.55) !important;
+  transform: translateY(-3px);
+}
+
+/* ─── СЧЁТЧИКИ / СТАТИСТИКА ─── */
+.stat-val { display: inline-block; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+.closery-land .stat-row { display: grid; grid-template-columns: repeat(3, max-content); gap: 2.5rem; }
+@media (max-width: 480px) {
+  .closery-land .stat-row { grid-template-columns: repeat(2, max-content); gap: 1.75rem 2.5rem; }
+}
+.closery-land .stat-row .stat-num {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-weight: 700; letter-spacing: -.02em;
+  color: var(--cl-em);
+  text-shadow: 0 0 16px rgba(52,211,153,.5);
+}
+
+/* ─── INPUTS ─── */
+input:focus, textarea:focus {
+  outline: none !important;
+  border-color: var(--cl-em) !important;
+  box-shadow: 0 0 0 2px rgba(52,211,153,.18) !important;
+}
+::selection        { background: var(--cl-em); color: var(--cl-ink); }
+::-moz-selection   { background: var(--cl-em); color: var(--cl-ink); }
+
+/* ─── ФОРМА ─── */
+#cl-form-wrap input,
+#cl-form-wrap select {
+  background: rgba(255,255,255,.015);
+  border: 1px solid var(--cl-line-soft);
+  border-radius: 8px;
+  padding: 1rem;
+  color: var(--cl-text);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  transition: border-color .2s, box-shadow .2s;
+}
+#cl-form-wrap input { width: 100%; }
+#cl-form-wrap select {
+  appearance: none; -webkit-appearance: none; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235F6B64' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .7rem center;
+  padding-left: .8rem; padding-right: 1.6rem;
+}
+#cl-form-wrap select option { background: #111713; color: var(--cl-text); }
+#cl-form-wrap input::placeholder { color: var(--cl-faint); }
+#cl-hp { display: none !important; }
+@media (max-width: 600px) {
+  #cl-form-wrap input, #cl-form-wrap select { font-size: 16px; }
+}
+.closery-land { overflow-x: hidden; }
+
+.cl-field { position: relative; }
+.cl-req {
+  position: absolute; top: -8px; right: 3px;
+  font-size: 13px; line-height: 1;
+  color: rgba(52,211,153,.5);
+  pointer-events: none; z-index: 3;
+}
+.cl-phone-row { display: flex; gap: 8px; }
+.cl-phone-row select { flex: 0 0 100px; width: 100px; }
+.cl-phone-row input { flex: 1 1 auto; width: auto; min-width: 0; }
+#cl-submit {
+  width: 100%;
+  padding: 1.05rem;
+  background: var(--cl-em);
+  color: var(--cl-ink);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  border: none; border-radius: 8px;
+  cursor: pointer;
+  transition: background .2s, transform .1s, box-shadow .2s;
+  position: relative; overflow: hidden;
+  box-shadow: 0 0 22px rgba(52,211,153,.25);
+}
+#cl-submit:hover { background: #fff; box-shadow: 0 0 30px rgba(52,211,153,.4); }
+#cl-submit:active { transform: scale(.98); }
+#cl-submit:disabled { opacity: .5; cursor: not-allowed; }
+#cl-msg {
+  display: none;
+  padding: 1rem; border-radius: 8px;
+  text-align: center;
+  font-size: 13px; font-weight: 600; letter-spacing: .05em;
+}
+#cl-msg.success { color: var(--cl-em); border: 1px solid rgba(52,211,153,.3); }
+#cl-msg.error   { color: #f87171; border: 1px solid rgba(248,113,113,.3); }
+.cl-invalid { border-color: #f87171 !important; }
+
+/* ─── ЧЕКБОКС ─── */
+.cl-consent { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; user-select: none; margin-top: 2px; }
+.cl-consent input { display: none; }
+.cl-consent .cl-box {
+  width: 18px; height: 18px;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 4px;
+  flex-shrink: 0; margin-top: 1px; position: relative;
+  transition: border-color .2s, background .2s;
+}
+.cl-consent input:checked + .cl-box { background: var(--cl-em); border-color: var(--cl-em); }
+.cl-consent input:checked + .cl-box::after {
+  content: ''; position: absolute; left: 5px; top: 1px;
+  width: 4px; height: 9px;
+  border: solid var(--cl-ink); border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.cl-consent .cl-txt { font-size: 11px; line-height: 1.5; color: var(--cl-faint); }
+.cl-consent .cl-txt a { color: var(--cl-em) !important; text-decoration: underline !important; }
+.cl-consent.cl-invalid .cl-box { border-color: #f87171 !important; }
+
+/* ─── НАВБАР ─── */
+.closery-land #cl-nav {
+  position: fixed;
+  background: rgba(11,15,13,0.2);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  backdrop-filter: blur(20px) saturate(160%);
+  border-bottom: 1px solid var(--cl-line-soft);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 4px 24px rgba(0,0,0,0.25);
+  transition: background .4s ease, box-shadow .4s ease, border-color .4s ease,
+    -webkit-backdrop-filter .4s ease, backdrop-filter .4s ease;
+}
+.closery-land #cl-nav::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, transparent 40%);
+}
+.closery-land #cl-nav.cl-scrolled {
+  background: rgba(11,15,13,0.6);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  backdrop-filter: blur(28px) saturate(190%);
+  border-bottom-color: rgba(52,211,153,0.2);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 8px 32px rgba(0,0,0,0.5);
+}
+
+/* ─── ФОНОВЫЕ ПЯТНА СЕКЦИЙ ─── */
+.closery-land .section-padding { position: relative; overflow: hidden; }
+.closery-land .section-padding::before {
+  content: ''; position: absolute;
+  width: 520px; height: 520px;
+  background: radial-gradient(circle, rgba(52,211,153,.08) 0%, transparent 70%);
+  border-radius: 50%;
+  top: -140px; right: -140px;
+  pointer-events: none; z-index: 0;
+  animation: spot-breathe 8s ease-in-out infinite;
+}
+.closery-land .section-padding > * { position: relative; z-index: 1; }
+@keyframes spot-breathe {
+  0%,100% { transform: scale(1) translate(0,0);          opacity: .55; }
+  50%     { transform: scale(1.12) translate(-18px,18px); opacity: 1;  }
+}
+
+/* ─── ЭТАПЫ / ФОРМАТЫ ─── */
+.fmt-badge {
+  display: inline-block;
+  background: var(--cl-em);
+  color: var(--cl-ink);
+  font-size: 9px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 6px;
+  white-space: nowrap;
+  margin-bottom: 16px;
+  animation: badge-breathe 2.8s ease-in-out infinite;
+}
+@keyframes badge-breathe {
+  0%,100% { transform: scale(1);    box-shadow: 0 0 14px rgba(52,211,153,.3); }
+  50%     { transform: scale(1.05); box-shadow: 0 0 28px rgba(52,211,153,.55); }
+}
+.step-week {
+  display: inline-block;
+  font-size: 9px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--cl-em);
+  border: 1px solid rgba(52,211,153,.25);
+  border-radius: 6px;
+  padding: 4px 10px;
+  margin-bottom: 14px;
+}
+.step-num {
+  font-family: 'JetBrains Mono', monospace !important;
+  color: var(--cl-em);
+  font-size: 1.4rem; font-weight: 700; letter-spacing: -.02em;
+  margin-bottom: 1rem;
+}
+.step-num small { font-size: .75em; color: var(--cl-faint); font-weight: 400; }
+
+/* ─── КЕЙСЫ (зеркалят one-pager) ─── */
+.case-index {
+  font-size: 11px; font-weight: 500; letter-spacing: .16em;
+  color: var(--cl-em); text-transform: uppercase;
+}
+.case-num {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 1.7rem; font-weight: 700; letter-spacing: -.02em;
+  color: var(--cl-em); line-height: 1.05;
+  text-shadow: 0 0 18px rgba(52,211,153,.35);
+}
+.case-transfer {
+  border-top: 1px dashed var(--cl-line);
+  padding-top: 1rem; margin-top: auto;
+  display: flex; gap: 10px; align-items: baseline;
+  font-size: 12px; color: var(--cl-faint); line-height: 1.5;
+}
+.case-transfer .arrow { color: var(--cl-em); font-family: 'JetBrains Mono', monospace !important; flex: none; }
+.case-transfer b { color: var(--cl-muted); font-weight: 600; }
+
+/* ─── ГАРАНТИЯ: пунктирная линия как в cases ─── */
+.dash-top { border-top: 1px dashed var(--cl-line); }
+</style>
+
+<div id="cl-progress"></div>
+<div id="cl-grain"></div>
+
+<div class="closery-land bg-[#0B0F0D] text-[#E8EFEA] min-h-screen">
+
+  <!-- ─── НАВИГАЦИЯ ─── -->
+  <nav id="cl-nav" class="w-full z-50 px-8 py-6 flex justify-between items-center">
+    <a href="#"
+       onclick="event.preventDefault();window.scrollTo({top:0,behavior:'smooth'})"
+       class="logo-btn font-bold uppercase text-sm select-none"><span class="brand-mark"></span>Closery</a>
+
+    <div class="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-[.2em]">
+      <a href="#method"     class="nav-lnk">Технология</a>
+      <a href="#formats"    class="nav-lnk">Форматы</a>
+      <a href="/dna"        class="nav-lnk">ДНК</a>
+      <a href="#guarantee"  class="nav-lnk">Гарантия</a>
+      <a href="#cases"      class="nav-lnk">Опыт</a>
+      <a href="#founder"    class="nav-lnk">Основатель</a>
+      <a href="/diagnostic" class="nav-lnk nav-dna">Диагностика</a>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <a id="cl-nav-cta" href="#cta"
+         class="cta-primary cta-ghost px-6 py-2 border border-white/20 text-[10px] font-bold uppercase tracking-widest
+                hover:bg-emerald-500 hover:border-emerald-500 transition-all">
+        Заявка
+      </a>
+      <button id="cl-hamburger" aria-label="Меню" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Мобильное меню -->
+  <div id="cl-mob-menu" role="navigation">
+    <a href="#method"     class="nav-lnk" onclick="closeMobMenu()">Технология</a>
+    <a href="#formats"    class="nav-lnk" onclick="closeMobMenu()">Форматы</a>
+    <a href="/dna"        class="nav-lnk" onclick="closeMobMenu()">ДНК</a>
+    <a href="#guarantee"  class="nav-lnk" onclick="closeMobMenu()">Гарантия</a>
+    <a href="#cases"      class="nav-lnk" onclick="closeMobMenu()">Опыт</a>
+    <a href="#founder"    class="nav-lnk" onclick="closeMobMenu()">Основатель</a>
+    <a href="/diagnostic" class="nav-lnk nav-dna" onclick="closeMobMenu()">Диагностика</a>
+  </div>
+
+  <!-- ─── ГЛАВНЫЙ ЭКРАН ─── -->
+  <section class="min-h-screen flex items-center pt-32 pb-20 px-4 md:px-8 relative overflow-hidden">
+    <div class="hero-glow"></div>
+    <div class="max-w-6xl mr-auto relative z-10">
+      <div class="em-tag mb-8 reveal">Коммерческий блок под ключ · 90 дней</div>
+      <h1 class="text-5xl md:text-8xl font-extrabold leading-[1.06] mb-10 gradient-text reveal rd1">
+        Строим отдел продаж,<br>который приносит прибыль —<br>и работает без вас
+      </h1>
+      <div class="text-lg md:text-xl text-[#9BA8A0] max-w-2xl mb-12 leading-relaxed reveal rd2 space-y-5">
+        <p>За 90 дней собираем систему: воронка и CRM, регламенты и мотивация, план и управление — и люди, отобранные на конкурсе вживую на вашем продукте.</p>
+        <p>Не советы в презентации. Каждый этап сдаём по чек-листу приёмки: <span class="text-[#E8EFEA] font-semibold">этап не принят — не оплачен</span>.</p>
+        <p>Людей страхуем: не подошёл — заменим бесплатно.</p>
+      </div>
+      <div class="reveal rd3 flex flex-wrap items-center gap-4">
+        <a href="#cta"
+           class="cta-primary cta-solid bg-emerald-500 px-10 py-5 font-bold uppercase tracking-widest text-[11px] hover:bg-white transition-all">
+          Получить разбор от основателя
+        </a>
+        <a href="/diagnostic"
+           class="cta-primary cta-ghost px-8 py-5 border border-white/20 font-bold uppercase tracking-widest text-[11px] hover:bg-emerald-500 hover:border-emerald-500 transition-all">
+          Пройти диагностику потерь →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── СРАВНЕНИЕ ─── -->
+  <section id="comparison" class="section-padding px-4 md:px-8 border-t border-white/5">
+    <div class="max-w-6xl mx-auto cl-center">
+      <div class="text-center mb-6 reveal"><div class="em-tag">01 / Почему не работает по-старому</div></div>
+      <h2 class="cl-h2 reveal">
+        Штатный РОП и консультанты<br>не чинят продажи. Вот почему
+      </h2>
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <div class="glass p-8 opacity-70 reveal rd1">
+          <h3 class="font-bold mb-8 text-[#5F6B64] uppercase tracking-wider text-[10px]">Нанять РОПа в штат</h3>
+          <div class="space-y-5 text-[#9BA8A0] text-sm">
+            <p>✕ Искать 2–4 месяца, а ошибка выбора стоит полугода и сотен тысяч</p>
+            <p>✕ 150–250 тыс. в месяц с налогами — вне зависимости от результата</p>
+            <p>✕ Настраивает всё под себя и не документирует: уйдёт — система уйдёт с ним</p>
+            <p>✕ Проверить его уровень некому — собственник не РОП по профессии</p>
+            <p>✕ Один человек не заменит систему: без воронки и мотивации утонет и сильный</p>
+          </div>
+        </div>
+
+        <div class="glass p-8 opacity-70 reveal rd2">
+          <h3 class="font-bold mb-8 text-[#5F6B64] uppercase tracking-wider text-[10px]">Консультанты и тренинги</h3>
+          <div class="space-y-5 text-[#9BA8A0] text-sm">
+            <p>✕ Диагноз в красивой презентации — внедрять всё равно вам</p>
+            <p>✕ Не трогают CRM, регламенты и цифры руками — только «рекомендуют»</p>
+            <p>✕ Никого не нанимают: система без людей остаётся схемой на бумаге</p>
+            <p>✕ Гонорар за процесс: не взлетело — «вы плохо внедряли»</p>
+            <p>✕ После оплаты исчезают, ответственность размыта</p>
+          </div>
+        </div>
+
+        <div class="our-side p-8 border border-emerald-500/30 reveal rd3">
+          <h3 class="font-bold mb-8 text-emerald-500 uppercase tracking-wider text-[10px]">Работа с&nbsp;&nbsp;<span class="text-white" style="letter-spacing:.2em">Closery</span></h3>
+          <div class="space-y-5 text-white text-sm">
+            <p><span class="text-emerald-500">✓</span> Строим руками: CRM, регламенты, мотивация, план — и сдаём по чек-листу</p>
+            <p><span class="text-emerald-500">✓</span> Людей ставим через конкурс: кандидаты продают ваш продукт вживую</p>
+            <p><span class="text-emerald-500">✓</span> Оплата поэтапно: этап не принят — не оплачен</p>
+            <p><span class="text-emerald-500">✓</span> Замена людей 3 месяца бесплатно и право выйти после любого этапа</p>
+            <p><span class="text-emerald-500">✓</span> Через 90 дней системой управляет ваш РОП, а не мы</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ТЕХНОЛОГИЯ: 90 ДНЕЙ ─── -->
+  <section id="method" class="section-padding px-4 md:px-8">
+    <div class="max-w-6xl mx-auto cl-center">
+      <div class="text-center mb-6 reveal"><div class="em-tag">02 / Технология</div></div>
+      <h2 class="cl-h2 has-sub reveal">Как устроены 90 дней</h2>
+      <p class="cl-sub text-[#9BA8A0] text-lg max-w-2xl reveal rd1">
+        Четыре этапа. У каждого — измеримый результат и чек-лист приёмки.<br>
+        Один договор на весь проект; платежи привязаны к вехам, а не к обещаниям.
+      </p>
+      <div class="grid md:grid-cols-2 gap-6 md:gap-10">
+        <div class="glass p-8 reveal rd1">
+          <span class="step-week mono">Недели 01–02</span>
+          <div class="step-num">01 <small>/ Диагностика и архитектура</small></div>
+          <p class="text-[#9BA8A0]">Разбираем воронку по цифрам: этапы, конверсии, звонки, база, экономика. На выходе — карта потерь в рублях и архитектура вашего коммерческого блока: структура, ФОТ, мотивация, план. С этим документом можно работать даже без нас.</p>
+        </div>
+        <div class="glass p-8 reveal rd2">
+          <span class="step-week mono">Недели 03–06</span>
+          <div class="step-num">02 <small>/ Фундамент системы</small></div>
+          <p class="text-[#9BA8A0]">CRM с живыми сделками, регламенты и скрипты ключевых этапов, каскад дожима, норматив скорости ответа на заявку, мотивация и план продаж. Приёмка: отдел неделю работает по новым правилам.</p>
+        </div>
+        <div class="glass p-8 reveal rd3">
+          <span class="step-week mono">Недели 05–08</span>
+          <div class="step-num">03 <small>/ Люди через конкурс</small></div>
+          <p class="text-[#9BA8A0]">Хантинг и парсинг тех, кто не ищет работу. Конкурсный день: 10–15 кандидатов, каждый продаёт ваш продукт вживую — вы видите навык, а не «красивые истории». Выход менеджеров или РОПа с планом адаптации. Замена 3 месяца — бесплатно.</p>
+        </div>
+        <div class="glass p-8 reveal rd4">
+          <span class="step-week mono">Недели 07–12</span>
+          <div class="step-num">04 <small>/ Разгон и передача</small></div>
+          <p class="text-[#9BA8A0]">Еженедельный план-факт, разборы звонков, контроль опережающих метрик: скорость ответа, касания, конверсия по этапам. Управление передаём вашему РОПу. Приёмка: четыре недели отдел держит ритм без нас.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ФОРМАТЫ ─── -->
+  <section id="formats" class="section-padding px-4 md:px-8 border-t border-white/5">
+    <div class="max-w-6xl mx-auto cl-center">
+      <div class="text-center mb-6 reveal"><div class="em-tag">03 / Форматы</div></div>
+      <h2 class="cl-h2 has-sub reveal">Форматы работы</h2>
+      <p class="cl-sub text-[#9BA8A0] text-lg max-w-2xl reveal rd1">
+        Точную смету считаем после диагностики — половине компаний не нужен весь проект.<br>
+        Один договор, одна цена. Оплата — по графику этапов, а не всё вперёд.
+      </p>
+      <div class="grid md:grid-cols-3 gap-8 pt-4">
+
+        <div class="glass p-8 reveal rd1">
+          <h3 class="font-bold mb-3 text-white text-lg">Сопровождение</h3>
+          <div class="text-[#5F6B64] text-[10px] uppercase tracking-wider mb-6 mono">Для тех, кто строит сам</div>
+          <p class="text-[#9BA8A0] text-sm leading-relaxed mb-6">
+            Еженедельная стратегическая сессия, разборы решений и контроль метрик. Внедряете своими руками — мы ведём по маршруту и не даём свернуть.
+          </p>
+          <div class="dash-top pt-4 text-[#5F6B64] text-[10px] uppercase tracking-wider mono">Ежемесячный формат</div>
+        </div>
+
+        <div class="our-side fmt-card p-8 border border-emerald-500/30 reveal rd2">
+          <div class="fmt-badge mono">Чаще всего выбирают</div>
+          <h3 class="font-bold mb-3 text-white text-lg">Коммерческий блок · 90 дней</h3>
+          <div class="text-emerald-500 text-[10px] uppercase tracking-wider mb-6 mono">Флагман</div>
+          <p class="text-[#C4CFC8] text-sm leading-relaxed mb-6">
+            Все четыре этапа под ключ: архитектура, фундамент, люди через конкурс, разгон. Оплата поэтапно, каждый этап — по чек-листу приёмки. Результат — система, которой управляет ваш РОП.
+          </p>
+          <div class="dash-top pt-4 text-[#9BA8A0] text-[10px] uppercase tracking-wider mono">Оплата траншами по вехам приёмки</div>
+        </div>
+
+        <div class="glass p-8 reveal rd3">
+          <h3 class="font-bold mb-3 text-white text-lg">Под ключ+</h3>
+          <div class="text-[#5F6B64] text-[10px] uppercase tracking-wider mb-6 mono">Максимум скорости</div>
+          <p class="text-[#9BA8A0] text-sm leading-relaxed mb-6">
+            Флагман, расширенный найм — РОП и команда менеджеров — и три месяца сопровождения после сдачи системы.
+          </p>
+          <div class="dash-top pt-4 text-[#5F6B64] text-[10px] uppercase tracking-wider mono">Ограничено: 1 проект в квартал</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ДИАГНОСТИКА (МРТ) ─── -->
+  <section id="mri" class="section-padding px-4 md:px-8">
+    <div class="max-w-6xl mx-auto cl-center">
+      <div class="text-center mb-6 reveal"><div class="em-tag">04 / Диагностика · Бесплатно, без звонков</div></div>
+      <h2 class="cl-h2 has-sub reveal">Коммерческий МРТ: за 15 минут увидите,<br>сколько денег теряете</h2>
+      <p class="cl-sub text-[#9BA8A0] text-lg max-w-2xl reveal rd1">
+        Онлайн-диагностика шести систем бизнеса: маркетинг, продажи, команда, управление, экономика, стратегия. Отвечаете на вопросы — модель считает в реальном времени.
+      </p>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="glass p-8 reveal rd1">
+          <div class="case-num mb-4">0–100</div>
+          <h3 class="font-bold mb-3 text-white">Индекс зрелости</h3>
+          <p class="text-[#9BA8A0] text-sm leading-relaxed">Где ваш коммерческий блок относительно нормы рынка — по каждой из шести систем.</p>
+        </div>
+        <div class="glass p-8 reveal rd2">
+          <div class="case-num mb-4">₽/год</div>
+          <h3 class="font-bold mb-3 text-white">Потери в деньгах</h3>
+          <p class="text-[#9BA8A0] text-sm leading-relaxed">Финансовая модель считает недополученную прибыль по каждому найденному фактору — и цену каждого месяца ожидания.</p>
+        </div>
+        <div class="glass p-8 reveal rd3">
+          <div class="case-num mb-4">PDF</div>
+          <h3 class="font-bold mb-3 text-white">Отчёт остаётся у вас</h3>
+          <p class="text-[#9BA8A0] text-sm leading-relaxed">Главное ограничение роста, топ проблем с ценниками и рекомендации — в отчёте, который можно скачать и показать партнёру.</p>
+        </div>
+      </div>
+      <div class="text-center mt-12 reveal rd3">
+        <a href="/diagnostic"
+           class="cta-primary cta-solid bg-emerald-500 px-10 py-5 font-bold uppercase tracking-widest text-[11px] hover:bg-white transition-all">
+          Пройти диагностику →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ГАРАНТИЯ ─── -->
+  <section id="guarantee" class="section-padding px-4 md:px-8 border-t border-white/5">
+    <div class="max-w-6xl mx-auto cl-center">
+      <div class="text-center mb-6 reveal"><div class="em-tag">05 / Гарантия</div></div>
+      <h2 class="cl-h2 has-sub reveal">Гарантия</h2>
+      <p class="cl-sub text-[#9BA8A0] text-lg max-w-2xl reveal rd1">
+        Выручку вам не гарантирует никто, кто не контролирует ваш продукт и цены. Кто обещает — уже заложил этот риск в цену вдвое.<br><br>
+        Мы письменно гарантируем то, что контролируем.
+      </p>
+      <div class="grid md:grid-cols-3 gap-8">
+
+        <div class="glass p-8 reveal rd1">
+          <div class="case-num mb-4">0 ₽</div>
+          <h3 class="font-bold mb-3 text-white">Этап не принят — не оплачен</h3>
+          <p class="text-[#9BA8A0] text-sm leading-relaxed">
+            У каждого этапа — измеримые критерии приёмки: сделки в CRM, подписанные регламенты, вышедшие люди, ритм отдела.
+          </p>
+        </div>
+
+        <div class="glass p-8 reveal rd2">
+          <div class="case-num mb-4">3 мес</div>
+          <h3 class="font-bold mb-3 text-white">Бесплатная замена людей</h3>
+          <p class="text-[#9BA8A0] text-sm leading-relaxed">
+            Нанятый через конкурс уходит или не справляется — подбираем замену за наш счёт, без доплат. Консультанты такого не дают: им нечем.
+          </p>
+        </div>
+
+        <div class="glass p-8 reveal rd3">
+          <div class="case-num mb-4">Выход</div>
+          <h3 class="font-bold mb-3 text-white">Расторжение без штрафов</h3>
+          <p class="text-[#9BA8A0] text-sm leading-relaxed">
+            Решили остановиться — платите только за принятые этапы, никаких «полных сумм по договору». Всё построенное — документы, CRM, регламенты, люди — остаётся у вас.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── КЕЙСЫ ─── -->
+  <section id="cases" class="section-padding px-4 md:px-8">
+    <div class="max-w-6xl mx-auto cl-center">
+      <div class="text-center mb-6 reveal"><div class="em-tag">06 / Опыт</div></div>
+      <h2 class="cl-h2 has-sub reveal">Три проекта. Три точки входа.<br>Одна методология</h2>
+      <p class="cl-sub text-[#9BA8A0] text-lg max-w-2xl reveal rd1">
+        Кризис, ноль и масштабирование — построено руками той же системой:<br>цифры плюс люди. Не советами.
+      </p>
+      <div class="grid md:grid-cols-3 gap-8">
+
+        <div class="glass p-8 flex flex-col reveal rd1">
+          <div class="case-index mb-5">Case 01 / Антикризис</div>
+          <h3 class="text-xl font-bold mb-1">CDEK</h3>
+          <div class="text-[#5F6B64] text-[11px] uppercase tracking-wider mb-6">Логистика · франчайзи-точка</div>
+          <div class="case-num">30-е → топ-5</div>
+          <div class="text-[#9BA8A0] text-[12px] mb-6 mt-1">место в рейтинге сети за 4,5 месяца</div>
+          <p class="text-[#9BA8A0] text-sm leading-relaxed mb-6">
+            Пересобрана система продаж и найм: с 6 человек в год — до конвейера на 100+. Результат стал следствием считаемых действий, а не «хорошего месяца». ×2 к выручке за 10 месяцев.
+          </p>
+          <div class="case-transfer"><span class="arrow">→</span><span>В вашем бизнесе это модуль <b>«результат виден в цифрах каждый день»</b>.</span></div>
+        </div>
+
+        <div class="glass p-8 flex flex-col reveal rd2">
+          <div class="case-index mb-5">Case 02 / С нуля</div>
+          <h3 class="text-xl font-bold mb-1">UniBox</h3>
+          <div class="text-[#5F6B64] text-[11px] uppercase tracking-wider mb-6">E-com · фулфилмент</div>
+          <div class="case-num">1,5 → 12,3 млн</div>
+          <div class="text-[#9BA8A0] text-[12px] mb-6 mt-1">месячная выручка за 9 месяцев — рост ×8</div>
+          <p class="text-[#9BA8A0] text-sm leading-relaxed mb-6">
+            Из активов был только склад. Построен весь коммерческий контур: упаковка продукта, отдел из 8 человек за 90 дней, холодный лидген и партнёрский канал без рекламного бюджета.
+          </p>
+          <div class="case-transfer"><span class="arrow">→</span><span>Это ядро продукта Closery — <b>коммерческий блок с нуля за 90 дней</b>.</span></div>
+        </div>
+
+        <div class="glass p-8 flex flex-col reveal rd3">
+          <div class="case-index mb-5">Case 03 / Масштабирование</div>
+          <h3 class="text-xl font-bold mb-1">MarketGuru</h3>
+          <div class="text-[#5F6B64] text-[11px] uppercase tracking-wider mb-6">SaaS для селлеров</div>
+          <div class="case-num">100 млн</div>
+          <div class="text-[#9BA8A0] text-[12px] mb-6 mt-1">взята планка, не покорявшаяся компании 3 года</div>
+          <p class="text-[#9BA8A0] text-sm leading-relaxed mb-6">
+            Выращены 3 РОПа и поставлена единая методология: конверсия отдела из Zoom-аудита в оплату — 34%, шесть месяцев подряд рекордов по выручке. Система работает без автора.
+          </p>
+          <div class="case-transfer"><span class="arrow">→</span><span>Та же механика — <b>из диагностики в оплату</b> — строится в вашей воронке.</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ОСНОВАТЕЛЬ ─── -->
+  <section id="founder" class="section-padding px-4 md:px-8 border-t border-white/5">
+    <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+      <div class="reveal">
+        <div class="em-tag mb-6">07 / Основатель</div>
+        <h2 class="cl-h2 reveal">Кто строит вашу систему</h2>
+        <p class="text-[#9BA8A0] leading-relaxed mb-6">
+          Более 10 лет в продажах. Последние 5 — строю коммерческие блоки под ключ:
+          от воронки и CRM до людей и управления.<br><br>
+          Лично выстроил и оптимизировал отделы продаж в самых разных сегментах —
+          от высокотехнологичного IT-сектора до промышленного производства.
+          На позиции выведено 8 РОПов и 2 коммерческих директора.
+        </p>
+        <p class="text-[#9BA8A0] leading-relaxed mb-8">
+          «Я не консультант с презентацией. Разницу между отделом, который красиво выглядит
+          в отчётах, и отделом, который приносит деньги, я знаю руками.
+          Моя работа — построить второй и передать вам управление».
+        </p>
+        <div class="stat-row pt-6 border-t border-white/10">
+          <div>
+            <div class="stat-num text-3xl md:text-4xl mb-1 whitespace-nowrap">≈1 млрд</div>
+            <div class="text-[#5F6B64] text-[10px] uppercase tracking-wider leading-snug">Выручка построенных<br>отделов</div>
+          </div>
+          <div style="text-align:center">
+            <div class="stat-num text-3xl md:text-4xl mb-1 stat-val" data-target="12">12</div>
+            <div class="text-[#5F6B64] text-[10px] uppercase tracking-wider leading-snug">Отделов продаж<br>построено</div>
+          </div>
+          <div>
+            <div class="stat-num text-3xl md:text-4xl mb-1 whitespace-nowrap">5 лет</div>
+            <div class="text-[#5F6B64] text-[10px] uppercase tracking-wider leading-snug">Системно строю<br>команды</div>
+          </div>
+        </div>
+      </div>
+      <div class="relative reveal rd2">
+        <div class="glass overflow-hidden p-3">
+          <img
+            src="https://optim.tildacdn.com/tild3831-3335-4039-a164-623864323233/-/format/webp/photo_2026-06-03_012.jpeg.webp"
+            alt="Николай Клименко, основатель Closery"
+            width="600"
+            height="550"
+            loading="lazy"
+            class="w-full aspect-[3/4] object-cover rounded-md grayscale"
+            style="object-position: center 15%">
+          <div class="mt-4 text-center pb-1">
+            <div class="text-white font-bold tracking-wide">Николай Клименко</div>
+            <div class="text-emerald-500 text-[10px] uppercase tracking-widest mt-1 font-semibold mono">Практик · основатель Closery</div>
+          </div>
+        </div>
+        <div class="absolute -top-2 -right-2 w-3 h-3 rounded-full bg-emerald-500"
+             style="box-shadow:0 0 14px rgba(52,211,153,.8)"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA ─── -->
+  <section id="cta" class="py-24 px-4 md:px-8 text-center border-t border-white/5" style="background:linear-gradient(180deg, rgba(52,211,153,.05), rgba(52,211,153,.015))">
+    <div class="max-w-xl mx-auto">
+      <div class="em-tag mb-6 reveal">08 / Старт</div>
+      <h2 class="cl-h2 reveal">Начнём с разбора<br>вашей воронки</h2>
+      <p class="text-[#9BA8A0] mb-12 reveal rd1">
+        Личный разбор от основателя в реальном времени: пройдём по вашим цифрам, покажу, где теряются деньги и что чинить первым.<br><br>
+        Заберёте пошаговый план в документе — он ваш вне зависимости от того, будем ли работать дальше.<br><br>
+        Беру не больше трёх новых проектов в месяц.
+      </p>
+
+      <div id="cl-form-wrap" class="glass p-8 flex flex-col gap-4 reveal rd2">
+
+        <div class="cl-field">
+          <span class="cl-req">*</span>
+          <input id="cl-name" type="text" placeholder="Ваше имя" autocomplete="name">
+        </div>
+
+        <div class="cl-field">
+          <span class="cl-req">*</span>
+          <div class="cl-phone-row">
+            <select id="cl-country">
+              <option value="+7">🇷🇺 +7</option>
+              <option value="+375">🇧🇾 +375</option>
+              <option value="+77">🇰🇿 +77</option>
+              <option value="+998">🇺🇿 +998</option>
+              <option value="+994">🇦🇿 +994</option>
+              <option value="+995">🇬🇪 +995</option>
+              <option value="+971">🇦🇪 +971</option>
+              <option value="+49">🇩🇪 +49</option>
+              <option value="+44">🇬🇧 +44</option>
+              <option value="+1">🇺🇸 +1</option>
+            </select>
+            <input id="cl-phone" type="tel" placeholder="Телефон" autocomplete="tel">
+          </div>
+        </div>
+
+        <div class="cl-field">
+          <input id="cl-tg" type="text" placeholder="Telegram — ваш ник">
+        </div>
+
+        <input id="cl-hp" name="_honey" type="text" tabindex="-1" autocomplete="off">
+
+        <label class="cl-consent" id="cl-consent-label">
+          <input type="checkbox" id="cl-consent">
+          <span class="cl-box"></span>
+          <span class="cl-txt">Я даю согласие на обработку моих персональных данных и ознакомлен(а) с <a href="/policy" target="_blank" onclick="event.stopPropagation()">Политикой обработки персональных данных</a></span>
+        </label>
+
+        <button id="cl-submit" type="button">Забронировать разбор</button>
+        <div id="cl-msg"></div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── ФУТЕР ─── -->
+  <footer class="py-14 px-4 md:px-8 border-t border-white/5">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row md:items-start md:justify-between gap-8">
+      <a href="#" onclick="event.preventDefault();window.scrollTo({top:0,behavior:'smooth'})" class="text-center md:text-left block">
+        <div class="logo-btn font-bold uppercase text-sm tracking-[.2em] mb-2" style="color:#fff"><span class="brand-mark"></span>Closery</div>
+        <div class="text-[#5F6B64] text-[11px] uppercase tracking-[.22em]">Коммерческие блоки под ключ</div>
+      </a>
+      <div class="flex flex-col items-center md:items-end gap-4">
+        <div class="flex flex-col md:flex-row md:items-center gap-5 md:gap-8 text-center">
+          <a href="https://t.me/klimenko_prod" class="cl-foot text-xs uppercase tracking-[.18em] transition-colors">Telegram</a>
+          <a href="https://closery.ru/policy" class="cl-foot text-xs uppercase tracking-[.18em] transition-colors">Политика&nbsp;конфиденциальности</a>
+        </div>
+        <span class="text-[#5F6B64] text-[11px] tracking-wider">© 2026 Closery. Все права защищены.</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ─── МОБИЛЬНОЕ МЕНЮ ─── */
+  var hamburger = document.getElementById('cl-hamburger');
+  var mobMenu   = document.getElementById('cl-mob-menu');
+
+  function closeMobMenu() {
+    hamburger.classList.remove('open');
+    mobMenu.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+  }
+  window.closeMobMenu = closeMobMenu;
+
+  if (hamburger) {
+    hamburger.addEventListener('click', function () {
+      var isOpen = mobMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+    });
+  }
+
+  /* ─── НАВБАР: уплотнение при скролле ─── */
+  var nav = document.getElementById('cl-nav');
+  function updateNav() {
+    if (!nav) return;
+    nav.classList.toggle('cl-scrolled', window.scrollY > 40);
+  }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+
+  /* ─── SCROLL PROGRESS ─── */
+  var bar = document.getElementById('cl-progress');
+  function updateBar() {
+    if (!bar) return;
+    var total = document.body.scrollHeight - window.innerHeight;
+    bar.style.width = (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', updateBar, { passive: true });
+
+  /* ─── REVEAL ─── */
+  var revObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        revObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(function (el) { revObs.observe(el); });
+
+  /* ─── COUNTER ─── */
+  function animateStat(el) {
+    var target = parseFloat(el.dataset.target);
+    var suffix = el.dataset.suffix || '';
+    var dur    = 1700;
+    var start  = null;
+    function tick(ts) {
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var e = 1 - Math.pow(1 - p, 4);
+      var v = target * e;
+      el.textContent = (Number.isInteger(target) ? Math.round(v) : v.toFixed(1)) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  var statObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting && !e.target._counted) {
+        e.target._counted = true;
+        animateStat(e.target);
+        statObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('[data-target]').forEach(function (el) { statObs.observe(el); });
+
+
+  /* ─── ФОРМА → MAKE → TELEGRAM ─── */
+  var WEBHOOK = 'https://hook.eu1.make.com/9bmzy20fmciviutub57col3w6mq5wmtv';
+
+  var btnEl        = document.getElementById('cl-submit');
+  var msgEl        = document.getElementById('cl-msg');
+  var nameEl       = document.getElementById('cl-name');
+  var telEl        = document.getElementById('cl-phone');
+  var countryEl    = document.getElementById('cl-country');
+  var tgEl         = document.getElementById('cl-tg');
+  var consentEl    = document.getElementById('cl-consent');
+  var consentLabel = document.getElementById('cl-consent-label');
+  var hpEl         = document.getElementById('cl-hp');
+
+  function showMsg(text, type) {
+    msgEl.textContent   = text;
+    msgEl.className     = type;
+    msgEl.style.display = 'block';
+  }
+
+  var DIAL_CODES = ['998','995','994','971','375','77','49','44','7','1'];
+  function detectCode(digits) {
+    for (var i = 0; i < DIAL_CODES.length; i++) {
+      var d = DIAL_CODES[i];
+      if (digits.indexOf(d) === 0) {
+        if (d.length === 1 && digits.length < 11) continue;
+        return d;
+      }
+    }
+    return null;
+  }
+
+  telEl.addEventListener('input', function () {
+    var digits = telEl.value.replace(/\D/g, '');
+    if (!digits) return;
+    if (digits.charAt(0) === '8' && digits.length >= 11) {
+      countryEl.value = '+7';
+      telEl.value = digits.slice(1);
+      telEl.classList.remove('cl-invalid');
+      return;
+    }
+    var code = detectCode(digits);
+    if (code) {
+      countryEl.value = '+' + code;
+      telEl.value = digits.slice(code.length);
+      telEl.classList.remove('cl-invalid');
+    }
+  });
+
+  function isValidPhone(val) {
+    return val.replace(/\D/g, '').length >= 6;
+  }
+
+  function resetForm() {
+    nameEl.value      = '';
+    telEl.value       = '';
+    tgEl.value        = '';
+    nameEl.classList.remove('cl-invalid');
+    telEl.classList.remove('cl-invalid');
+    consentEl.checked = false;
+    consentLabel.classList.remove('cl-invalid');
+    btnEl.disabled    = false;
+    btnEl.textContent = 'Забронировать разбор';
+  }
+
+  btnEl.addEventListener('click', function () {
+    if (hpEl && hpEl.value) {
+      resetForm();
+      showMsg('Мы получили заявку — свяжемся в течение часа', 'success');
+      return;
+    }
+
+    var name    = nameEl.value.trim();
+    var phone   = telEl.value.trim();
+    var country = countryEl.value;
+    var tg      = tgEl.value.trim();
+    var valid   = true;
+
+    nameEl.classList.remove('cl-invalid');
+    telEl.classList.remove('cl-invalid');
+    consentLabel.classList.remove('cl-invalid');
+    msgEl.style.display = 'none';
+
+    if (!name)                     { nameEl.classList.add('cl-invalid');     valid = false; }
+    if (!phone || !isValidPhone(phone)) { telEl.classList.add('cl-invalid'); valid = false; }
+    if (!consentEl.checked)        { consentLabel.classList.add('cl-invalid'); valid = false; }
+
+    if (!valid) {
+      if (consentEl.checked) {
+        showMsg('Пожалуйста, заполните имя и корректный номер телефона', 'error');
+      } else if (name && isValidPhone(phone)) {
+        showMsg('Подтвердите согласие на обработку данных', 'error');
+      } else {
+        showMsg('Заполните поля и подтвердите согласие на обработку данных', 'error');
+      }
+      return;
+    }
+
+    btnEl.disabled    = true;
+    btnEl.textContent = 'Отправляем...';
+
+    fetch(WEBHOOK, {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify({
+        name: name,
+        phone: country + ' ' + phone,
+        telegram: tg || '—'
+      })
+    })
+    .then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      resetForm();
+      showMsg('Мы получили заявку — свяжемся в течение часа', 'success');
+    })
+    .catch(function () {
+      btnEl.disabled    = false;
+      btnEl.textContent = 'Забронировать разбор';
+      showMsg('Ошибка отправки. Напишите нам напрямую в Telegram', 'error');
+    });
+  });
+
+})();
+</script>
