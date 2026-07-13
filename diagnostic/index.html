@@ -1,0 +1,1666 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Closery — Коммерческий МРТ бизнеса</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>
+:root{
+  --font-display:'Plus Jakarta Sans',sans-serif;
+  --font-body:'Plus Jakarta Sans',sans-serif;
+  --font-mono:'Plus Jakarta Sans',sans-serif;
+  --bg:#000;
+  --surface:rgba(255,255,255,.02); --surface-2:rgba(255,255,255,.045);
+  --line:rgba(255,255,255,.1); --line-soft:rgba(255,255,255,.06);
+  --ink:#e4e4e7; --ink-2:#a1a1aa; --ink-3:#71717a;
+  --teal:#10b981; --teal-2:#34d399; --teal-deep:#059669; --teal-soft:rgba(16,185,129,.08);
+  --good:#10b981; --warn:#fbbf24; --bad:#f87171;
+  --red-soft:rgba(248,113,113,.06);
+  --glow:0 0 40px rgba(16,185,129,.14);
+  --shadow:0 12px 40px rgba(0,0,0,.45);
+  --dur:.45s; --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);background:var(--bg);color:var(--ink);
+  min-height:100vh;line-height:1.55;overflow-x:hidden;
+}
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:1999;opacity:.032;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px 180px;
+}
+button{font-family:inherit;cursor:pointer}
+input,textarea,select{font-family:inherit;color:inherit}
+::selection{background:#10b981;color:#000}
+::-moz-selection{background:#10b981;color:#000}
+.num,.gauge-num b,.loss-num,.final-index b,.loss-factor b,.growth-row b,.progress-label{font-variant-numeric:tabular-nums}
+.topbar{
+  position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:20px;
+  padding:18px 32px;background:rgba(0,0,0,.55);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);backdrop-filter:blur(24px) saturate(180%);
+  border-bottom:1px solid var(--line-soft);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 4px 24px rgba(0,0,0,.25);
+}
+.brand{display:flex;align-items:baseline;gap:12px;white-space:nowrap}
+.brand b{font-weight:700;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#fff}
+.brand span{font-size:9px;color:var(--teal);letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+.progress-wrap{flex:1;display:flex;align-items:center;gap:12px;min-width:0}
+.progress-track{flex:1;height:2px;background:var(--line-soft);overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#10b981,#34d399);box-shadow:0 0 8px rgba(16,185,129,.55);transition:width .5s var(--ease)}
+.progress-label{font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--ink-3);white-space:nowrap}
+.shell{max-width:1360px;margin:0 auto;padding:28px;display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:28px;align-items:start}
+@media(max-width:1024px){.shell{grid-template-columns:1fr}}
+@media(max-width:640px){.shell{padding:16px}}
+.intro{padding:64px 8px 24px;max-width:780px;position:relative}
+.intro::before{
+  content:'';position:absolute;width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(16,185,129,.16) 0%,transparent 64%);
+  top:-180px;left:-240px;pointer-events:none;z-index:-1;
+  animation:glow-breathe 5s ease-in-out infinite;
+}
+@keyframes glow-breathe{0%,100%{transform:scale(1);opacity:.55}50%{transform:scale(1.1);opacity:1}}
+.eyebrow{
+  display:inline-block;border:1px solid rgba(16,185,129,.28);padding:5px 12px;
+  font-size:9.5px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--teal);
+  margin-bottom:26px;animation:tag-pulse 3s ease-in-out infinite;
+}
+@keyframes tag-pulse{0%,100%{box-shadow:none}50%{box-shadow:0 0 14px rgba(16,185,129,.18)}}
+.intro h1{
+  font-weight:800;font-size:clamp(30px,4.6vw,54px);line-height:1.05;letter-spacing:-.01em;margin-bottom:24px;
+  background:linear-gradient(135deg,#fff 0%,#9f9fa8 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  padding-left:.08em;padding-right:.08em;margin-left:-.08em;margin-right:-.08em;
+}
+.intro h1 em{font-style:normal;-webkit-text-fill-color:#10b981}
+.intro p{color:var(--ink-2);font-size:16px;max-width:580px;margin-bottom:10px}
+.intro-meta{display:flex;gap:32px;margin:30px 0 34px;flex-wrap:wrap}
+.intro-meta div{font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);line-height:1.6}
+.intro-meta b{display:block;font-size:22px;color:var(--teal);font-weight:800;letter-spacing:0;text-transform:none}
+.btn-primary{
+  position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:10px;
+  padding:17px 30px;border:none;background:#10b981;color:#000;
+  font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  transition:background .2s,transform .1s;
+}
+.btn-primary:hover{background:#fff}
+.btn-primary:active{transform:scale(.98)}
+.btn-primary::after{
+  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);
+  transition:left .5s ease;
+}
+.btn-primary:hover::after{left:100%}
+@media(hover:none){.btn-primary::after{display:none}}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:8px;padding:16px 24px;
+  border:1px solid rgba(255,255,255,.2);background:transparent;color:var(--ink);
+  font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;transition:all .2s;
+}
+.btn-ghost:hover{background:#10b981;border-color:#10b981;color:#000}
+.flow{position:relative}
+.section-tag{
+  display:inline-block;border:1px solid rgba(16,185,129,.28);padding:5px 12px;
+  font-size:9.5px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--teal);
+  margin-bottom:16px;animation:tag-pulse 3s ease-in-out infinite;
+}
+.qcard{
+  background:var(--surface);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  border:1px solid var(--line-soft);
+  padding:36px;box-shadow:var(--shadow);position:relative;overflow:hidden;
+  animation:cardIn var(--dur) var(--ease);
+}
+.qcard::before{
+  content:'';position:absolute;width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle,rgba(16,185,129,.07) 0%,transparent 70%);
+  top:-140px;right:-140px;pointer-events:none;
+}
+@media(max-width:640px){.qcard{padding:24px 18px}}
+@keyframes cardIn{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+.qcard.leaving{animation:cardOut .28s ease forwards}
+@keyframes cardOut{to{opacity:0;transform:translateY(-14px)}}
+.q-count{font-size:9.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px}
+.q-title{font-size:clamp(19px,2.4vw,26px);font-weight:800;letter-spacing:-.01em;margin-bottom:6px;color:#fff}
+.q-sub{color:var(--ink-2);font-size:14px;margin-bottom:24px}
+.q-input input[type=text],.q-input input[type=number],.q-input textarea{
+  width:100%;padding:16px;border:1px solid var(--line);
+  background:transparent;font-size:16px;outline:none;transition:border-color .2s,box-shadow .2s;
+}
+.q-input textarea{min-height:110px;resize:vertical}
+.q-input input:focus,.q-input textarea:focus{border-color:#10b981;box-shadow:0 0 0 2px rgba(16,185,129,.18)}
+.q-input input::placeholder,.q-input textarea::placeholder{color:#52525b}
+.q-input input[type=number]::-webkit-outer-spin-button,
+.q-input input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.q-input input[type=number]{-moz-appearance:textfield;appearance:textfield}
+.unit-wrap{position:relative}
+.unit-wrap .unit{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#52525b;pointer-events:none}
+.opts{display:grid;gap:10px}
+.opts.cols-2{grid-template-columns:1fr 1fr}
+@media(max-width:560px){.opts.cols-2{grid-template-columns:1fr}}
+.opt{
+  text-align:left;padding:15px 16px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;font-weight:600;
+  display:flex;align-items:center;gap:12px;transition:border-color .2s,background .2s,box-shadow .2s,transform .2s;
+}
+.opt:hover{border-color:rgba(16,185,129,.5);transform:translateY(-2px)}
+.opt.selected{border-color:#10b981;background:rgba(16,185,129,.08);box-shadow:0 0 0 1px rgba(16,185,129,.6),0 0 24px rgba(16,185,129,.22)}
+.opt .key{font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--ink-3);border:1px solid var(--line);padding:3px 7px;min-width:24px;text-align:center}
+.opt.selected .key{color:var(--teal);border-color:var(--teal)}
+.opt small{display:block;font-weight:500;color:var(--ink-2);font-size:12.5px;margin-top:2px}
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.chip{
+  padding:11px 16px;border:1px solid var(--line);background:var(--surface);
+  font-size:12.5px;font-weight:700;color:var(--ink-2);transition:all .16s;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.chip .key{font-size:8.5px;font-weight:700;color:var(--ink-3);border:1px solid var(--line);padding:2px 5px;letter-spacing:.06em}
+.chip.selected .key{color:var(--teal);border-color:var(--teal)}
+.chip:hover{border-color:rgba(16,185,129,.5);color:var(--ink);transform:translateY(-2px)}
+.chip.selected{background:rgba(16,185,129,.1);border-color:#10b981;color:var(--teal-2)}
+.q-nav{display:flex;align-items:center;gap:12px;margin-top:28px;flex-wrap:wrap}
+.q-nav .spacer{flex:1}
+.btn-back{background:none;border:none;color:var(--ink-3);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;display:inline-flex;gap:6px;align-items:center;padding:10px 6px;transition:color .2s}
+.btn-back:hover{color:var(--teal)}
+.btn-skip{background:none;border:none;color:var(--ink-3);font-size:12px;text-decoration:underline dotted;padding:10px 6px}
+.btn-skip:hover{color:var(--ink-2)}
+.enter-hint{font-size:10px;font-weight:600;letter-spacing:.06em;color:var(--ink-3)}
+kbd{border:1px solid var(--line);border-bottom-width:2px;padding:1px 6px;font-size:9px;font-weight:700}
+.insight{
+  margin-top:16px;border:1px solid var(--line-soft);border-left:2px solid var(--warn);
+  background:var(--surface);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  padding:15px 18px;font-size:13.5px;color:var(--ink-2);
+  animation:cardIn .4s var(--ease);display:none;
+}
+.insight b{color:#fff}
+.insight.bad{border-left-color:var(--bad)}
+.insight.good{border-left-color:var(--good)}
+.dash{position:sticky;top:92px;display:flex;flex-direction:column;gap:14px}
+@media(max-width:1024px){.dash{position:static;order:-1}}
+.panel{
+  background:var(--surface);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  border:1px solid var(--line-soft);padding:22px;box-shadow:var(--shadow);
+  transition:border-color .35s ease;
+}
+.panel:hover{border-color:rgba(16,185,129,.22)}
+.panel-h{font-size:9px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 8px rgba(16,185,129,.7)}50%{opacity:.45;box-shadow:none}}
+.gauge-wrap{display:flex;align-items:center;gap:20px}
+.gauge{position:relative;width:150px;height:150px;flex:none}
+.gauge svg{width:100%;height:100%;transform:rotate(-90deg)}
+.gauge .track{fill:none;stroke:rgba(255,255,255,.07);stroke-width:10}
+.gauge .val{fill:none;stroke:var(--teal);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .8s var(--ease),stroke .5s;filter:drop-shadow(0 0 6px rgba(16,185,129,.4))}
+.gauge .scanline{fill:none;stroke:var(--teal-2);stroke-width:2;opacity:.5;stroke-dasharray:6 460;animation:scan 2.6s linear infinite}
+@keyframes scan{to{stroke-dashoffset:-466}}
+.gauge-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.gauge-num b{font-weight:800;font-size:40px;line-height:1;letter-spacing:-.02em;color:#fff}
+.gauge-num span{font-size:8.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);margin-top:5px}
+.gauge-side{flex:1;min-width:0}
+.gauge-side .verdict{font-weight:800;font-size:15px;margin-bottom:4px;color:#fff}
+.gauge-side p{font-size:12.5px;color:var(--ink-2)}
+.cat-rows{display:flex;flex-direction:column;gap:11px}
+.cat-row{display:grid;grid-template-columns:96px 1fr 34px;align-items:center;gap:10px;font-size:12.5px}
+.cat-row .name{color:var(--ink-2);font-weight:600}
+.cat-bar{height:5px;background:rgba(255,255,255,.06);overflow:hidden}
+.cat-bar i{display:block;height:100%;width:0;transition:width .7s var(--ease),background .5s;box-shadow:0 0 8px rgba(16,185,129,.3)}
+.cat-row .num{font-size:12px;font-weight:700;text-align:right;color:var(--ink-2)}
+.constraint-card{
+  border:1px solid var(--line-soft);padding:20px 22px;position:relative;overflow:hidden;
+  background:var(--surface);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+}
+.constraint-card::after{content:"";position:absolute;top:-40px;right:-40px;width:130px;height:130px;border-radius:50%;background:rgba(248,113,113,.12);filter:blur(12px)}
+.constraint-card .panel-h{margin-bottom:8px}
+.constraint-name{font-weight:800;font-size:19px;color:var(--bad);transition:color .4s}
+.constraint-why{font-size:12.5px;color:var(--ink-2);margin-top:6px}
+.loss-panel{border-color:rgba(248,113,113,.28);background:linear-gradient(160deg,var(--surface),rgba(248,113,113,.05))}
+.loss-panel:hover{border-color:rgba(248,113,113,.5)}
+.loss-num{font-weight:800;font-size:clamp(28px,2.6vw,36px);color:var(--bad);letter-spacing:-.01em;line-height:1.1;text-shadow:0 0 24px rgba(248,113,113,.35)}
+.loss-sub{font-size:12px;color:var(--ink-2);margin-top:6px}
+.loss-factors{margin-top:14px;display:flex;flex-direction:column;gap:7px}
+.loss-factor{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;color:var(--ink-2);border-top:1px dashed rgba(255,255,255,.08);padding-top:7px}
+.loss-factor b{color:var(--bad);font-weight:700;white-space:nowrap}
+.growth-rows{display:flex;flex-direction:column;gap:10px}
+.growth-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:13px;color:var(--ink-2);padding:9px 0;border-bottom:1px dashed rgba(255,255,255,.06)}
+.growth-row:last-child{border-bottom:none}
+.growth-row b{color:var(--good);font-weight:700;white-space:nowrap;text-shadow:0 0 16px rgba(16,185,129,.4)}
+.empty-note{font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--ink-3)}
+.final{display:none;animation:cardIn .6s var(--ease)}
+.final.visible{display:block}
+.final-hero{
+  background:var(--surface);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  border:1px solid var(--line-soft);padding:48px;box-shadow:var(--shadow);
+  position:relative;overflow:hidden;margin-bottom:20px;
+}
+@media(max-width:640px){.final-hero{padding:28px 20px}}
+.final-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 320px at 85% -10%,rgba(16,185,129,.12),transparent);pointer-events:none}
+.final-grid{display:grid;grid-template-columns:auto 1fr;gap:44px;align-items:center;position:relative}
+@media(max-width:760px){.final-grid{grid-template-columns:1fr;gap:24px}}
+.final-index b{font-weight:800;font-size:clamp(60px,8vw,92px);line-height:1;display:block;text-shadow:0 0 32px rgba(16,185,129,.25)}
+.final-index span{font-size:9px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-3)}
+.final-verdict h2{font-weight:800;font-size:clamp(21px,3vw,32px);margin-bottom:10px;line-height:1.2;color:#fff}
+.final-verdict p{color:var(--ink-2);max-width:580px}
+.final-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-bottom:20px}
+.list-num{display:flex;flex-direction:column;gap:12px}
+.list-num li{list-style:none;display:flex;gap:12px;font-size:14px;color:var(--ink-2)}
+.list-num li b{color:#fff}
+.list-num .n{font-size:10px;font-weight:700;color:var(--bad);border:1px solid rgba(248,113,113,.3);height:26px;min-width:26px;display:flex;align-items:center;justify-content:center;flex:none;margin-top:2px}
+.rec-list li .n{color:var(--teal);border-color:rgba(16,185,129,.3)}
+.cta-panel{
+  padding:44px 36px;text-align:center;border:1px solid rgba(16,185,129,.3);
+  background:rgba(16,185,129,.05);margin-bottom:22px;position:relative;overflow:hidden;
+}
+.cta-panel::before{content:'';position:absolute;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(16,185,129,.1) 0%,transparent 70%);top:-160px;right:-120px;pointer-events:none;animation:glow-breathe 7s ease-in-out infinite}
+.cta-panel h3{font-weight:800;font-size:clamp(19px,2.4vw,26px);margin-bottom:12px;color:#fff;position:relative}
+.cta-panel p{color:var(--ink-2);max-width:540px;margin:0 auto 26px;position:relative}
+.final-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.modal-bg.open{display:flex}
+.modal{background:#0a0a0a;border:1px solid var(--line);max-width:640px;width:100%;max-height:80vh;overflow:auto;padding:28px;box-shadow:var(--shadow)}
+.modal h3{font-size:17px;font-weight:800;margin-bottom:10px;color:#fff}
+.modal p{font-size:13.5px;color:var(--ink-2);margin-bottom:14px}
+.modal pre{background:#000;border:1px solid var(--line-soft);padding:16px;font-family:ui-monospace,Menlo,monospace;font-size:11px;overflow:auto;max-height:320px;color:var(--ink-2)}
+.modal .q-nav{margin-top:18px}
+.sc-good{color:var(--good)!important}.sc-warn{color:var(--warn)!important}.sc-bad{color:var(--bad)!important}
+.bg-good{background:var(--good)!important}.bg-warn{background:var(--warn)!important}.bg-bad{background:var(--bad)!important}
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);opacity:0;
+  background:#0a0a0a;border:1px solid rgba(16,185,129,.4);color:var(--ink);
+  padding:13px 22px;font-size:12px;font-weight:700;letter-spacing:.04em;z-index:2000;
+  transition:all .35s var(--ease);box-shadow:0 0 24px rgba(16,185,129,.15);
+}
+.toast.show{transform:translateX(-50%);opacity:1}
+.find-count{font-size:9px;color:var(--bad);letter-spacing:.1em}
+.find-row{display:flex;gap:9px;font-size:12px;line-height:1.45;color:var(--ink-2);padding:8px 0;border-top:1px dashed rgba(255,255,255,.06);align-items:flex-start;animation:cardIn .4s var(--ease)}
+.find-row:first-child{border-top:none;padding-top:0}
+.find-dot{width:6px;height:6px;border-radius:50%;flex:none;margin-top:5px}
+.find-dot.bad{background:var(--bad);box-shadow:0 0 8px rgba(248,113,113,.6)}
+.find-dot.warn{background:var(--warn)}
+.find-toggle{margin-top:12px;width:100%;background:none;border:1px solid var(--line);color:var(--ink-2);font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:9px 12px;transition:all .2s}
+.find-toggle:hover{border-color:var(--teal);color:var(--teal)}
+.find-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 26px}
+@media(max-width:700px){.find-grid{grid-template-columns:1fr}}
+.prob-detail{font-size:12px;color:var(--ink-3);margin-top:3px;line-height:1.5}
+.mirror-quote{margin-top:20px;border-left:2px solid var(--teal);padding:14px 18px;background:rgba(16,185,129,.05);font-size:14px;color:var(--ink-2);max-width:640px}
+.mirror-quote b{color:#fff}
+.cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:640px){.cases-grid{grid-template-columns:1fr}}
+.cases-grid>div{border:1px solid var(--line-soft);padding:16px 18px;background:var(--surface)}
+.cases-grid b{font-size:26px;font-weight:800;color:var(--teal);display:block;margin-bottom:4px;text-shadow:0 0 20px rgba(16,185,129,.4)}
+.cases-grid span{font-size:11.5px;color:var(--ink-2);line-height:1.5;display:block}
+.cases-grid small{display:block;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);margin-top:8px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.print-report{display:none}
+@media print{
+  @page{margin:12mm}
+  body{background:#fff!important;background-image:none!important;color:#16242E;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .topbar,.shell,.toast,.modal-bg{display:none!important}
+  .print-report{display:block;font-family:var(--font-body)}
+  .pr-page{page-break-after:always}
+  .pr-page:last-child{page-break-after:auto}
+  .pr-band{background:#000;color:#fff;border-radius:16px;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+  .pr-band .logo{font-family:var(--font-display);font-weight:700;font-size:15px;letter-spacing:.06em}
+  .pr-band .logo span{display:block;font-family:var(--font-mono);font-weight:400;font-size:9px;letter-spacing:.24em;color:#34d399;margin-top:5px}
+  .pr-band .date{font-family:var(--font-mono);font-size:9.5px;color:#9FB3BC;text-align:right;letter-spacing:.08em;line-height:1.7}
+  .pr-h1{font-family:var(--font-display);font-size:25px;font-weight:700;margin:0 0 4px}
+  .pr-sub{color:#5F7480;font-size:12px;margin-bottom:18px;font-family:var(--font-mono)}
+  .pr-hero{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;border:1px solid #DDE6E8;border-radius:16px;padding:22px 26px;margin-bottom:16px;background:#F5F9F9}
+  .pr-gauge{width:120px;height:120px;position:relative;flex:none}
+  .pr-gauge svg{transform:rotate(-90deg);display:block}
+  .pr-gauge b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:30px;font-weight:900}
+  .pr-kicker{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.22em;color:#8AA0AA;margin-bottom:5px;text-transform:uppercase}
+  .pr-verdict{font-family:var(--font-display);font-weight:700;font-size:17px;margin-bottom:6px}
+  .pr-vdesc{font-size:12px;color:#4E626D;max-width:440px}
+  .pr-constraint{margin-top:10px;font-size:11.5px;color:#33454F;border-top:1px dashed #D6E0E3;padding-top:9px}
+  .pr-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .pr-card{border:1px solid #DDE6E8;border-radius:14px;padding:16px 18px;background:#fff}
+  .pr-h2{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#059669;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+  .pr-h2::after{content:"";flex:1;height:1px;background:#DDE6E8}
+  .pr-bars>div{font-size:11px;margin:0 0 9px;color:#4E626D;font-weight:600}
+  .pr-bars b{font-family:var(--font-mono);float:right}
+  .pr-bar{height:7px;background:#EDF2F3;border-radius:99px;margin-top:4px;clear:both}
+  .pr-bar i{display:block;height:100%;border-radius:99px}
+  .pr-loss-card{border:1px solid #fecaca;border-radius:14px;padding:16px 18px;background:#fef2f2}
+  .pr-loss-card .pr-h2{color:#dc2626}
+  .pr-loss-card .pr-h2::after{background:#fecaca}
+  .pr-loss-num{font-family:var(--font-mono);font-size:22px;font-weight:700;color:#dc2626;margin-bottom:4px}
+  .pr-frow{display:flex;justify-content:space-between;gap:10px;font-size:11px;color:#4E626D;border-top:1px dashed #fecaca;padding:6px 0 0;margin-top:6px}
+  .pr-frow b{font-family:var(--font-mono);color:#dc2626;font-weight:600;white-space:nowrap}
+  .pr-grow .pr-frow{border-color:#d1fae5}
+  .pr-grow .pr-frow b{color:#059669}
+  .pr-list{list-style:none;margin:0;padding:0}
+  .pr-list li{display:flex;gap:10px;font-size:11.5px;color:#33454F;margin-bottom:9px;line-height:1.5}
+  .pr-list .n{font-family:var(--font-mono);font-size:9.5px;color:#059669;border:1px solid #a7f3d0;border-radius:6px;min-width:21px;height:21px;display:flex;align-items:center;justify-content:center;flex:none;margin-top:1px}
+  .pr-list.pr-red .n{color:#dc2626;border-color:#fecaca}
+  .pr-cta{background:#000;color:#fff;border-radius:16px;padding:22px 26px;margin-top:14px;position:relative;overflow:hidden}
+  .pr-cta::after{content:"";position:absolute;top:-30px;right:-30px;width:130px;height:130px;border-radius:50%;background:rgba(16,185,129,.2)}
+  .pr-cta h3{font-family:var(--font-display);font-size:15px;font-weight:700;margin:0 0 7px}
+  .pr-cta h3 span{color:#34d399}
+  .pr-cta p{font-size:11.5px;margin:0;color:#C6D4DA;max-width:560px}
+  .pr-foot{margin-top:16px;font-size:8.5px;color:#8AA0AA;border-top:1px solid #E2EAEC;padding-top:8px;font-family:var(--font-mono);letter-spacing:.04em}
+}
+</style></head><body><header class="topbar"><a class="brand" href="https://closery.ru" target="_blank" rel="noopener noreferrer"><b>CLOSERY</b><span>Commercial MRI</span></a><div class="progress-wrap"><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div><div class="progress-label" id="progressLabel">0%</div></div></header><div class="shell"><main class="flow" id="flow"><!-- Intro --><section class="intro" id="introScreen"><div class="eyebrow">Диагностика коммерческого блока</div><h1>Сколько денег ваш бизнес <em>теряет прямо сейчас</em> — в цифрах, за 15 минут</h1><p>Коммерческий МРТ просканирует маркетинг, продажи, команду, управление и экономику вашей компании. По ходу ответов система в реальном времени считает индекс зрелости, находит главное ограничение роста и оценивает недополученную прибыль.</p><div class="intro-meta"><div><b>15–20 мин</b>время диагностики</div><div><b>6 систем</b>бизнеса под сканером</div><div><b>₽ в год</b>оценка потерь и потенциала</div></div><div style="display:flex;gap:12px;flex-wrap:wrap"><button class="btn-primary" id="btnStart">Начать сканирование →</button></div></section><!-- Question card renders here --><section id="questionScreen" style="display:none"><div class="section-tag" id="sectionTag"></div><div id="cardHost"></div><div class="insight" id="insightBox"></div></section><!-- Final screen --><section class="final" id="finalScreen"></section></main><!-- ================= DASHBOARD ================= --><aside class="dash" id="dash"><div class="panel"><div class="panel-h">Индекс коммерческой зрелости <span class="live-dot"></span></div><div class="gauge-wrap"><div class="gauge"><svg viewBox="0 0 160 160"><circle class="track" cx="80" cy="80" r="70"></circle><circle class="scanline" cx="80" cy="80" r="70" id="scanLine"></circle><circle class="val" cx="80" cy="80" r="70" id="gaugeVal"></circle></svg><div class="gauge-num"><b id="indexNum">—</b><span>из 100</span></div></div><div class="gauge-side"><div class="verdict" id="indexVerdict">Сканер готов</div><p id="indexDesc">Отвечайте на вопросы — индекс и оценки систем будут пересчитываться после каждого ответа.</p></div></div></div><div class="panel loss-panel"><div class="panel-h">Потенциально теряете</div><div class="loss-num" id="lossNum">— ₽/год</div><div class="loss-sub" id="lossSub">Оценка недополученной прибыли по финансовой модели. Уточняется с каждым ответом.</div><div class="loss-factors" id="lossFactors"></div></div><div class="constraint-card"><div class="panel-h">Главное ограничение роста</div><div class="constraint-name" id="constraintName">Определяется…</div><div class="constraint-why" id="constraintWhy">Нужно больше данных для постановки диагноза.</div></div><div class="panel"><div class="panel-h">Системы бизнеса</div><div class="cat-rows" id="catRows"></div></div><div class="panel"><div class="panel-h">Находки сканера <span class="find-count" id="findCount"></span></div><div id="findRows"><div class="empty-note">// пока чисто</div></div></div><div class="panel"><div class="panel-h">Потенциал роста</div><div class="growth-rows" id="growthRows"><div class="empty-note">// появится после блока «Финансы»</div></div></div></aside></div><div class="modal-bg" id="modalBg"><div class="modal"><h3 id="modalTitle"></h3><p id="modalText"></p><pre id="modalPre"></pre><div class="q-nav"><span class="spacer"></span><button class="btn-ghost" id="modalCopy">Скопировать JSON</button><button class="btn-primary" id="modalClose">Закрыть</button></div></div></div><div class="toast" id="toast"></div><div class="print-report" id="printReport"></div><script>
+const ClsMRI = (() => {
+'use strict';
+const C = {
+  STORAGE_KEY : 'closery_mri_v1',
+  BOOKING_URL : 'https://t.me/klimenko_prod',
+  MONTHS      : 12,
+  BM: {
+    CONV_TARGET   : 20,
+    REPEAT_TARGET : 30,
+    CONV_UPLIFT   : 5,
+    CHECK_UPLIFT  : 0.10,
+    CYCLE_SLOW    : 60,
+    CYCLE_DRAG    : 0.06,
+    NO_CRM_DRAG   : 0.07,
+    NO_ROP_DRAG   : 0.05,
+    NO_KPI_DRAG   : 0.04,
+    OWNER_DRAG    : 0.10,
+    NO_ADS_DRAG   : 0.08,
+    RESP_DAY_DRAG : 0.05,
+    RESP_NEXT_DRAG: 0.09,
+    NO_FOLLOW_DRAG: 0.08,
+    WEAK_FOLLOW   : 0.04,
+    DEAD_BASE_DRAG: 0.03,
+    TURNOVER_DRAG : 0.04,
+    PLAN_FAIL_DRAG: 0.05,
+    DRAG_CAP      : 0.35
+  },
+  WEIGHTS: { marketing:.16, sales:.24, team:.14, management:.18, economics:.14, strategy:.14 }
+};
+const CAT_LABELS = {
+  marketing:'Маркетинг', sales:'Продажи', team:'Команда',
+  management:'Управление', economics:'Экономика', strategy:'Стратегия'
+};
+const SECTION_LABELS = {
+  business:'01 · Бизнес', marketing:'02 · Маркетинг', sales:'03 · Продажи',
+  team:'04 · Команда', finance:'05 · Финансы', strategy:'06 · Стратегия'
+};
+const QUESTIONS = [
+
+  { id:'company', section:'business', type:'text', required:true,
+    title:'Как называется ваша компания?',
+    sub:'Название попадёт в итоговый отчёт.' },
+  { id:'site', section:'business', type:'text', optional:true,
+    title:'Сайт компании',
+    sub:'Если сайта нет — пропустите этот шаг.', placeholder:'example.ru',
+    score:v => v && v.trim() ? [{cat:'marketing', delta:+4}] : [{cat:'marketing', delta:-6}],
+    insight:v => (!v || !v.trim()) ? {tone:'bad', text:'<b>Нет сайта</b> — вы теряете самый дешёвый канал доверия. Даже одностраничник поднимает конверсию холодных касаний.'} : null },
+  { id:'niche', section:'business', type:'text', required:true,
+    title:'В какой нише работаете?', placeholder:'Например: производство упаковки, B2B-логистика…' },
+  { id:'product', section:'business', type:'textarea', required:true,
+    title:'Что вы продаёте?',
+    sub:'Продукт или услуга — своими словами, одним-двумя предложениями.' },
+  { id:'audience', section:'business', type:'select',
+    title:'Кому продаёте?',
+    options:[
+      {v:'b2b', t:'B2B — компаниям'},
+      {v:'b2c', t:'B2C — частным клиентам'},
+      {v:'mixed', t:'И тем, и другим'}
+    ]},
+  { id:'avg_check', section:'business', type:'money', required:true,
+    title:'Средний чек сделки', unit:'₽',
+    sub:'Средняя сумма одной продажи. Это ядро финансовой модели.' },
+  { id:'margin', section:'business', type:'percent', required:true,
+    title:'Маржинальность', unit:'%',
+    sub:'Сколько процентов от выручки остаётся валовой прибылью.',
+    score:v => v >= 40 ? [{cat:'economics', delta:+10}] : v >= 20 ? [{cat:'economics', delta:+4}] : [{cat:'economics', delta:-8}],
+    insight:v => v < 15 ? {tone:'bad', text:'<b>Маржа ниже 15%</b> — любая ошибка в маркетинге или продажах съедает прибыль целиком. Это зона повышенного риска.'} : null },
+  { id:'usp', section:'business', type:'textarea', optional:true,
+    title:'В чём ваше УТП?',
+    sub:'Чем ваше предложение объективно отличается от конкурентов.',
+    score:v => v && v.trim().length > 15 ? [{cat:'strategy', delta:+6}] : [{cat:'strategy', delta:-8}],
+    insight:v => (!v || v.trim().length <= 15) ? {tone:'warn', text:'Если УТП не формулируется за 10 секунд — <b>его нет и для клиента</b>. Продажи в таком случае держатся на скидках и личных связях.'} : null },
+  { id:'why_buy', section:'business', type:'textarea', optional:true,
+    title:'Почему покупают именно у вас?',
+    sub:'Что говорят сами клиенты, когда выбирают вас.' },
+
+  { id:'lead_sources', section:'marketing', type:'chips',
+    title:'Откуда приходят лиды?',
+    sub:'Выберите все реальные источники.',
+    options:[
+      {v:'ads', t:'Платная реклама'},
+      {v:'seo', t:'SEO / сайт'},
+      {v:'social', t:'Соцсети / контент'},
+      {v:'referral', t:'Рекомендации'},
+      {v:'cold', t:'Холодные продажи'},
+      {v:'tenders', t:'Тендеры'},
+      {v:'partners', t:'Партнёры'},
+      {v:'marketplace', t:'Маркетплейсы / агрегаторы'}
+    ],
+    score:v => {
+      const n = (v||[]).length;
+      if (n >= 3) return [{cat:'marketing', delta:+12}];
+      if (n === 2) return [{cat:'marketing', delta:+4}];
+      if (n === 1) return [{cat:'marketing', delta:-10}];
+      return [{cat:'marketing', delta:-16}];
+    },
+    insight:v => {
+      const n = (v||[]).length;
+      if (n === 1 && v[0]==='referral') return {tone:'bad', text:'<b>Единственный канал — рекомендации.</b> Это не система, а удача. Рост невозможно планировать, а падение — предсказать.'};
+      if (n <= 1) return {tone:'bad', text:'<b>Один канал лидов</b> — единая точка отказа. Отключается канал — отключается бизнес.'};
+      return null;
+    }},
+  { id:'leads_month', section:'marketing', type:'number', required:true,
+    title:'Сколько лидов в месяц вы получаете?', unit:'шт',
+    sub:'Заявки, входящие обращения, целевые контакты — суммарно.' },
+  { id:'has_ads', section:'marketing', type:'yesno',
+    title:'Есть ли платная реклама?',
+    score:v => v==='yes' ? [{cat:'marketing', delta:+8}] : [{cat:'marketing', delta:-10}],
+    insight:v => v==='no' ? {tone:'warn', text:'Без платного трафика поток лидов <b>не масштабируется управляемо</b> — вы растёте со скоростью сарафана, а не со скоростью рынка.'} : null },
+  { id:'cac', section:'marketing', type:'money', optional:true, unit:'₽',
+    when:a => a.has_ads === 'yes',
+    title:'CAC — стоимость привлечения клиента',
+    sub:'Все расходы на маркетинг ÷ количество новых клиентов. Если не считаете — пропустите.',
+    score:v => (v===null||v===undefined||v==='') ? [{cat:'economics', delta:-8},{cat:'marketing', delta:-4}] : [{cat:'economics', delta:+8}],
+    insight:(v)=> (v===null||v===undefined||v==='') ? {tone:'bad', text:'<b>CAC не считается.</b> Вы покупаете клиентов вслепую — возможно, дороже, чем они приносят.'} : null },
+  { id:'cost_per_lead', section:'marketing', type:'money', optional:true, unit:'₽',
+    when:a => a.has_ads === 'yes',
+    title:'Стоимость заявки',
+    sub:'Средняя цена одного лида из рекламы. Если не считаете — пропустите.' },
+  { id:'channels_work', section:'marketing', type:'textarea', optional:true,
+    when:a => a.has_ads === 'yes',
+    title:'Какие каналы реально работают?',
+    sub:'Где сходится экономика, а где деньги сгорают.' },
+  { id:'channels_tried', section:'marketing', type:'textarea', optional:true,
+    title:'Что уже пробовали в маркетинге?',
+    sub:'Каналы и гипотезы, которые тестировали — удачно или нет.' },
+
+  { id:'managers', section:'sales', type:'number', required:true, unit:'чел',
+    title:'Сколько менеджеров по продажам в компании?',
+    sub:'0 — если продаёт только собственник.',
+    score:v => v > 0 ? [{cat:'sales', delta:+6}] : [{cat:'sales', delta:-10}] },
+
+  { id:'owner_share', section:'sales', type:'select',
+    when:a => Number(a.managers) === 0,
+    title:'Какая доля продаж завязана лично на вас?',
+    options:[
+      {v:'all', t:'Все продажи делаю я'},
+      {v:'most', t:'Больше половины'},
+      {v:'part', t:'Меньше половины'}
+    ],
+    score:v => v==='all' ? [{cat:'sales', delta:-14},{cat:'management', delta:-10}] : v==='most' ? [{cat:'sales', delta:-8}] : [],
+    insight:v => v==='all' ? {tone:'bad', text:'<b>Компания = вы.</b> Вы не владеете активом — вы владеете рабочим местом. Болезнь, отпуск или выгорание останавливают выручку в ноль.'} : null },
+  { id:'owner_time', section:'sales', type:'select',
+    when:a => Number(a.managers) === 0,
+    title:'Сколько часов в неделю вы лично тратите на продажи?',
+    options:[
+      {v:'lt10', t:'До 10 часов'},
+      {v:'10_25', t:'10–25 часов'},
+      {v:'gt25', t:'Больше 25 часов'}
+    ],
+    insight:v => v==='gt25' ? {tone:'warn', text:'25+ часов в неделю на продажи — это <b>полная ставка менеджера</b>, которую выполняет самый дорогой человек в компании.'} : null },
+  { id:'dialogs', section:'sales', type:'number', optional:true, unit:'шт',
+    title:'Сколько диалогов с клиентами в месяц?',
+    sub:'Звонки, встречи, переписки с потенциальными клиентами.' },
+  { id:'conversion', section:'sales', type:'percent', required:true, unit:'%',
+    title:'Конверсия из лида в сделку',
+    sub:'Сколько процентов обращений заканчиваются оплатой.',
+    score:v => v >= 25 ? [{cat:'sales', delta:+12}] : v >= 15 ? [{cat:'sales', delta:+4}] : v >= 8 ? [{cat:'sales', delta:-6}] : [{cat:'sales', delta:-12}],
+    insight:v => v < 10 ? {tone:'bad', text:`Конверсия <b>${v}%</b> означает: 9 из 10 лидов, за которые вы уже заплатили, уходят к конкурентам или «в никуда».`} : null },
+  { id:'deal_cycle', section:'sales', type:'select',
+    title:'Средний цикл сделки',
+    sub:'От первого контакта до оплаты.',
+    options:[
+      {v:'7', t:'До недели'},
+      {v:'21', t:'1–4 недели'},
+      {v:'60', t:'1–3 месяца'},
+      {v:'120', t:'Больше 3 месяцев'}
+    ],
+    score:v => Number(v) >= 120 ? [{cat:'sales', delta:-6}] : [],
+  },
+  { id:'response_time', section:'sales', type:'select',
+    title:'Как быстро отвечаете на новую заявку?',
+    sub:'Среднее время от заявки до первого контакта менеджера.',
+    options:[
+      {v:'15m', t:'До 15 минут'},
+      {v:'hour', t:'В течение часа'},
+      {v:'same_day', t:'В тот же день'},
+      {v:'next_day', t:'На следующий день или позже'}
+    ],
+    score:v => v==='15m' ? [{cat:'sales', delta:+10}] : v==='hour' ? [{cat:'sales', delta:+4}] : v==='same_day' ? [{cat:'sales', delta:-8}] : [{cat:'sales', delta:-14}],
+    insight:v => v==='same_day' ? {tone:'bad', text:'Ответ «в тот же день» — за это время лид уже <b>поговорил с двумя конкурентами</b>. Скорость первого контакта — самый дешёвый способ поднять конверсию.'}
+               : v==='next_day' ? {tone:'bad', text:'<b>Сутки до первого контакта</b> — к этому моменту заявка холодная. Часть маркетингового бюджета сгорает ещё до разговора.'} : null },
+  { id:'followup', section:'sales', type:'select',
+    title:'Что происходит с лидом, который не купил сразу?',
+    sub:'Сказал «дорого», «подумаю», перестал отвечать — что дальше?',
+    options:[
+      {v:'system', t:'Системные касания по регламенту'},
+      {v:'manager', t:'На усмотрение менеджера'},
+      {v:'couple', t:'Пару раз перезвоним — и всё'},
+      {v:'nothing', t:'Ничего: ждём, сам вернётся'}
+    ],
+    score:v => v==='system' ? [{cat:'sales', delta:+10}] : v==='manager' ? [{cat:'sales', delta:-5}] : v==='couple' ? [{cat:'sales', delta:-9}] : [{cat:'sales', delta:-14}],
+    insight:v => v==='nothing' ? {tone:'bad', text:'<b>Лид без ответа просто бросается.</b> Больше половины B2B-сделок закрывается после 5+ касаний — вы останавливаетесь на первом.'}
+               : v==='couple' ? {tone:'bad', text:'Пара звонков — и лид, за которого заплачено, списывается. <b>Основные деньги лежат в касаниях 3–7</b>, куда никто не доходит.'}
+               : v==='manager' ? {tone:'warn', text:'«На усмотрение менеджера» означает: <b>у слабых менеджеров дожима нет вообще</b>. Система не может опираться на усмотрение.'} : null },
+  { id:'repeat_pct', section:'sales', type:'percent', required:true, unit:'%',
+    title:'Доля повторных продаж',
+    sub:'Сколько процентов клиентов покупают повторно.',
+    score:v => v >= 30 ? [{cat:'sales', delta:+10},{cat:'economics', delta:+6}] : v >= 20 ? [{cat:'sales', delta:+2}] : [{cat:'sales', delta:-8},{cat:'economics', delta:-4}],
+    insight:v => v < 20 ? {tone:'bad', text:`Повторных продаж <b>${v}%</b> — вы каждый месяц покупаете выручку заново по полной цене. Повторная продажа стоит в 5–7 раз дешевле новой.`} : null },
+
+  { id:'repeat_block', section:'sales', type:'select',
+    when:a => Number(a.repeat_pct) < 20,
+    title:'Почему клиенты не возвращаются?',
+    sub:'Дополнительный блок: система увидела аномалию в повторных продажах.',
+    options:[
+      {v:'oneoff', t:'Продукт разовый по своей природе'},
+      {v:'nobody', t:'Некому заниматься базой клиентов'},
+      {v:'noreason', t:'Нет повода возвращаться (нет линейки)'},
+      {v:'unknown', t:'Честно — не знаю'}
+    ],
+    score:v => v==='unknown' ? [{cat:'management', delta:-6}] : v==='nobody' ? [{cat:'team', delta:-6}] : [],
+    insight:v => v==='unknown' ? {tone:'bad', text:'«Не знаю, почему не возвращаются» — значит, <b>с клиентами после сделки никто не разговаривает</b>. Это самые дешёвые деньги, которые вы не поднимаете.'} : null },
+  { id:'old_base', section:'sales', type:'select',
+    when:a => { const r = Number(a.repeat_pct); return a.repeat_pct !== '' && a.repeat_pct != null && isFinite(r) && r < 30; },
+    title:'Работаете со старой базой клиентов?',
+    sub:'Реактивация: возвращаете тех, кто покупал раньше или не купил тогда.',
+    options:[
+      {v:'regular', t:'Да, регулярно и системно'},
+      {v:'sometimes', t:'Иногда, вручную'},
+      {v:'never', t:'Нет, база лежит мёртвым грузом'}
+    ],
+    score:v => v==='regular' ? [{cat:'sales', delta:+6}] : v==='never' ? [{cat:'sales', delta:-8},{cat:'economics', delta:-4}] : [{cat:'sales', delta:-3}],
+    insight:v => v==='never' ? {tone:'bad', text:'<b>База лежит мёртвым грузом.</b> Реактивация старых клиентов — самые дешёвые деньги в бизнесе: контакт уже есть, доверие уже есть.'} : null },
+  { id:'has_crm', section:'sales', type:'yesno',
+    title:'Есть ли CRM-система?',
+    sub:'И реально ли в ней ведутся сделки, а не «стоит для галочки».',
+    score:v => v==='yes' ? [{cat:'management', delta:+10}] : [{cat:'management', delta:-12}],
+    insight:v => v==='no' ? {tone:'bad', text:'<b>Нет CRM (−12 к управлению).</b> Лиды теряются в мессенджерах и блокнотах. По рынку это 10–25% недозаработанной выручки.'} : null },
+  { id:'funnel_visibility', section:'sales', type:'yesno',
+    title:'Знаете конверсию по каждому этапу воронки?',
+    sub:'Не общую «из лида в деньги», а по шагам: квалификация → КП → сделка.',
+    score:v => v==='yes' ? [{cat:'management', delta:+7},{cat:'economics', delta:+4}] : [{cat:'management', delta:-8}],
+    insight:v => v==='no' ? {tone:'warn', text:'Видна только общая конверсия — <b>где именно теряются клиенты, неизвестно</b>. Лечить воронку вслепую дорого: чинится не то место.'} : null },
+  { id:'has_rop', section:'sales', type:'yesno',
+    when:a => Number(a.managers) > 0,
+    title:'Есть ли РОП — руководитель отдела продаж?',
+    score:v => v==='yes' ? [{cat:'management', delta:+12},{cat:'team', delta:+6}] : [{cat:'management', delta:-15}],
+    insight:v => v==='no' ? {tone:'bad', text:'<b>Нет РОПа (−15 к управлению).</b> Менеджеры без управления работают на 50–60% возможностей, а контролировать их приходится собственнику.'} : null },
+  { id:'has_regl', section:'sales', type:'yesno',
+    title:'Есть ли регламенты и скрипты продаж?',
+    sub:'Описанные этапы сделки, стандарты общения, база знаний.',
+    score:v => v==='yes' ? [{cat:'management', delta:+8}] : [{cat:'management', delta:-9}],
+    insight:v => v==='no' ? {tone:'warn', text:'Без регламентов каждый продаёт «как умеет». Результат отдела — <b>лотерея</b>, а новый сотрудник учится месяцами.'} : null },
+  { id:'call_records', section:'sales', type:'yesno',
+    when:a => Number(a.managers) > 0,
+    title:'Звонки записываются и разбираются?',
+    sub:'Регулярная прослушка и разбор диалогов с менеджерами.',
+    score:v => v==='yes' ? [{cat:'management', delta:+7}] : [{cat:'management', delta:-8}],
+    insight:v => v==='no' ? {tone:'warn', text:'Диалоги никто не слышит — <b>ошибки менеджеров повторяются месяцами</b> и каждый день стоят сделок. Разбор звонков — самый быстрый рычаг качества.'} : null },
+  { id:'owner_dep', section:'sales', type:'yesno',
+    when:a => Number(a.managers) > 0,
+    title:'Продажи завязаны на собственнике?',
+    sub:'Ключевые сделки, крупные клиенты, дожимы — через вас.',
+    score:v => v==='yes' ? [{cat:'sales', delta:-20},{cat:'management', delta:-8}] : [{cat:'sales', delta:+8}],
+    insight:v => v==='yes' ? {tone:'bad', text:'<b>Продажи держатся на собственнике (−20).</b> Отдел не продаёт — отдел оформляет. Масштабирование упирается в ваши 24 часа в сутках.'} : null },
+  { id:'has_kpi', section:'sales', type:'yesno',
+    title:'Есть ли KPI и план продаж?',
+    sub:'Цифровые цели по менеджерам и понятная мотивация от результата.',
+    score:v => v==='yes' ? [{cat:'management', delta:+9}] : [{cat:'management', delta:-10}],
+    insight:v => v==='no' ? {tone:'bad', text:'<b>Нет KPI (−10 к управлению).</b> Без плана «хороший месяц» и «плохой месяц» — это погода, а не управляемый результат.'} : null },
+  { id:'plan_done', section:'sales', type:'select',
+    when:a => a.has_kpi === 'yes',
+    title:'План продаж выполняется?',
+    options:[
+      {v:'stable', t:'Стабильно, из месяца в месяц'},
+      {v:'half', t:'Через раз'},
+      {v:'rare', t:'Редко или никогда'}
+    ],
+    score:v => v==='stable' ? [{cat:'sales', delta:+8}] : v==='half' ? [{cat:'sales', delta:-4}] : [{cat:'sales', delta:-10},{cat:'management', delta:-4}],
+    insight:v => v==='rare' ? {tone:'bad', text:'План есть, но не выполняется — значит, это <b>не план, а пожелание</b>. Нет план-факт разборов и управленческой реакции на отставание.'} : null },
+  { id:'motivation', section:'sales', type:'select',
+    when:a => Number(a.managers) > 0,
+    title:'Как устроена мотивация менеджеров?',
+    options:[
+      {v:'balanced', t:'Оклад + % с понятными порогами'},
+      {v:'salary', t:'В основном оклад'},
+      {v:'percent', t:'В основном процент'},
+      {v:'chaos', t:'У всех по-разному'}
+    ],
+    score:v => v==='balanced' ? [{cat:'management', delta:+6}] : v==='salary' ? [{cat:'sales', delta:-8}] : v==='chaos' ? [{cat:'management', delta:-6}] : [{cat:'sales', delta:-2}],
+    insight:v => v==='salary' ? {tone:'bad', text:'Менеджеры в основном на окладе — вы <b>платите за присутствие, а не за результат</b>. Продавать больше им экономически незачем.'}
+               : v==='chaos' ? {tone:'warn', text:'У каждого своя мотивация — <b>отделом с разными правилами нельзя управлять как системой</b>.'} : null },
+
+  { id:'headcount', section:'team', type:'number', required:true, unit:'чел',
+    title:'Сколько человек в штате?' },
+  { id:'turnover', section:'team', type:'select',
+    when:a => Number(a.managers) > 0,
+    title:'Сколько менеджеров ушло или заменено за год?',
+    options:[
+      {v:'none', t:'Никто — команда стабильна'},
+      {v:'few', t:'1–2 человека'},
+      {v:'half', t:'Половина отдела и больше'}
+    ],
+    score:v => v==='none' ? [{cat:'team', delta:+8}] : v==='half' ? [{cat:'team', delta:-12},{cat:'management', delta:-6}] : [],
+    insight:v => v==='half' ? {tone:'bad', text:'Текучка в половину отдела — команда <b>постоянно в состоянии обучения, а не продаж</b>. Это симптом найма «по ощущениям» и слабой адаптации.'} : null },
+  { id:'missing_roles', section:'team', type:'chips',
+    title:'Каких людей не хватает для роста?',
+    options:[
+      {v:'sellers', t:'Менеджеры по продажам'},
+      {v:'rop', t:'РОП'},
+      {v:'marketer', t:'Маркетолог'},
+      {v:'ops', t:'Операционный директор'},
+      {v:'prod', t:'Производство / исполнители'},
+      {v:'none', t:'Все роли закрыты'}
+    ],
+    score:v => (v||[]).includes('none') ? [{cat:'team', delta:+10}] : (v||[]).length >= 3 ? [{cat:'team', delta:-12}] : [{cat:'team', delta:-6}] },
+  { id:'hiring_time', section:'team', type:'select',
+    when:a => Array.isArray(a.missing_roles) && (a.missing_roles.includes('sellers') || a.missing_roles.includes('rop')),
+    title:'Сколько уже ищете этих людей?',
+    sub:'Дополнительный вопрос: система увидела незакрытые роли в продажах.',
+    options:[
+      {v:'start', t:'Только начали'},
+      {v:'months', t:'1–3 месяца'},
+      {v:'long', t:'Больше 3 месяцев'},
+      {v:'gaveup', t:'Уже почти отчаялись'}
+    ],
+    score:v => (v==='long'||v==='gaveup') ? [{cat:'team', delta:-10}] : [],
+    insight:v => (v==='long'||v==='gaveup') ? {tone:'bad', text:'Вакансия висит месяцами, а план горит сейчас. Это <b>не проблема рынка кандидатов — это отсутствие системы найма</b>: профиля, воронки, конкурсного отбора.'} : null },
+  { id:'who_slows', section:'team', type:'textarea', optional:true,
+    title:'Кто или что сейчас тормозит рост?',
+    sub:'Конкретная роль, человек или процесс.' },
+  { id:'weak_link', section:'team', type:'select',
+    title:'Главное слабое звено компании сегодня',
+    options:[
+      {v:'sales', t:'Продажи'},
+      {v:'marketing', t:'Маркетинг / поток лидов'},
+      {v:'team', t:'Команда / кадры'},
+      {v:'owner', t:'Я сам — всё замкнуто на мне'},
+      {v:'product', t:'Продукт / производство'},
+      {v:'chaos', t:'Хаос: нет системы и процессов'}
+    ],
+    score:v => v==='owner' ? [{cat:'management', delta:-8}] : v==='chaos' ? [{cat:'management', delta:-10}] : [],
+  },
+
+  { id:'revenue', section:'finance', type:'money', required:true, unit:'₽/мес',
+    title:'Выручка в месяц',
+    sub:'Среднемесячная выручка за последние 3–6 месяцев.' },
+  { id:'profit', section:'finance', type:'money', required:true, unit:'₽/мес',
+    title:'Чистая прибыль в месяц',
+    score:(v,a) => {
+      const rev = Number(a.revenue)||0;
+      if (!rev) return [];
+      const pm = v/rev*100;
+      return pm >= 20 ? [{cat:'economics', delta:+12}] : pm >= 10 ? [{cat:'economics', delta:+4}] : [{cat:'economics', delta:-10}];
+    },
+    insight:(v,a)=>{
+      const rev=Number(a.revenue)||0; if(!rev) return null;
+      const pm=v/rev*100;
+      return pm < 10 ? {tone:'bad', text:`Рентабельность <b>${pm.toFixed(1)}%</b> — бизнес работает почти в ноль. Любой рост расходов уводит в минус.`} : null;
+    }},
+  { id:'ltv', section:'finance', type:'money', optional:true, unit:'₽',
+    title:'LTV клиента',
+    sub:'Сколько денег приносит клиент за всё время работы с вами. Не считаете — пропустите.',
+    score:v => (v===null||v===undefined||v==='') ? [{cat:'economics', delta:-6}] : [{cat:'economics', delta:+6}],
+    insight:v => (v===null||v===undefined||v==='') ? {tone:'warn', text:'LTV не считается — значит, <b>невозможно понять, сколько можно платить за клиента</b>. Маркетинговый бюджет назначается на глаз.'} : null },
+  { id:'romi', section:'finance', type:'percent', optional:true, unit:'%',
+    when:a => a.has_ads === 'yes',
+    title:'ROMI рекламы',
+    sub:'Возврат на маркетинговые инвестиции. Не считаете — пропустите.',
+    score:v => (v===null||v===undefined||v==='') ? [{cat:'economics', delta:-4}] : [{cat:'economics', delta:+4}] },
+
+  { id:'year_goal', section:'strategy', type:'select',
+    title:'Цель на ближайший год',
+    options:[
+      {v:'x2', t:'Вырасти в 1.5–2 раза'},
+      {v:'x3', t:'Вырасти в 3+ раза'},
+      {v:'system', t:'Системность: выйти из операционки'},
+      {v:'survive', t:'Стабилизироваться / выжить'},
+    ],
+    score:v => v==='survive' ? [{cat:'strategy', delta:-6}] : [{cat:'strategy', delta:+6}] },
+  { id:'main_problem', section:'strategy', type:'select',
+    title:'Главная проблема бизнеса сейчас',
+    options:[
+      {v:'leads', t:'Мало лидов'},
+      {v:'conv', t:'Лиды есть — продажи не закрываются'},
+      {v:'people', t:'Некому продавать: нет людей'},
+      {v:'owner', t:'Всё на мне, не хватает рук и времени'},
+      {v:'money', t:'Выручка есть — прибыли нет'},
+      {v:'chaos', t:'Нет системы: хаос в процессах'}
+    ]},
+  { id:'blocker', section:'strategy', type:'textarea', optional:true,
+    title:'Что конкретно мешает решить эту проблему?',
+    sub:'Почему она до сих пор не решена.' },
+  { id:'if_nothing', section:'strategy', type:'select',
+    title:'Что будет, если ничего не менять ближайший год?',
+    options:[
+      {v:'same', t:'Останемся на месте'},
+      {v:'slowdeath', t:'Медленно начнём терять рынок'},
+      {v:'crisis', t:'Придём к кассовому разрыву / кризису'},
+      {v:'grow', t:'Всё равно вырастем'}
+    ],
+    score:v => v==='crisis' ? [{cat:'strategy', delta:-10}] : v==='slowdeath' ? [{cat:'strategy', delta:-6}] : v==='grow' ? [{cat:'strategy', delta:+4}] : [{cat:'strategy', delta:-2}],
+    insight:v => v==='crisis' ? {tone:'bad', text:'Вы сами прогнозируете <b>кризис при бездействии</b>. Каждый месяц ожидания имеет конкретную цену — она посчитана справа.'} : null },
+  { id:'one_fix', section:'strategy', type:'select',
+    title:'Если решить только одну проблему — какую?',
+    sub:'Финальный вопрос диагностики.',
+    options:[
+      {v:'sales_dept', t:'Построить работающий отдел продаж'},
+      {v:'leads', t:'Настроить стабильный поток лидов'},
+      {v:'people', t:'Найти сильных людей'},
+      {v:'system', t:'Навести систему и выйти из операционки'},
+      {v:'margin', t:'Поднять маржинальность и прибыль'}
+    ]}
+];
+const State = {
+  answers: {},
+  cursor: 0,
+  started: false,
+  finished: false,
+  visibleQuestions(){
+    return QUESTIONS.filter(q => !q.when || q.when(this.answers));
+  },
+  current(){
+    return this.visibleQuestions()[this.cursor] || null;
+  },
+  progress(){
+    const vis = this.visibleQuestions();
+    if (this.finished) return 100;
+    if (!vis.length) return 0;
+    return Math.round(this.cursor / vis.length * 100);
+  },
+  reset(){
+    this.answers = {}; this.cursor = 0; this.started = false; this.finished = false;
+  }
+};
+const Scoring = {
+  BASE: 62,
+  MIN_EVIDENCE: 2,
+  MIN_READY_WEIGHT: .5,
+  categories(){
+    const cats = {};
+    Object.keys(CAT_LABELS).forEach(k => cats[k] = { score: Scoring.BASE, touched:false, ev:0 });
+    for (const q of State.visibleQuestions()){
+      if (!(q.id in State.answers) || !q.score) continue;
+      const deltas = q.score(State.answers[q.id], State.answers) || [];
+      for (const d of deltas){
+        cats[d.cat].score += d.delta;
+        cats[d.cat].touched = true;
+        cats[d.cat].ev += 1;
+      }
+    }
+    Object.values(cats).forEach(c => {
+      c.score = Math.max(0, Math.min(100, Math.round(c.score)));
+      c.ready = c.ev >= Scoring.MIN_EVIDENCE;
+    });
+    return cats;
+  },
+
+  index(force = false){
+    const cats = this.categories();
+    let sum = 0, wsum = 0;
+    for (const [k, c] of Object.entries(cats)){
+      if (!(force ? c.touched : c.ready)) continue;
+      sum += c.score * C.WEIGHTS[k];
+      wsum += C.WEIGHTS[k];
+    }
+    if (!wsum) return null;
+    if (!force && wsum < this.MIN_READY_WEIGHT) return null;
+    return Math.round(sum / wsum);
+  },
+
+  coverage(){
+    const vis = State.visibleQuestions();
+    if (!vis.length) return 0;
+    const answered = vis.filter(q => q.id in State.answers).length;
+    return Math.round(answered / vis.length * 100);
+  },
+  zone(v){ return v >= 80 ? 'good' : v >= 60 ? 'warn' : 'bad'; },
+  verdict(v){
+    if (v === null) return ['Сканирование…','Данных пока недостаточно.'];
+    if (v >= 80) return ['Система работает','Бизнес зрелый. Точки роста — в тонкой настройке, а не в тушении пожаров.'];
+    if (v >= 60) return ['Растёте не в полную силу','База есть, но несколько систем ограничивают рост и съедают прибыль.'];
+    if (v >= 40) return ['Ручное управление','Бизнес держится на людях и энергии собственника, а не на системе.'];
+    return ['Красная зона','Коммерческий блок фактически не построен. Рост при таком фундаменте опасен.'];
+  }
+};
+const FinModel = {
+  num(id){ const v = State.answers[id]; const n = Number(v); return isFinite(n) && v !== '' && v !== null && v !== undefined ? n : null; },
+  base(){
+    const leads  = this.num('leads_month');
+    const conv   = this.num('conversion');
+    const check  = this.num('avg_check');
+    const margin = this.num('margin');
+    const repeat = this.num('repeat_pct');
+    const revenue= this.num('revenue');
+    const m = margin !== null ? Math.min(Math.max(margin,1),95)/100 : 0.30;
+    return { leads, conv, check, margin, m, repeat, revenue };
+  },
+
+  losses(){
+    const {leads, conv, check, m, repeat, revenue} = this.base();
+    const a = State.answers;
+    const gaps = [], drags = [];
+    const push = (arr, id, label, val, detail) => { if (val > 1000) arr.push({id, label, val: Math.round(val), detail}); };
+    if (leads !== null && conv !== null && check !== null && conv < C.BM.CONV_TARGET){
+      const perPoint = leads * 0.01 * check * C.MONTHS * m;
+      push(gaps, 'conv_gap', `Конверсия ${conv}% при норме ${C.BM.CONV_TARGET}%`,
+        leads * (C.BM.CONV_TARGET - conv) / 100 * check * C.MONTHS * m,
+        `Каждый пункт конверсии при ваших объёмах — ${Fmt.money(perPoint)} в год. Самая дорогая утечка воронки.`);
+    }
+    if (leads !== null && conv !== null && check !== null && repeat !== null && repeat < C.BM.REPEAT_TARGET){
+      const clientsMo = leads * conv / 100;
+      push(gaps, 'repeat_gap', `Повторные продажи ${repeat}% при норме ${C.BM.REPEAT_TARGET}%`,
+        clientsMo * (C.BM.REPEAT_TARGET - repeat) / 100 * check * C.MONTHS * m,
+        'Повторная продажа обходится в 5–7 раз дешевле новой: контакт и доверие уже оплачены.');
+    }
+    const annualGP = revenue !== null ? revenue * C.MONTHS * m
+                   : (leads !== null && conv !== null && check !== null ? leads*conv/100*check*C.MONTHS*m : null);
+    if (annualGP){
+      if (a.has_crm === 'no')
+        push(drags, 'no_crm', 'Нет CRM: потери лидов и сделок', annualGP * C.BM.NO_CRM_DRAG,
+          'Лиды живут в мессенджерах и блокнотах — по рынку так теряется 10–25% обращений.');
+      if (a.has_rop === 'no')
+        push(drags, 'no_rop', 'Нет РОПа: отдел работает вполсилы', annualGP * C.BM.NO_ROP_DRAG,
+          'Отдел без ежедневного управления работает на 50–60% мощности, а функцию РОПа бесплатно тянет собственник.');
+      if (a.has_kpi === 'no')
+        push(drags, 'no_kpi', 'Нет KPI: результат не управляется', annualGP * C.BM.NO_KPI_DRAG,
+          'Без плана «хороший месяц» — это погода. Управлять можно только тем, что измеряется.');
+      if (a.owner_dep === 'yes' || a.owner_share === 'all')
+        push(drags, 'owner', 'Продажи завязаны на собственнике', annualGP * C.BM.OWNER_DRAG,
+          'Каждая сделка требует вашего участия — рост упирается в ваш календарь, а не в рынок.');
+      if (a.has_ads === 'no')
+        push(drags, 'no_ads', 'Нет платного трафика: рост не масштабируется', annualGP * C.BM.NO_ADS_DRAG,
+          'Поток лидов не управляется бюджетом. Рост со скоростью сарафана, а не со скоростью рынка.');
+      if (Number(a.deal_cycle) >= C.BM.CYCLE_SLOW)
+        push(drags, 'cycle', 'Длинный цикл сделки замораживает деньги', annualGP * C.BM.CYCLE_DRAG,
+          'Деньги висят в воронке месяцами; без системы касаний длинные сделки «протухают».');
+      if (a.response_time === 'same_day')
+        push(drags, 'slow_resp', 'Ответ на заявку — часами', annualGP * C.BM.RESP_DAY_DRAG,
+          'Лид, которому не ответили 15 минут, уже разговаривает с конкурентом.');
+      if (a.response_time === 'next_day')
+        push(drags, 'slow_resp', 'Ответ на заявку — сутки и дольше', annualGP * C.BM.RESP_NEXT_DRAG,
+          'К моменту звонка заявка холодная. Часть маркетингового бюджета сгорает до первого разговора.');
+      if (a.followup === 'nothing')
+        push(drags, 'no_follow', 'Нет дожима: несогласный лид бросается', annualGP * C.BM.NO_FOLLOW_DRAG,
+          'Больше половины B2B-сделок закрывается после 5+ касаний — вы останавливаетесь на первом.');
+      if (a.followup === 'couple')
+        push(drags, 'weak_follow', 'Дожим — пара звонков и всё', annualGP * C.BM.WEAK_FOLLOW,
+          'Основные деньги лежат в касаниях 3–7, куда никто не доходит.');
+      if (a.old_base === 'never')
+        push(drags, 'dead_base', 'Старая база лежит мёртвым грузом', annualGP * C.BM.DEAD_BASE_DRAG,
+          'Реактивация базы — самые дешёвые деньги: контакт уже есть, доверие уже есть.');
+      if (a.turnover === 'half')
+        push(drags, 'turnover', 'Текучка: заменяется половина отдела', annualGP * C.BM.TURNOVER_DRAG,
+          'Каждая замена менеджера — 2–3 месяца простоя территории и обучение заново.');
+      if (a.plan_done === 'rare')
+        push(drags, 'plan_fail', 'План продаж не выполняется', annualGP * C.BM.PLAN_FAIL_DRAG,
+          'План без план-факт разбора — пожелание, а не инструмент управления.');
+      const cap = annualGP * C.BM.DRAG_CAP;
+      const sum = drags.reduce((s,f)=>s+f.val,0);
+      if (sum > cap){
+        const k = cap / sum;
+        drags.forEach(f => f.val = Math.round(f.val * k));
+      }
+    }
+    const out = [...gaps, ...drags];
+    out.sort((x,y)=>y.val-x.val);
+    return out;
+  },
+  totalLoss(){ return this.losses().reduce((s,f)=>s+f.val,0); },
+
+  potential(){
+    const {leads, conv, check, m, repeat} = this.base();
+    const out = [];
+    if (leads !== null && check !== null && conv !== null){
+      out.push({ label:`Конверсия +${C.BM.CONV_UPLIFT} п.п.`,
+                 val: Math.round(leads * C.BM.CONV_UPLIFT/100 * check * C.MONTHS * m) });
+      out.push({ label:'Средний чек +10%',
+                 val: Math.round(leads * conv/100 * check * C.BM.CHECK_UPLIFT * C.MONTHS * m) });
+      if (repeat !== null && repeat < C.BM.REPEAT_TARGET){
+        const clientsMo = leads*conv/100;
+        out.push({ label:`Повторные продажи до ${C.BM.REPEAT_TARGET}%`,
+                   val: Math.round(clientsMo * (C.BM.REPEAT_TARGET-repeat)/100 * check * C.MONTHS * m) });
+      }
+    }
+    return out.filter(p=>p.val>0);
+  }
+};
+const Constraint = {
+  detect(){
+    const a = State.answers;
+    const num = id => FinModel.num(id);
+    const flags = [];
+    const add = (p, name, why) => flags.push({p, name, why});
+    if (a.owner_share === 'all' || a.owner_dep === 'yes')
+      add(100, 'Собственник', 'Продажи замкнуты лично на вас. Компания не может расти быстрее ваших 24 часов в сутках.');
+    if (a.has_crm === 'no' && (a.has_kpi === 'no' || a.has_regl === 'no'))
+      add(95, 'Нет системы', 'Без CRM, регламентов и KPI результат — случайность, которую нельзя повторить и масштабировать.');
+    if (a.weak_link === 'owner')
+      add(90, 'Собственник', 'Вы сами назвали себя узким местом — данные диагностики это подтверждают.');
+    if (a.weak_link === 'chaos')
+      add(88, 'Нет управления', 'Хаос в процессах: рост будет умножать беспорядок, а не прибыль.');
+    const conv = num('conversion');
+    if (conv !== null && conv < 10)
+      add(85, 'Продажи', `Конверсия ${conv}%: воронка теряет 9 из 10 оплаченных лидов. Дыра — между заявкой и деньгами.`);
+    else if (conv !== null && conv < C.BM.CONV_TARGET)
+      add(60, 'Продажи', `Конверсия ${conv}% ниже нормы ${C.BM.CONV_TARGET}% — главные деньги теряются на этапе закрытия.`);
+    const rev = num('revenue'), profit = num('profit');
+    if (rev && profit !== null && profit / rev < 0.10)
+      add(82, 'Экономика', `Рентабельность ${(profit/rev*100).toFixed(1)}% — бизнес работает почти в ноль. Расти без запаса прочности опасно.`);
+    else {
+      const margin = num('margin');
+      if (margin !== null && margin < 15)
+        add(65, 'Экономика', `Маржа ${margin}% не оставляет пространства для ошибок в маркетинге и продажах.`);
+    }
+    if (Array.isArray(a.lead_sources) && a.lead_sources.length <= 1)
+      add(70, 'Маркетинг', 'Один источник лидов — единая точка отказа. Падает канал — падает бизнес.');
+    if (a.has_ads === 'no')
+      add(52, 'Маркетинг', 'Нет управляемого платного трафика: поток лидов не масштабируется решением — только удачей.');
+    const rep = num('repeat_pct');
+    if (rep !== null && rep < 20)
+      add(55, 'Экономика', `Повторные продажи ${rep}%: выручка каждый месяц покупается заново по полной цене.`);
+    if (Array.isArray(a.missing_roles) && !a.missing_roles.includes('none') && a.missing_roles.length >= 2)
+      add(58, 'Команда', 'Не закрыты ключевые роли — рост некому везти.');
+    if (flags.length){
+      flags.sort((x,y) => y.p - x.p);
+      return { name: flags[0].name, why: flags[0].why };
+    }
+    const cats = Scoring.categories();
+    const touched = Object.entries(cats).filter(([,c]) => c.ready);
+    if (!touched.length) return null;
+    touched.sort((x,y) => x[1].score - y[1].score);
+    const [key, c] = touched[0];
+    if (c.score >= 75) return { name:'Не критично', why:'Явного ограничения не видно — слабейшая система: ' + CAT_LABELS[key].toLowerCase() + '.' };
+    const why = {
+      marketing:'Поток лидов — самое слабое место. Продажи голодают без входящего трафика.',
+      sales:'Лиды есть, но конвертация в деньги проседает. Дыра — между заявкой и оплатой.',
+      team:'Не хватает людей, которые повезут рост. Узкое горлышко — кадры.',
+      management:'Нет управляемости: без CRM, KPI и регламентов рост держится на энтузиазме.',
+      economics:'Юнит-экономика хромает: бизнес может расти в выручке и терять в прибыли.',
+      strategy:'Нет чёткого фокуса: усилия размазаны, главная проблема не названа.'
+    }[key];
+    return { name: CAT_LABELS[key], why };
+  }
+};
+const Problems = {
+  structural(){
+    const a = State.answers, out = [];
+    const add = (sev, title, detail) => out.push({sev, title, detail});
+    if (a.call_records === 'no')
+      add(2, 'Диалоги менеджеров никто не разбирает', 'Качество звонков не контролируется — ошибки повторяются месяцами и стоят сделок каждый день.');
+    if (a.funnel_visibility === 'no')
+      add(2, 'Воронка не прозрачна по этапам', 'Известна только общая конверсия. Где именно теряются клиенты — не видно, лечится «не то место».');
+    if (a.motivation === 'salary')
+      add(2, 'Менеджеры сидят на окладе', 'Оплата за присутствие, а не за результат — продавать больше экономически незачем.');
+    if (a.motivation === 'chaos')
+      add(1, 'Мотивация у всех устроена по-разному', 'Отделом с разными правилами игры невозможно управлять как системой.');
+    if (a.hiring_time === 'long' || a.hiring_time === 'gaveup')
+      add(2, 'Ключевые вакансии висят месяцами', 'Это не дефицит кандидатов на рынке, а отсутствие системы найма: профиля, воронки, конкурсного отбора.');
+    if (Array.isArray(a.lead_sources) && a.lead_sources.length <= 1)
+      add(2, 'Один источник лидов', 'Единая точка отказа: канал проседает — проседает весь бизнес.');
+    if (a.has_regl === 'no')
+      add(1, 'Нет регламентов и скриптов', 'Каждый продаёт «как умеет» — результат отдела является лотереей, новички учатся месяцами.');
+    if (!a.usp || String(a.usp).trim().length <= 15)
+      add(1, 'УТП не сформулировано', 'Если отличие не называется за 10 секунд — для клиента его нет. Продажи держатся на скидках и связях.');
+    if (a.repeat_block === 'unknown')
+      add(1, 'Неизвестно, почему клиенты не возвращаются', 'С клиентами после сделки никто не разговаривает — обратная связь не собирается.');
+    return out;
+  },
+  top(n = 5){
+    const moneyed = FinModel.losses().map(f => ({title: f.label, money: f.val, detail: f.detail}));
+    const struct = this.structural().sort((x,y)=>y.sev-x.sev).map(p => ({title: p.title, detail: p.detail}));
+    return [...moneyed, ...struct].slice(0, n);
+  }
+};
+const Recs = {
+  build(){
+    const a = State.answers, out = [];
+    const add = (p, text) => out.push({p, text});
+    if (a.owner_share === 'all' || a.owner_dep === 'yes')
+      add(1,'Снять продажи с собственника: нанять первых менеджеров и передать им регулярные сделки, оставив себе только стратегические.');
+    if (a.has_crm === 'no')
+      add(1,'Внедрить CRM за 2–4 недели: единая воронка, ни один лид не теряется, история каждой сделки прозрачна.');
+    if (a.has_rop === 'no' && Number(a.managers) > 0)
+      add(1,'Нанять или вырастить РОПа: ежедневное управление менеджерами, разборы сделок, контроль воронки.');
+    if (a.has_kpi === 'no')
+      add(2,'Ввести план продаж и KPI: цифровые цели по каждому менеджеру и мотивация, привязанная к результату.');
+    if (a.has_regl === 'no')
+      add(2,'Описать регламенты и скрипты ключевых этапов сделки — чтобы результат не зависел от настроения и таланта.');
+    if (FinModel.num('conversion') !== null && FinModel.num('conversion') < C.BM.CONV_TARGET)
+      add(1,'Поднять конверсию: аудит воронки, прослушка диалогов, работа с возражениями и скоростью ответа на заявку.');
+    if (FinModel.num('repeat_pct') !== null && FinModel.num('repeat_pct') < C.BM.REPEAT_TARGET)
+      add(2,'Запустить работу с базой: повторные касания, допродажи и реактивация старых клиентов — самые дешёвые деньги в бизнесе.');
+    if (a.has_ads === 'no')
+      add(2,'Запустить управляемый платный канал лидов с контролем CAC — чтобы рост перестал зависеть от сарафана.');
+    if (a.response_time === 'same_day' || a.response_time === 'next_day')
+      add(1,'Ввести норматив скорости: первый контакт с заявкой — до 15 минут, с контролем в CRM. Самый быстрый рычаг конверсии.');
+    if (a.followup === 'couple' || a.followup === 'nothing' || a.followup === 'manager')
+      add(1,'Построить каскад дожима: 5–7 касаний по регламенту для каждого «подумаю» — письмо, звонок, кейс, дедлайн оффера.');
+    if (a.turnover === 'half' || a.hiring_time === 'long' || a.hiring_time === 'gaveup')
+      add(1,'Выстроить систему найма: профиль кандидата, воронка, конкурсный отбор с проверкой в бою — вместо поиска «по откликам».');
+    if (a.call_records === 'no')
+      add(2,'Включить запись звонков и еженедельный разбор диалогов — ошибки менеджеров чинятся за недели, а не за кварталы.');
+    if (a.motivation === 'salary' || a.motivation === 'chaos')
+      add(2,'Пересобрать мотивацию: оклад + прогрессивный процент с понятными порогами, одинаковые правила для всех.');
+    if (a.funnel_visibility === 'no')
+      add(2,'Оцифровать воронку по этапам: конверсия каждого шага в CRM, чтобы чинить конкретное место, а не «продажи вообще».');
+    if (a.plan_done === 'rare')
+      add(2,'Ввести еженедельный план-факт разбор: отставание видно на неделе 1, а не в конце месяца.');
+    if (a.old_base === 'never')
+      add(2,'Запустить реактивацию старой базы: сегментация, оффер-повод, прозвон. Обычно это самые быстрые деньги проекта.');
+    if ((a.lead_sources||[]).length <= 1)
+      add(2,'Диверсифицировать источники лидов: минимум 2–3 работающих канала вместо одной точки отказа.');
+    if (FinModel.num('ltv') === null)
+      add(3,'Начать считать LTV и CAC: без них невозможно управлять маркетинговым бюджетом.');
+    if (!out.length)
+      add(1,'База выстроена. Следующий уровень — тонкая настройка воронки, усиление команды и работа над средним чеком.');
+    out.sort((x,y)=>x.p-y.p);
+    return out.slice(0,7).map(r=>r.text);
+  }
+};
+const Fmt = {
+  money(v){ return new Intl.NumberFormat('ru-RU').format(Math.round(v)) + ' ₽'; },
+  moneyYear(v){ return this.money(v) + ' / год'; }
+};
+const Dashboard = {
+  els:{},
+  animState:{ index:0, loss:0 },
+  init(){
+    const $ = id => document.getElementById(id);
+    this.els = {
+      gaugeVal:$('gaugeVal'), indexNum:$('indexNum'), indexVerdict:$('indexVerdict'),
+      indexDesc:$('indexDesc'), catRows:$('catRows'), constraintName:$('constraintName'),
+      constraintWhy:$('constraintWhy'), lossNum:$('lossNum'), lossFactors:$('lossFactors'),
+      growthRows:$('growthRows'), lossSub:$('lossSub'),
+      findRows:$('findRows'), findCount:$('findCount')
+    };
+    const CIRC = 2*Math.PI*70;
+    this.els.gaugeVal.style.strokeDasharray = CIRC;
+    this.els.gaugeVal.style.strokeDashoffset = CIRC;
+    this.renderCats(Scoring.categories());
+  },
+  colorVar(zone){ return zone==='good' ? 'var(--good)' : zone==='warn' ? 'var(--warn)' : 'var(--bad)'; },
+  tween(from, to, ms, cb){
+    const t0 = performance.now();
+    const step = t => {
+      const k = Math.min(1,(t-t0)/ms), e = 1-Math.pow(1-k,3);
+      cb(from + (to-from)*e);
+      if (k<1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  },
+  update(){
+    const idx = Scoring.index();
+    const CIRC = 2*Math.PI*70;
+    if (idx !== null){
+      const zone = Scoring.zone(idx);
+      this.els.gaugeVal.style.stroke = this.colorVar(zone);
+      this.els.gaugeVal.style.strokeDashoffset = CIRC * (1 - idx/100);
+      this.tween(this.animState.index, idx, 700, v => this.els.indexNum.textContent = Math.round(v));
+      this.animState.index = idx;
+      this.els.indexNum.className = 'sc-'+zone;
+      const [v,d] = Scoring.verdict(idx);
+      this.els.indexVerdict.textContent = v;
+      this.els.indexDesc.textContent = d;
+    } else {
+      this.els.gaugeVal.style.strokeDashoffset = CIRC;
+      this.els.indexNum.textContent = '—';
+      this.els.indexNum.className = '';
+      this.animState.index = 0;
+      this.els.indexVerdict.textContent = 'Сканирование…';
+      this.els.indexDesc.textContent = `Собрано ${Scoring.coverage()}% данных. Индекс появится, когда просканировано достаточно систем — оценка по паре ответов была бы гаданием.`;
+    }
+    this.renderCats(Scoring.categories());
+    const c = Constraint.detect();
+    if (c){
+      this.els.constraintName.textContent = c.name;
+      this.els.constraintWhy.textContent = (State.finished ? '' : 'Предварительно: ') + c.why;
+    } else if (Object.keys(State.answers).length >= 1){
+      this.els.constraintName.textContent = 'Сканирую…';
+      this.els.constraintWhy.textContent = 'Красных флагов пока нет. Продолжаю искать узкое место.';
+    }
+    const total = FinModel.totalLoss();
+    if (total > 0){
+      this.tween(this.animState.loss, total, 900, v => this.els.lossNum.textContent = Fmt.moneyYear(v));
+      this.animState.loss = total;
+      this.els.lossSub.innerHTML = `≈ <b class="sc-bad">${Fmt.money(total/12)}</b> каждый месяц, пока система не меняется. Недополученная валовая прибыль против рыночных норм.`;
+    }
+    const lf = this.els.lossFactors;
+    lf.innerHTML = FinModel.losses().slice(0,5)
+      .map(f=>`<div class="loss-factor"><span>${f.label}</span><b>−${Fmt.money(f.val)}</b></div>`).join('');
+    const feed = Feedback.collect();
+    if (feed.length){
+      const shown = this.findOpen ? feed.slice().reverse() : feed.slice(-4).reverse();
+      const row = f => {
+        let t = f.text; if (!this.findOpen && t.length > 120) t = t.slice(0, 117) + '…';
+        return `<div class="find-row"><span class="find-dot ${f.tone}"></span><span>${t}</span></div>`;
+      };
+      this.els.findRows.innerHTML = shown.map(row).join('')
+        + (feed.length > 4 ? `<button class="find-toggle" id="findToggle">${this.findOpen ? 'Свернуть' : `Показать все ${feed.length}`}</button>` : '');
+      this.els.findRows.style.maxHeight = this.findOpen ? '340px' : '';
+      this.els.findRows.style.overflowY = this.findOpen ? 'auto' : '';
+      this.els.findCount.textContent = feed.length;
+      const tgl = document.getElementById('findToggle');
+      if (tgl) tgl.onclick = () => { this.findOpen = !this.findOpen; this.update(); };
+    } else {
+      this.els.findRows.innerHTML = '<div class="empty-note">// пока чисто</div>';
+      this.els.findCount.textContent = '';
+    }
+    const pot = FinModel.potential();
+    this.els.growthRows.innerHTML = pot.length
+      ? pot.map(p=>`<div class="growth-row"><span>${p.label}</span><b>+${Fmt.moneyYear(p.val)}</b></div>`).join('')
+      : '<div class="empty-note">// появится после данных о лидах, чеке и конверсии</div>';
+  },
+  renderCats(cats){
+    this.els.catRows.innerHTML = Object.entries(CAT_LABELS).map(([k,label])=>{
+      const c = cats[k];
+      const zone = Scoring.zone(c.score);
+      const w = c.ready ? c.score : 0;
+      const num = c.ready ? c.score : '—';
+      return `<div class="cat-row"><span class="name">${label}</span><span class="cat-bar"><i style="width:${w}%;background:${this.colorVar(zone)}"></i></span><span class="num ${c.ready?'sc-'+zone:''}">${num}</span></div>`;
+    }).join('');
+  }
+};
+const Feedback = {
+  get(q, v, a){
+    if (q.insight){ const i = q.insight(v, a); if (i) return i; }
+    const fn = this.custom[q.id];
+    if (fn){ const r = fn(v, a); if (r) return r; }
+    return this.generic(q, v);
+  },
+
+  collect(){
+    const feed = [];
+    for (const q of State.visibleQuestions()){
+      if (!(q.id in State.answers)) continue;
+      const f = this.get(q, State.answers[q.id], State.answers);
+      if (f && (f.tone === 'bad' || f.tone === 'warn'))
+        feed.push({tone: f.tone, text: f.text.replace(/<[^>]+>/g,'')});
+    }
+    return feed;
+  },
+  custom: {
+    company: v => v ? {tone:'good', text:`<b>${FlowUI.esc(v)}</b> — сканер запущен. Каждый следующий ответ уточняет модель справа.`} : null,
+    site: v => v && v.trim() ? {tone:'good', text:'Сайт есть — базовый канал доверия закрыт. Плюс к маркетингу.'} : null,
+    niche: v => v ? {tone:'good', text:'Ниша зафиксирована — бенчмарки конверсии и повторных продаж будут смотреться через неё.'} : null,
+    product: () => ({tone:'good', text:'Понял продукт. Дальше — кому и почём вы его продаёте.'}),
+    audience: v => ({
+      b2b:   {tone:'good', text:'B2B: длинный цикл и высокая цена ошибки менеджера. Модель учитывает это.'},
+      b2c:   {tone:'good', text:'B2C: скорость обработки лида и повторные продажи будут решать больше всего.'},
+      mixed: {tone:'warn', text:'Два сегмента — две разные воронки. Часто это размывает фокус отдела продаж.'}
+    })[v],
+    avg_check: v => (v!=='' && v!=null) ? {tone:'good', text:`Средний чек <b>${Fmt.money(Number(v))}</b> — ядро финансовой модели. Потери и потенциал считаются от него.`} : null,
+    margin: v => v >= 40 ? {tone:'good', text:`Маржа <b>${v}%</b> — сильная. Есть топливо для инвестиций в трафик и людей.`}
+               : v >= 15 ? {tone:'warn', text:`Маржа <b>${v}%</b> — рабочая, но каждая утечка в воронке теперь бьёт напрямую по прибыли.`} : null,
+    usp: v => v && v.trim().length > 15 ? {tone:'good', text:'УТП сформулировано. Проверим, конвертируется ли оно в цифры воронки.'} : null,
+    why_buy: v => v && v.trim() ? {tone:'good', text:'Зафиксировал. Если это знание живёт только в вашей голове — отдел продаж им не пользуется.'} : null,
+    lead_sources: v => (v||[]).length >= 3 ? {tone:'good', text:`${v.length} канала лидов — устойчивая структура без единой точки отказа.`}
+                     : (v||[]).length === 2 ? {tone:'warn', text:'Два канала — уже не лотерея, но подушки безопасности ещё нет.'} : null,
+    leads_month: v => {
+      const check = FinModel.num('avg_check');
+      if (v !== '' && check) return {tone:'good', text:`${v} лидов × ${Fmt.money(check)} = до <b>${Fmt.money(v*check)}</b> потенциальной выручки в месяц на входе воронки. Смотрим, сколько доходит до кассы.`};
+      return v !== '' ? {tone:'good', text:`${v} лидов в месяц — учтено в модели воронки.`} : null;
+    },
+    has_ads: v => v === 'yes' ? {tone:'good', text:'Платный трафик есть — ростом можно управлять бюджетом, а не надеждой.'} : null,
+    cac: v => (v!=='' && v!=null) ? {tone:'good', text:`CAC ${Fmt.money(Number(v))} под контролем — редкость для малого бизнеса. Плюс к экономике.`} : null,
+    cost_per_lead: v => (v!=='' && v!=null) ? {tone:'good', text:`Заявка стоит ${Fmt.money(Number(v))}. Вместе с конверсией это даст реальную цену клиента.`} : null,
+    channels_work: v => v && v.trim() ? {tone:'good', text:'Понимание работающих каналов есть — значит, бюджет можно концентрировать, а не размазывать.'} : null,
+    channels_tried: v => v && v.trim() ? {tone:'good', text:'История экспериментов учтена — не будем рекомендовать то, что уже сожгло бюджет.'} : null,
+    managers: v => Number(v) > 0 ? {tone:'good', text:`${v} менеджер(а/ов) — есть кому продавать. Вопрос в том, управляем ли этот ресурс. Проверим.`} : null,
+    owner_share: v => v === 'part' ? {tone:'good', text:'Меньше половины на вас — делегирование началось. Осталось дожать до системы.'}
+                    : v === 'most' ? {tone:'warn', text:'Больше половины продаж на вас — компания пока продаёт вашим временем.'} : null,
+    owner_time: v => v === 'lt10' ? {tone:'good', text:'До 10 часов — продажи почти не съедают ваш стратегический ресурс.'}
+                   : v === '10_25' ? {tone:'warn', text:'10–25 часов в неделю на продажи — от четверти до половины вашей недели уходит на работу менеджера.'} : null,
+    dialogs: v => {
+      const leads = FinModel.num('leads_month');
+      if (v !== '' && leads){
+        return v < leads
+          ? {tone:'bad', text:`Диалогов меньше, чем лидов (${v} на ${leads}). Часть заявок вообще не обрабатывается — это прямые потери.`}
+          : {tone:'good', text:`${v} диалогов на ${leads} лидов — заявки в работе. Дальше смотрим конверсию.`};
+      }
+      return null;
+    },
+    response_time: v => v === '15m' ? {tone:'good', text:'До 15 минут — уровень лучших отделов. Скорость первого контакта уже работает на вас.'}
+                       : v === 'hour' ? {tone:'warn', text:'Час до контакта — терпимо, но первые 15 минут дают в разы больше дозвона и тёплый разговор.'} : null,
+    followup: v => v === 'system' ? {tone:'good', text:'Каскад касаний по регламенту — так закрываются сделки, до которых конкуренты не доходят.'} : null,
+    call_records: v => v === 'yes' ? {tone:'good', text:'Звонки записываются и разбираются — качество диалогов под контролем, ошибки чинятся быстро.'} : null,
+    plan_done: v => v === 'stable' ? {tone:'good', text:'План выполняется стабильно — редкий признак реально управляемого отдела.'}
+                   : v === 'half' ? {tone:'warn', text:'План выполняется через раз — цель есть, но управленческая реакция на отставание запаздывает.'} : null,
+    motivation: v => v === 'balanced' ? {tone:'good', text:'Оклад + прогрессивный процент — здоровая механика: людям выгодно продавать больше.'}
+                    : v === 'percent' ? {tone:'warn', text:'Чистый процент — агрессивно: работает на потоке лидов, но люди бегут при первой просадке.'} : null,
+    funnel_visibility: v => v === 'yes' ? {tone:'good', text:'Воронка оцифрована по этапам — можно чинить конкретное место, а не «продажи вообще».'} : null,
+    old_base: v => v === 'regular' ? {tone:'good', text:'База реактивируется системно — вы поднимаете деньги, которые большинство просто теряет.'}
+                  : v === 'sometimes' ? {tone:'warn', text:'База отрабатывается вручную и иногда — деньги из неё поднимаются случайно, а не системно.'} : null,
+    turnover: v => v === 'none' ? {tone:'good', text:'Команда стабильна — найм и удержание работают. Это серьёзный актив.'}
+                  : v === 'few' ? {tone:'warn', text:'1–2 замены в год — нормальная ротация, но стоит понимать причины каждого ухода.'} : null,
+    hiring_time: v => v === 'start' ? {tone:'warn', text:'Поиск только начат — самое время делать его системно: профиль, воронка, конкурс, а не «по откликам».'}
+                     : v === 'months' ? {tone:'warn', text:'1–3 месяца поиска — уже дорого. Посчитайте простой роли в деньгах: пустое кресло продавца ест план каждый день.'} : null,
+    conversion: v => v >= 25 ? {tone:'good', text:`Конверсия <b>${v}%</b> — выше рынка. Узкое место, вероятно, не здесь.`}
+                   : v >= 15 ? {tone:'warn', text:`Конверсия <b>${v}%</b> — средняя. До нормы 20–25% есть зазор, и он стоит денег — сумма справа.`}
+                   : v >= 10 ? {tone:'bad', text:`Конверсия <b>${v}%</b> заметно ниже нормы. Здесь утекает больше всего — модель уже это посчитала.`} : null,
+    deal_cycle: v => Number(v) <= 21 ? {tone:'good', text:'Короткий цикл — деньги не замораживаются в воронке.'}
+                   : Number(v) === 60 ? {tone:'warn', text:'Цикл 1–3 месяца: каждая сделка требует системы касаний, иначе «протухает».'} : null,
+    repeat_pct: v => v >= 30 ? {tone:'good', text:`Повторные <b>${v}%</b> — база работает на вас. Это самые дешёвые деньги в бизнесе.`}
+                   : v >= 20 ? {tone:'warn', text:`Повторные <b>${v}%</b> — приемлемо, но до нормы 30% лежат лёгкие деньги.`} : null,
+    repeat_block: v => v === 'oneoff' ? {tone:'warn', text:'Разовый продукт — тогда решают чек, конверсия и рекомендации. Модель перенастроена.'}
+                     : v === 'nobody' ? {tone:'bad', text:'База есть, а работать с ней некому. Это готовая точка роста с самым быстрым эффектом.'}
+                     : v === 'noreason' ? {tone:'warn', text:'Нет продуктовой линейки для возврата — LTV упирается в потолок первой сделки.'} : null,
+    has_crm: v => v === 'yes' ? {tone:'good', text:'CRM есть — фундамент управляемости на месте.'} : null,
+    has_rop: v => v === 'yes' ? {tone:'good', text:'РОП есть — отделом управляют ежедневно, а не по остаточному принципу.'} : null,
+    has_regl: v => v === 'yes' ? {tone:'good', text:'Регламенты есть — результат не зависит от таланта конкретного менеджера.'} : null,
+    owner_dep: v => v === 'no' ? {tone:'good', text:'Продажи не завязаны на вас — редкий и дорогой актив. Компания продаёт сама.'} : null,
+    has_kpi: v => v === 'yes' ? {tone:'good', text:'KPI и план есть — «хороший месяц» у вас управляемый, а не погодный.'} : null,
+    headcount: v => v !== '' ? {tone:'good', text:`Штат ${v} чел. — смотрим, хватает ли этой команды под цели роста.`} : null,
+    missing_roles: v => (v||[]).includes('none') ? {tone:'good', text:'Все роли закрыты — усиление пойдёт через качество работы, а не через найм.'}
+                      : (v||[]).length ? {tone:'warn', text:`Не хватает ${v.length === 1 ? 'одной ключевой роли' : v.length + ' ключевых ролей'} — это ограничитель скорости роста.`} : null,
+    who_slows: v => v && v.trim() ? {tone:'warn', text:'Названо узкое место. Сверю с цифрами — часто настоящий тормоз не там, где кажется.'} : null,
+    weak_link: v => ({
+      sales:     {tone:'warn', text:'Слабое звено — продажи. Проверим гипотезу цифрами воронки.'},
+      marketing: {tone:'warn', text:'Слабое звено — поток лидов. Сверим с данными по каналам.'},
+      team:      {tone:'warn', text:'Слабое звено — кадры. Лечится системой найма, а не удачей.'},
+      product:   {tone:'warn', text:'Слабое звено — продукт. Продажи будут компенсировать, но не вылечат.'}
+    })[v],
+    revenue: v => v !== '' ? {tone:'good', text:`Выручка ${Fmt.money(Number(v))}/мес = <b>${Fmt.money(Number(v)*12)}</b> в год. От неё считается цена ваших проблем.`} : null,
+    profit: v => {
+      const rev = FinModel.num('revenue');
+      if (v !== '' && rev){
+        const pm = v / rev * 100;
+        if (pm >= 20) return {tone:'good', text:`Рентабельность <b>${pm.toFixed(0)}%</b> — здоровая. Есть запас прочности для инвестиций в рост.`};
+        if (pm >= 10) return {tone:'warn', text:`Рентабельность <b>${pm.toFixed(0)}%</b> — средняя. Рост расходов без роста системы съест её быстро.`};
+      }
+      return null;
+    },
+    ltv: v => {
+      const cac = FinModel.num('cac');
+      if (v !== '' && v != null && cac){
+        const r = Number(v) / cac;
+        return {tone: r >= 3 ? 'good' : 'warn',
+          text:`LTV/CAC = <b>${r.toFixed(1)}</b>. ${r >= 3 ? 'Экономика сходится — трафик можно агрессивно масштабировать.' : 'Ниже нормы 3:1 — масштабирование трафика сейчас будет сжигать прибыль.'}`};
+      }
+      return (v !== '' && v != null) ? {tone:'good', text:`LTV ${Fmt.money(Number(v))} — считается. Это редкость и серьёзный плюс к экономике.`} : null;
+    },
+    romi: v => (v !== '' && v != null) ? {tone: Number(v) >= 100 ? 'good' : 'warn',
+      text:`ROMI ${v}% — ${Number(v) >= 100 ? 'реклама окупается, канал можно масштабировать.' : 'реклама не окупается. Масштабировать нельзя — сначала чинить воронку.'}`} : null,
+    year_goal: v => ({
+      x2:      {tone:'good', text:'Рост ×1.5–2 — реалистичная амбиция. Диагностика покажет, что именно её ограничивает.'},
+      x3:      {tone:'warn', text:'Рост ×3+ — при текущей системе это проверка бизнеса на прочность. Смотрим, выдержит ли фундамент.'},
+      system:  {tone:'good', text:'Выход из операционки — правильная цель. Она требует системы, а не героизма.'},
+      survive: {tone:'warn', text:'Режим выживания — сначала стабилизация экономики, рост потом. Модель расставит приоритеты.'}
+    })[v],
+    main_problem: v => ({
+      leads:  {tone:'warn', text:'«Мало лидов» — сверим: часто лиды есть, но теряются в обработке.'},
+      conv:   {tone:'warn', text:'Лиды есть — продажи не закрываются. Классический симптом несистемного отдела.'},
+      people: {tone:'warn', text:'Некому продавать. Это решается системой найма — и решается быстро.'},
+      owner:  {tone:'bad',  text:'«Всё на мне» — самая дорогая проблема из возможных: она блокирует все остальные решения.'},
+      money:  {tone:'bad',  text:'Выручка без прибыли — проблема юнит-экономики, а не оборотов. Расти в таком состоянии опасно.'},
+      chaos:  {tone:'bad',  text:'Хаос в процессах — рост будет умножать хаос, а не деньги.'}
+    })[v],
+    blocker: v => v && v.trim() ? {tone:'warn', text:'Зафиксировал. Обычно за «не доходят руки» стоит отсутствие человека, который отвечает за это головой.'} : null,
+    if_nothing: v => ({
+      same: {tone:'warn', text:'«Останемся на месте» на живом рынке = медленное отставание. Цена бездействия — справа.'},
+      grow: {tone:'good', text:'Рост даже без изменений — сильная позиция. Вопрос лишь в том, сколько роста вы недобираете.'}
+    })[v],
+    one_fix: v => ({
+      sales_dept: {tone:'good', text:'Отдел продаж — рычаг №1: он монетизирует всё остальное. Именно это строит Closery.'},
+      leads:      {tone:'good', text:'Поток лидов — важный рычаг. Но проверьте по дашборду: готова ли воронка их переваривать.'},
+      people:     {tone:'good', text:'Сильные люди — верно. Их даёт не удача, а система найма и управления.'},
+      system:     {tone:'good', text:'Система вместо операционки — фундаментальный выбор. С него начинается масштабирование.'},
+      margin:     {tone:'good', text:'Маржа и прибыль — зрелый фокус. Решается через чек, повторные продажи и дисциплину воронки.'}
+    })[v]
+  },
+  generic(q, v){
+    if (q.type === 'yesno') return v === 'yes'
+      ? {tone:'good', text:'Учтено — плюс к оценке.'}
+      : {tone:'warn', text:'Зафиксировано как зона риска — уже в модели.'};
+    if (q.type === 'chips') return (v||[]).length
+      ? {tone:'good', text:`Выбрано: ${v.length}. Учтено в модели.`}
+      : {tone:'warn', text:'Ничего не выбрано — модель учтёт отсутствие данных.'};
+    if (v === '' || v == null) return {tone:'warn', text:'Пропущено. Отсутствие цифры — тоже диагноз: этой метрикой никто не управляет.'};
+    return {tone:'good', text:'Принято — модель обновлена.'};
+  }
+};
+const FlowUI = {
+  els:{}, chipsBuffer:[],
+  init(){
+    const $ = id => document.getElementById(id);
+    this.els = {
+      intro:$('introScreen'), qScreen:$('questionScreen'), cardHost:$('cardHost'),
+      sectionTag:$('sectionTag'), insight:$('insightBox'),
+      progressFill:$('progressFill'), progressLabel:$('progressLabel'),
+      finalScreen:$('finalScreen')
+    };
+    document.addEventListener('keydown', e => {
+      if (!State.started || State.finished) return;
+      const ae = document.activeElement;
+      if (ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA')) return;
+      const q = State.current();
+      if (!q) return;
+      if (q.type === 'select' || q.type === 'yesno'){
+        const opts = [...this.els.cardHost.querySelectorAll('.opt')];
+        let i = -1;
+        if (/^[1-9]$/.test(e.key)) i = Number(e.key) - 1;
+        if (q.type === 'yesno'){
+          if (/^[yYдД]$/.test(e.key)) i = 0;
+          if (/^[nNнН]$/.test(e.key)) i = 1;
+        }
+        if (i >= 0 && opts[i]){ e.preventDefault(); opts[i].click(); }
+      } else if (q.type === 'chips'){
+        if (/^[1-9]$/.test(e.key)){
+          const chips = [...this.els.cardHost.querySelectorAll('.chip')];
+          const i = Number(e.key) - 1;
+          if (chips[i]){ e.preventDefault(); chips[i].click(); }
+        }
+        if (e.key === 'Enter'){
+          e.preventDefault();
+          const next = document.getElementById('btnNext');
+          if (next) next.click();
+        }
+      }
+    });
+  },
+  start(){
+    State.started = true;
+    this.els.insight.style.display = 'none';
+    this.els.intro.style.display = 'none';
+    this.els.finalScreen.classList.remove('visible');
+    this.els.qScreen.style.display = 'block';
+    this.render();
+  },
+  progress(){
+    const p = State.progress();
+    this.els.progressFill.style.width = p+'%';
+    this.els.progressLabel.textContent = p+'%';
+  },
+  render(){
+    this.progress();
+    const q = State.current();
+    if (!q){ Final.show(); return; }
+    this.els.sectionTag.textContent = SECTION_LABELS[q.section];
+    this.chipsBuffer = Array.isArray(State.answers[q.id]) ? [...State.answers[q.id]] : [];
+    const vis = State.visibleQuestions();
+    const saved = State.answers[q.id];
+    const savedStr = (saved===undefined||saved===null) ? '' : saved;
+    let inputHTML = '';
+    switch(q.type){
+      case 'text':
+        inputHTML = `<div class="q-input"><input type="text" id="qInput" placeholder="${q.placeholder||'Введите ответ…'}" value="${this.esc(savedStr)}" autocomplete="off"></div>`;
+        break;
+      case 'textarea':
+        inputHTML = `<div class="q-input"><textarea id="qInput" placeholder="${q.placeholder||'Ваш ответ…'}">${this.esc(savedStr)}</textarea></div>`;
+        break;
+      case 'number': case 'percent':
+        inputHTML = `<div class="q-input unit-wrap"><input type="number" id="qInput" inputmode="numeric" min="0" ${q.type==='percent'?'max="100"':''} placeholder="0" value="${this.esc(savedStr)}"><span class="unit">${q.unit||''}</span></div>`;
+        break;
+      case 'money':
+        inputHTML = `<div class="q-input unit-wrap"><input type="text" id="qInput" inputmode="numeric" placeholder="0" autocomplete="off"
+                 value="${savedStr!==''?new Intl.NumberFormat('ru-RU').format(Number(savedStr)):''}"><span class="unit">${q.unit||''}</span></div>`;
+        break;
+      case 'select':
+        inputHTML = `<div class="opts">${q.options.map((o,i)=>`
+          <button class="opt ${saved===o.v?'selected':''}" data-v="${o.v}"><span class="key">${i+1}</span><span>${o.t}${o.d?`<small>${o.d}</small>`:''}</span></button>`).join('')}</div>`;
+        break;
+      case 'yesno':
+        inputHTML = `<div class="opts cols-2"><button class="opt ${saved==='yes'?'selected':''}" data-v="yes"><span class="key">Y</span><span>Да</span></button><button class="opt ${saved==='no'?'selected':''}" data-v="no"><span class="key">N</span><span>Нет</span></button></div>`;
+        break;
+      case 'chips':
+        inputHTML = `<div class="chips">${q.options.map((o,i)=>`
+          <button class="chip ${this.chipsBuffer.includes(o.v)?'selected':''}" data-v="${o.v}"><span class="key">${i+1}</span>${o.t}</button>`).join('')}</div>`;
+        break;
+    }
+    const isInstant = q.type==='select' || q.type==='yesno';
+    this.els.cardHost.innerHTML = `
+      <div class="qcard" id="qcard"><div class="q-count">Вопрос ${State.cursor+1} из ${vis.length}</div><div class="q-title">${q.title}</div>
+        ${q.sub?`<div class="q-sub">${q.sub}</div>`:''}
+        ${inputHTML}
+        <div class="q-nav">
+          ${State.cursor>0?'<button class="btn-back" id="btnBack">← Назад</button>':''}
+          <span class="spacer"></span>
+          ${q.optional?'<button class="btn-skip" id="btnSkip">Пропустить</button>':''}
+          ${!isInstant?`<span class="enter-hint">${q.type==='textarea'?'<kbd>Enter</kbd> — далее · <kbd>Shift+Enter</kbd> — абзац':'<kbd>Enter</kbd> — далее'}</span><button class="btn-primary" id="btnNext">Далее →</button>`:''}
+          ${q.type==='chips'?'':''}
+        </div></div>`;
+    if (q.type==='chips' && !document.getElementById('btnNext')){
+      const nav = this.els.cardHost.querySelector('.q-nav');
+      nav.insertAdjacentHTML('beforeend','<button class="btn-primary" id="btnNext">Далее →</button>');
+    }
+    this.bind(q);
+    const inp = document.getElementById('qInput');
+    if (inp) setTimeout(()=>inp.focus(),80);
+  },
+  bind(q){
+    const host = this.els.cardHost;
+    const back = document.getElementById('btnBack');
+    if (back) back.onclick = ()=>{ this.els.insight.style.display='none'; State.cursor = Math.max(0, State.cursor-1); this.render(); };
+    const skip = document.getElementById('btnSkip');
+    if (skip) skip.onclick = ()=>this.commit(q, q.type==='chips'?[]:'');
+    const next = document.getElementById('btnNext');
+    if (next) next.onclick = ()=>this.tryCommitInput(q);
+    if (q.type==='select' || q.type==='yesno'){
+      host.querySelectorAll('.opt').forEach(btn=>{
+        btn.onclick = ()=>{
+          host.querySelectorAll('.opt').forEach(b=>b.classList.remove('selected'));
+          btn.classList.add('selected');
+          this.commit(q, btn.dataset.v);
+        };
+      });
+    }
+    if (q.type==='chips'){
+      host.querySelectorAll('.chip').forEach(chip=>{
+        chip.onclick = ()=>{
+          const v = chip.dataset.v;
+          if (v==='none'){ this.chipsBuffer = ['none']; }
+          else {
+            this.chipsBuffer = this.chipsBuffer.filter(x=>x!=='none');
+            this.chipsBuffer.includes(v)
+              ? this.chipsBuffer = this.chipsBuffer.filter(x=>x!==v)
+              : this.chipsBuffer.push(v);
+          }
+          host.querySelectorAll('.chip').forEach(c=>c.classList.toggle('selected', this.chipsBuffer.includes(c.dataset.v)));
+        };
+      });
+    }
+    const inp = document.getElementById('qInput');
+    if (inp){
+      inp.addEventListener('keydown', e=>{
+        if (e.key !== 'Enter') return;
+        if (q.type==='textarea' && e.shiftKey) return;
+        e.preventDefault();
+        this.tryCommitInput(q);
+      });
+      if (q.type==='money'){
+        inp.addEventListener('input', ()=>{
+          const digits = inp.value.replace(/\D/g,'').slice(0,15);
+          inp.value = digits ? new Intl.NumberFormat('ru-RU').format(Number(digits)) : '';
+        });
+      }
+    }
+  },
+  tryCommitInput(q){
+    if (q.type==='chips') return this.commit(q, [...this.chipsBuffer]);
+    const inp = document.getElementById('qInput');
+    if (!inp) return;
+    let v = inp.value.trim();
+    if (q.type==='money') v = v.replace(/\D/g,'');
+    if (q.required && v===''){ inp.style.borderColor='var(--bad)'; inp.focus(); return; }
+    if (['number','money','percent'].includes(q.type)){
+      if (v!==''){ v = Number(v); if (!isFinite(v)||v<0){ inp.style.borderColor='var(--bad)'; return; }
+        if (q.type==='percent') v = Math.min(v,100); }
+      else v = '';
+    }
+    this.commit(q, v);
+  },
+  commit(q, value){
+    State.answers[q.id] = value;
+    Storage.save();
+    Dashboard.update();
+    const ins = Feedback.get(q, value, State.answers);
+    const advance = ()=>{
+      const card = document.getElementById('qcard');
+      if (card) card.classList.add('leaving');
+      setTimeout(()=>{
+        const vis = State.visibleQuestions();
+        const pos = vis.findIndex(x=>x.id===q.id);
+        State.cursor = pos+1;
+        this.render();
+      }, 240);
+    };
+    if (ins){
+      this.els.insight.className = 'insight '+(ins.tone||'warn');
+      this.els.insight.innerHTML = ins.text;
+      this.els.insight.style.display = 'block';
+      setTimeout(advance, (ins.tone==='bad' ? 1700 : ins.tone==='warn' ? 1300 : 750));
+    } else advance();
+  },
+  esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+};
+const Final = {
+  show(){
+    State.finished = true;
+    Storage.save();
+    FlowUI.els.qScreen.style.display = 'none';
+    FlowUI.progress();
+    const idx = Scoring.index(true) ?? 0;
+    const zone = Scoring.zone(idx);
+    const [verdict, vdesc] = Scoring.verdict(idx);
+    const c = Constraint.detect();
+    const loss = FinModel.totalLoss();
+    const pot = FinModel.potential();
+    const potTotal = pot.reduce((s,p)=>s+p.val,0);
+    const probs = Problems.top(5);
+    const recs = Recs.build();
+    const cats = Scoring.categories();
+    const company = State.answers.company || 'Ваша компания';
+    const a = State.answers;
+    const goalTxt = {x2:'вырасти в 1.5–2 раза', x3:'вырасти в 3+ раза', system:'выйти из операционки и получить системный бизнес', survive:'стабилизироваться'}[a.year_goal];
+    const probTxt = {leads:'мало лидов', conv:'лиды есть, но продажи не закрываются', people:'некому продавать', owner:'всё замкнуто на вас лично', money:'выручка есть — прибыли нет', chaos:'хаос в процессах'}[a.main_problem];
+    const nothingTxt = {same:'останетесь на месте', slowdeath:'начнёте медленно терять рынок', crisis:'придёте к кассовому разрыву', grow:'вырастете медленнее, чем могли бы'}[a.if_nothing];
+    let mirror = '';
+    if (goalTxt || probTxt || nothingTxt){
+      const parts = [];
+      if (goalTxt)    parts.push(`Ваша цель на год — <b>${goalTxt}</b>`);
+      if (probTxt)    parts.push(`главной проблемой вы назвали: <b>${probTxt}</b>`);
+      if (nothingTxt) parts.push(`ваш собственный прогноз при бездействии — <b>${nothingTxt}</b>`);
+      mirror = 'Это не наши слова — это ваши ответы. ' + parts.join('. ') + '.';
+      if (loss > 0) mirror += ` Разрыв между целью и текущей точкой стоит примерно <b class="sc-bad">${Fmt.money(loss/12)}</b> каждый месяц.`;
+    }
+    const feedAll = Feedback.collect().sort((x,y)=>(x.tone==='bad'?0:1)-(y.tone==='bad'?0:1));
+    const el = FlowUI.els.finalScreen;
+    el.innerHTML = `
+      <div class="final-hero"><div class="final-grid"><div class="final-index"><b class="sc-${zone}">${idx}</b><span>индекс зрелости / 100</span></div><div class="final-verdict"><div class="eyebrow">Диагноз · ${FlowUI.esc(company)}</div><h2>${verdict}</h2><p>${vdesc} Главное ограничение роста — <b>${c?c.name.toLowerCase():'не определено'}</b>.${loss>0?` По финансовой модели вы недополучаете порядка <b class="sc-bad">${Fmt.moneyYear(loss)}</b> валовой прибыли.`:''}</p>
+            ${mirror?`<div class="mirror-quote">${mirror}</div>`:''}
+          </div></div></div><div class="final-cols"><div class="panel"><div class="panel-h">Главные проблемы${probs.length?` · ${probs.length} из ${FinModel.losses().length + Problems.structural().length}`:''}</div><ul class="list-num">${probs.map((p,i)=>`<li><span class="n">${i+1}</span><span><b>${p.title}</b>${p.money?` — <b class="sc-bad">−${Fmt.money(p.money)}/год</b>`:''}${p.detail?`<div class="prob-detail">${p.detail}</div>`:''}</span></li>`).join('')||'<li>Критичных проблем не обнаружено — редкий случай.</li>'}</ul></div><div class="panel"><div class="panel-h">Системы бизнеса</div><div class="cat-rows">${Object.entries(CAT_LABELS).map(([k,l])=>{
+            const cc=cats[k]; const z=Scoring.zone(cc.score);
+            return `<div class="cat-row"><span class="name">${l}</span><span class="cat-bar"><i style="width:${cc.touched?cc.score:0}%;background:${Dashboard.colorVar(z)}"></i></span><span class="num ${cc.touched?'sc-'+z:''}">${cc.touched?cc.score:'—'}</span></div>`;
+          }).join('')}</div></div><div class="panel loss-panel"><div class="panel-h">Потенциально теряете</div><div class="loss-num">${loss>0?Fmt.moneyYear(loss):'— ₽'}</div>
+          ${loss>0?`<div class="loss-sub">≈ <b class="sc-bad">${Fmt.money(loss/12)}</b> каждый месяц ожидания</div>`:''}
+          <div class="loss-factors">${FinModel.losses().slice(0,4).map(f=>`<div class="loss-factor"><span>${f.label}</span><b>−${Fmt.money(f.val)}</b></div>`).join('')}</div></div><div class="panel"><div class="panel-h">Потенциал роста${potTotal>0?` · до +${Fmt.moneyYear(potTotal)}`:''}</div><div class="growth-rows">${pot.map(p=>`<div class="growth-row"><span>${p.label}</span><b>+${Fmt.moneyYear(p.val)}</b></div>`).join('')||'<div class="empty-note">// недостаточно данных</div>'}</div></div></div><div class="panel" style="margin-bottom:22px"><div class="panel-h">Рекомендации: с чего начинать</div><ul class="list-num rec-list">${recs.map((r,i)=>`<li><span class="n">${i+1}</span><span>${r}</span></li>`).join('')}</ul></div>
+      ${feedAll.length ? `<div class="panel" style="margin-bottom:22px"><div class="panel-h">Полный лог сканера · ${feedAll.length} наход${feedAll.length%10===1&&feedAll.length%100!==11?'ка':[2,3,4].includes(feedAll.length%10)&&![12,13,14].includes(feedAll.length%100)?'ки':'ок'}</div><div class="find-grid">${feedAll.map(f=>`<div class="find-row"><span class="find-dot ${f.tone}"></span><span>${f.text}</span></div>`).join('')}</div></div>` : ''}
+      <div class="panel" style="margin-bottom:22px"><div class="panel-h">Методология проверена в бою</div><div class="cases-grid"><div><b>×2</b><span>выручка филиала СДЭК за 6 месяцев — филиал вернулся в топ-5 сети</span><small>Логистика · B2B/B2C</small></div><div><b>100 млн</b><span>планка MarketGuru, не покорявшаяся 3 года, взята новой связкой РОПов</span><small>IT-платформа · SaaS</small></div><div><b>12.5 млн</b><span>выручка UNIBOX с нуля за 8 месяцев — отдел построен с чистого листа</span><small>Фулфилмент</small></div></div></div><div class="cta-panel"><h3>Следующий шаг</h3><p>Диагностика показала, где бизнес теряет деньги. На стратегической сессии Closery мы разберём вашу воронку в деталях и соберём план: как закрыть эти дыры и превратить потенциал роста в выручку.</p><div class="final-actions"><button class="btn-primary" id="btnBook">Записаться на стратегическую сессию →</button><button class="btn-ghost" id="btnPDF">Скачать PDF-отчёт</button><button class="btn-ghost" id="btnAI">Получить AI-анализ</button><button class="btn-ghost" id="btnRestart">Пройти заново</button></div></div>`;
+    el.classList.add('visible');
+    window.scrollTo({top:0, behavior:'smooth'});
+    document.getElementById('btnPDF').onclick = ()=>Report.printPDF();
+    document.getElementById('btnAI').onclick = ()=>AIExport.open();
+    document.getElementById('btnBook').onclick = ()=>window.open(C.BOOKING_URL, '_blank');
+    document.getElementById('btnRestart').onclick = ()=>{ if(confirm('Начать диагностику заново? Текущие ответы будут удалены.')){ Storage.clear(); location.reload(); } };
+  }
+};
+const Report = {
+  printPDF(){
+    const idx = Scoring.index(true) ?? 0;
+    const c = Constraint.detect();
+    const loss = FinModel.totalLoss();
+    const pot = FinModel.potential();
+    const cats = Scoring.categories();
+    const date = new Date().toLocaleDateString('ru-RU');
+    const company = FlowUI.esc(State.answers.company || '—');
+    const zc = v => v >= 80 ? '#059669' : v >= 60 ? '#d97706' : '#dc2626';
+    const CIRC = (2 * Math.PI * 52);
+    const audience = {b2b:'B2B', b2c:'B2C', mixed:'B2B + B2C'}[State.answers.audience] || '—';
+    const band = `<div class="pr-band"><div class="logo">CLOSERY<span>COMMERCIAL MRI</span></div><div class="date">ДИАГНОСТИКА КОММЕРЧЕСКОГО БЛОКА<br>${date}</div></div>`;
+    document.getElementById('printReport').innerHTML = `
+      <div class="pr-page">
+        ${band}
+        <div class="pr-h1">${company}</div><div class="pr-sub">ниша: ${FlowUI.esc(State.answers.niche || '—')} · аудитория: ${audience}</div><div class="pr-hero"><div class="pr-gauge"><svg width="120" height="120" viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="#E4ECEC" stroke-width="11"/><circle cx="60" cy="60" r="52" fill="none" stroke="${zc(idx)}" stroke-width="11" stroke-linecap="round"
+                stroke-dasharray="${CIRC.toFixed(1)}" stroke-dashoffset="${(CIRC * (1 - idx/100)).toFixed(1)}"/></svg><b style="color:${zc(idx)}">${idx}</b></div><div><div class="pr-kicker">Индекс коммерческой зрелости · ${idx} из 100</div><div class="pr-verdict">${Scoring.verdict(idx)[0]}</div><div class="pr-vdesc">${Scoring.verdict(idx)[1]}</div>
+            ${c ? `<div class="pr-constraint"><b style="color:#dc2626">Главное ограничение — ${c.name.toLowerCase()}.</b> ${c.why}</div>` : ''}
+          </div></div><div class="pr-grid"><div class="pr-card"><div class="pr-h2">Системы бизнеса</div><div class="pr-bars">${Object.entries(CAT_LABELS).map(([k,l])=>{
+              const cc = cats[k];
+              return `<div>${l}<b style="color:${cc.touched?zc(cc.score):'#8AA0AA'}">${cc.touched?cc.score:'—'}</b><div class="pr-bar"><i style="width:${cc.touched?cc.score:0}%;background:${zc(cc.score)}"></i></div></div>`;
+            }).join('')}</div></div><div class="pr-loss-card"><div class="pr-h2">Потенциально теряете</div><div class="pr-loss-num">${loss > 0 ? Fmt.moneyYear(loss) : 'потери не выявлены'}</div>
+            ${loss > 0 ? `<div style="font-size:11px;color:#4E626D;margin-bottom:2px">≈ <b style="color:#dc2626">${Fmt.money(loss/12)}</b> каждый месяц, пока система не меняется</div>` : ''}
+            ${FinModel.losses().slice(0,6).map(f=>`<div class="pr-frow"><span>${f.label}</span><b>−${Fmt.money(f.val)}</b></div>`).join('')}
+          </div></div></div><div class="pr-page">
+        ${band}
+        <div class="pr-grid"><div class="pr-card pr-grow"><div class="pr-h2">Потенциал роста</div>
+            ${pot.length ? pot.map(p=>`<div class="pr-frow"><span>${p.label}</span><b>+${Fmt.moneyYear(p.val)}</b></div>`).join('')
+              : '<div style="font-size:11.5px;color:#8AA0AA">Недостаточно данных для расчёта.</div>'}
+          </div><div class="pr-card"><div class="pr-h2">Главные проблемы</div><ul class="pr-list pr-red">${Problems.top(5).map((p,i)=>`<li><span class="n">${i+1}</span><span><b>${p.title}</b>${p.money?` — <b style="color:#dc2626">−${Fmt.money(p.money)}/год</b>`:''}${p.detail?`<br><span style="color:#6b7280;font-size:10.5px">${p.detail}</span>`:''}</span></li>`).join('') || '<li>Критичных проблем не обнаружено.</li>'}</ul></div></div><div class="pr-card" style="margin-top:14px"><div class="pr-h2">Рекомендации: с чего начинать</div><ul class="pr-list">${Recs.build().map((r,i)=>`<li><span class="n">${i+1}</span><span>${r}</span></li>`).join('')}</ul></div>
+        ${(()=>{ const fl = Feedback.collect().sort((x,y)=>(x.tone==='bad'?0:1)-(y.tone==='bad'?0:1));
+          return fl.length ? `<div class="pr-card" style="margin-top:14px"><div class="pr-h2">Полный лог сканера · ${fl.length}</div><div style="columns:2;column-gap:26px;font-size:10.5px;color:#4b5563;line-height:1.55">
+            ${fl.map(f=>`<div style="break-inside:avoid;margin-bottom:7px"><span style="color:${f.tone==='bad'?'#dc2626':'#d97706'}">●</span> ${f.text}</div>`).join('')}
+          </div></div>` : ''; })()}
+        <div class="pr-cta"><h3>Следующий шаг — <span>стратегическая сессия Closery</span></h3><p>Детальный разбор вашей воронки и план: как закрыть найденные потери и превратить потенциал роста в выручку. Свяжитесь с нами, чтобы забронировать время.</p></div><div class="pr-foot">Отчёт сформирован автоматически · Closery Commercial MRI · Оценки потерь и потенциала — модельные, на основе введённых данных и рыночных бенчмарков</div></div>`;
+    window.print();
+  }
+};
+const AIExport = {
+  payload(){
+    return {
+      meta: { product:'Closery Commercial MRI', version:1, generated_at:new Date().toISOString() },
+      company: { name:State.answers.company||null, site:State.answers.site||null, niche:State.answers.niche||null },
+      answers: State.answers,
+      computed: {
+        maturity_index: Scoring.index(),
+        category_scores: Object.fromEntries(Object.entries(Scoring.categories()).map(([k,c])=>[k,c.touched?c.score:null])),
+        data_coverage_pct: Scoring.coverage(),
+        main_constraint: Constraint.detect(),
+        annual_lost_profit_rub: FinModel.totalLoss(),
+        loss_factors: FinModel.losses(),
+        growth_potential: FinModel.potential(),
+        top_problems: Problems.top(5),
+        recommendations: Recs.build()
+      },
+      llm_task: 'Ты — senior-консультант по построению отделов продаж. На основе данных диагностики подготовь развёрнутый стратегический разбор: диагноз, приоритеты на 90 дней, риски бездействия, план внедрения.'
+    };
+  },
+  open(){
+    const json = JSON.stringify(this.payload(), null, 2);
+    App.openModal(
+      'AI-анализ: данные готовы к отправке',
+      'Архитектура подготовлена: этот JSON будет отправляться в GPT-эндпоинт для развёрнутого консалтингового разбора. API пока не подключён — ниже полный пакет данных.',
+      json
+    );
+  }
+};
+const Storage = {
+  save(){
+    try{ localStorage.setItem(C.STORAGE_KEY, JSON.stringify({
+      answers:State.answers, cursor:State.cursor, started:State.started, finished:State.finished
+    })); }catch(e){  }
+  },
+  load(){
+    try{ const raw = localStorage.getItem(C.STORAGE_KEY); return raw ? JSON.parse(raw) : null; }
+    catch(e){ return null; }
+  },
+  clear(){ try{ localStorage.removeItem(C.STORAGE_KEY); }catch(e){} }
+};
+const App = {
+  init(){
+    Dashboard.init();
+    FlowUI.init();
+
+    document.getElementById('btnStart').onclick = ()=>{ Storage.clear(); State.reset(); FlowUI.start(); };
+    document.getElementById('modalClose').onclick = ()=>document.getElementById('modalBg').classList.remove('open');
+    document.getElementById('modalBg').onclick = e=>{ if(e.target.id==='modalBg') e.target.classList.remove('open'); };
+    document.getElementById('modalCopy').onclick = ()=>{
+      navigator.clipboard.writeText(document.getElementById('modalPre').textContent)
+        .then(()=>this.toast('JSON скопирован в буфер'));
+    };
+  },
+  openModal(title, text, pre){
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalText').textContent = text;
+    document.getElementById('modalPre').textContent = pre;
+    document.getElementById('modalBg').classList.add('open');
+  },
+  toast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(this._toastT);
+    this._toastT = setTimeout(()=>t.classList.remove('show'), 2600);
+  }
+};
+document.addEventListener('DOMContentLoaded', ()=>App.init());
+return { State, Scoring, FinModel };
+})();
+</script></body></html>
