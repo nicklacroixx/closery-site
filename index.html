@@ -665,6 +665,18 @@ html, body { background: #0B0F0D; }
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
 }
+
+/* ═══ СРАВНЕНИЕ: премиум иконки ═══ */
+.cmp-list { display: flex; flex-direction: column; gap: 15px; }
+.cmp-row { display: flex; gap: 13px; align-items: flex-start; font-size: 14px; line-height: 1.5; }
+.cmp-ico { flex: none; width: 22px; height: 22px; border-radius: 7px; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+.cmp-ico svg { width: 11px; height: 11px; display: block; }
+.cmp-x { background: rgba(248,113,113,.09); color: #F87171; box-shadow: inset 0 0 0 1px rgba(248,113,113,.22); }
+.cmp-v { background: rgba(52,211,153,.14); color: var(--cl-em); box-shadow: inset 0 0 0 1px rgba(52,211,153,.4), 0 0 14px rgba(52,211,153,.18); }
+
+/* ═══ ФОРМАТЫ: равная высота, мета прижата к низу ═══ */
+.fmt-grid > * { display: flex; flex-direction: column; height: 100%; }
+.fmt-foot { margin-top: auto; }
 </style>
 </head>
 <body>
@@ -802,36 +814,36 @@ html, body { background: #0B0F0D; }
       </h2>
       <div class="grid md:grid-cols-3 gap-6">
 
-        <div class="glass p-8 opacity-70 reveal rd1">
-          <h3 class="font-bold mb-8 text-[#5F6B64] uppercase tracking-wider text-[10px]">Нанять РОПа в штат</h3>
-          <div class="space-y-5 text-[#9BA8A0] text-sm">
-            <p>✕ Искать 2–4 месяца, а ошибка выбора стоит полугода и сотен тысяч</p>
-            <p>✕ 150–250 тыс. в месяц с налогами — вне зависимости от результата</p>
-            <p>✕ Настраивает всё под себя и не документирует: уйдёт — система уйдёт с ним</p>
-            <p>✕ Проверить его уровень некому — собственник не РОП по профессии</p>
-            <p>✕ Один человек не заменит систему: без воронки и мотивации утонет и сильный</p>
+        <div class="glass p-8 reveal rd1">
+          <h3 class="font-bold mb-8 text-[#8A968F] uppercase tracking-wider text-[10px]">Нанять РОПа в штат</h3>
+          <div class="cmp-list text-[#9BA8A0]">
+            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>Искать 2–4 месяца, а ошибка выбора стоит полугода и сотен тысяч</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>150–250 тыс. в месяц с налогами — вне зависимости от результата</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>Настраивает всё под себя и не документирует: уйдёт — система уйдёт с ним</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>Проверить его уровень некому — собственник не РОП по профессии</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>Один человек не заменит систему: без воронки и мотивации утонет и сильный</span></div>
           </div>
         </div>
 
-        <div class="glass p-8 opacity-70 reveal rd2">
-          <h3 class="font-bold mb-8 text-[#5F6B64] uppercase tracking-wider text-[10px]">Консультанты и тренинги</h3>
-          <div class="space-y-5 text-[#9BA8A0] text-sm">
-            <p>✕ Диагноз в красивой презентации — внедрять всё равно вам</p>
-            <p>✕ Не трогают CRM, регламенты и цифры руками — только «рекомендуют»</p>
-            <p>✕ Никого не нанимают: система без людей остаётся схемой на бумаге</p>
-            <p>✕ Гонорар за процесс: не взлетело — «вы плохо внедряли»</p>
-            <p>✕ После оплаты исчезают, ответственность размыта</p>
+        <div class="glass p-8 reveal rd2">
+          <h3 class="font-bold mb-8 text-[#8A968F] uppercase tracking-wider text-[10px]">Консультанты и тренинги</h3>
+          <div class="cmp-list text-[#9BA8A0]">
+            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>Диагноз в красивой презентации — внедрять всё равно вам</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>Не трогают CRM, регламенты и цифры руками — только «рекомендуют»</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>Никого не нанимают: система без людей остаётся схемой на бумаге</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>Гонорар за процесс: не взлетело — «вы плохо внедряли»</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>После оплаты исчезают, ответственность размыта</span></div>
           </div>
         </div>
 
-        <div class="our-side p-8 border border-emerald-500/30 reveal rd3">
+        <div class="our-side p-8 reveal rd3">
           <h3 class="font-bold mb-8 text-emerald-500 uppercase tracking-wider text-[10px]">Работа с&nbsp;&nbsp;<span class="text-white" style="letter-spacing:.2em">Closery</span></h3>
-          <div class="space-y-5 text-white text-sm">
-            <p><span class="text-emerald-500">✓</span> Строим руками: CRM, регламенты, мотивация, план — и сдаём по чек-листу</p>
-            <p><span class="text-emerald-500">✓</span> Людей ставим через конкурс: кандидаты продают ваш продукт вживую</p>
-            <p><span class="text-emerald-500">✓</span> Оплата поэтапно: этап не принят — не оплачен</p>
-            <p><span class="text-emerald-500">✓</span> Замена людей 3 месяца бесплатно и право выйти после любого этапа</p>
-            <p><span class="text-emerald-500">✓</span> Через 90 дней системой управляет ваш РОП, а не мы</p>
+          <div class="cmp-list text-white">
+            <div class="cmp-row"><span class="cmp-ico cmp-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span>Строим руками: CRM, регламенты, мотивация, план — и сдаём по чек-листу</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span>Людей ставим через конкурс: кандидаты продают ваш продукт вживую</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span>Оплата поэтапно: этап не принят — не оплачен</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span>Замена людей 3 месяца бесплатно и право выйти после любого этапа</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span>Через 90 дней системой управляет ваш РОП, а не мы</span></div>
           </div>
         </div>
 
@@ -873,53 +885,10 @@ html, body { background: #0B0F0D; }
     </div>
   </section>
 
-  <!-- ─── ФОРМАТЫ ─── -->
-  <section id="formats" class="section-padding px-4 md:px-8 border-t border-white/5">
-    <div class="max-w-6xl mx-auto cl-center">
-      <div class="text-center mb-6 reveal"><div class="em-tag">03 / Форматы</div></div>
-      <h2 class="cl-h2 has-sub reveal">Форматы работы</h2>
-      <p class="cl-sub text-[#9BA8A0] text-lg max-w-2xl reveal rd1">
-        Точную смету считаем после диагностики — половине компаний не нужен весь проект.<br>
-        Один договор, одна цена. Оплата — по графику этапов, а не всё вперёд.
-      </p>
-      <div class="grid md:grid-cols-3 gap-8 pt-4">
-
-        <div class="glass p-8 reveal rd1">
-          <h3 class="font-bold mb-3 text-white text-lg">Сопровождение</h3>
-          <div class="text-[#5F6B64] text-[10px] uppercase tracking-wider mb-6 mono">Для тех, кто строит сам</div>
-          <p class="text-[#9BA8A0] text-sm leading-relaxed mb-6">
-            Еженедельная стратегическая сессия, разборы решений и контроль метрик. Внедряете своими руками — мы ведём по маршруту и не даём свернуть.
-          </p>
-          <div class="dash-top pt-4 text-[#5F6B64] text-[10px] uppercase tracking-wider mono">Ежемесячный формат</div>
-        </div>
-
-        <div class="our-side fmt-card p-8 border border-emerald-500/30 reveal rd2">
-          <div class="fmt-badge mono">Чаще всего выбирают</div>
-          <h3 class="font-bold mb-3 text-white text-lg">Коммерческий блок · 90 дней</h3>
-          <div class="text-emerald-500 text-[10px] uppercase tracking-wider mb-6 mono">Флагман</div>
-          <p class="text-[#C4CFC8] text-sm leading-relaxed mb-6">
-            Все четыре этапа под ключ: архитектура, фундамент, люди через конкурс, разгон. Оплата поэтапно, каждый этап — по чек-листу приёмки. Результат — система, которой управляет ваш РОП.
-          </p>
-          <div class="dash-top pt-4 text-[#9BA8A0] text-[10px] uppercase tracking-wider mono">Оплата траншами по вехам приёмки</div>
-        </div>
-
-        <div class="glass p-8 reveal rd3">
-          <h3 class="font-bold mb-3 text-white text-lg">Под ключ+</h3>
-          <div class="text-[#5F6B64] text-[10px] uppercase tracking-wider mb-6 mono">Максимум скорости</div>
-          <p class="text-[#9BA8A0] text-sm leading-relaxed mb-6">
-            Флагман, расширенный найм — РОП и команда менеджеров — и три месяца сопровождения после сдачи системы.
-          </p>
-          <div class="dash-top pt-4 text-[#5F6B64] text-[10px] uppercase tracking-wider mono">Ограничено: 1 проект в квартал</div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
   <!-- ─── ДИАГНОСТИКА (МРТ) ─── -->
   <section id="mri" class="section-padding px-4 md:px-8">
     <div class="max-w-6xl mx-auto cl-center">
-      <div class="text-center mb-6 reveal"><div class="em-tag">04 / Диагностика · Бесплатно, без звонков</div></div>
+      <div class="text-center mb-6 reveal"><div class="em-tag">03 / Диагностика · Бесплатно, без звонков</div></div>
       <h2 class="cl-h2 has-sub reveal">Коммерческий МРТ: за 15 минут увидите,<br>сколько денег теряете</h2>
       <p class="cl-sub text-[#9BA8A0] text-lg max-w-2xl reveal rd1">
         Онлайн-диагностика шести систем бизнеса: маркетинг, продажи, команда, управление, экономика, стратегия. Отвечаете на вопросы — модель считает в реальном времени.
@@ -953,7 +922,7 @@ html, body { background: #0B0F0D; }
   <!-- ─── ГАРАНТИЯ ─── -->
   <section id="guarantee" class="section-padding px-4 md:px-8 border-t border-white/5">
     <div class="max-w-6xl mx-auto cl-center">
-      <div class="text-center mb-6 reveal"><div class="em-tag">05 / Гарантия</div></div>
+      <div class="text-center mb-6 reveal"><div class="em-tag">04 / Гарантия</div></div>
       <h2 class="cl-h2 has-sub reveal">Гарантия</h2>
       <p class="cl-sub text-[#9BA8A0] text-lg max-w-2xl reveal rd1">
         Выручку вам не гарантирует никто, кто не контролирует ваш продукт и цены. Кто обещает — уже заложил этот риск в цену вдвое.<br><br>
@@ -992,7 +961,7 @@ html, body { background: #0B0F0D; }
   <!-- ─── КЕЙСЫ ─── -->
   <section id="cases" class="section-padding px-4 md:px-8">
     <div class="max-w-6xl mx-auto cl-center">
-      <div class="text-center mb-6 reveal"><div class="em-tag">06 / Опыт</div></div>
+      <div class="text-center mb-6 reveal"><div class="em-tag">05 / Опыт</div></div>
       <h2 class="cl-h2 has-sub reveal">Три проекта. Три точки входа.<br>Одна методология</h2>
       <p class="cl-sub text-[#9BA8A0] text-lg max-w-2xl reveal rd1">
         Кризис, ноль и масштабирование — построено руками той же системой:<br>цифры плюс люди. Не советами.
@@ -1080,7 +1049,7 @@ html, body { background: #0B0F0D; }
   <section id="founder" class="section-padding px-4 md:px-8 border-t border-white/5">
     <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
       <div class="reveal">
-        <div class="em-tag mb-6">07 / Основатель</div>
+        <div class="em-tag mb-6">06 / Основатель</div>
         <h2 class="cl-h2 reveal">Кто строит вашу систему</h2>
         <p class="text-[#9BA8A0] leading-relaxed mb-6">
           Более 10 лет в продажах. Последние 5 — строю коммерческие блоки под ключ:
@@ -1126,6 +1095,49 @@ html, body { background: #0B0F0D; }
         </div>
         <div class="absolute -top-2 -right-2 w-3 h-3 rounded-full bg-emerald-500"
              style="box-shadow:0 0 14px rgba(52,211,153,.8)"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ФОРМАТЫ ─── -->
+  <section id="formats" class="section-padding px-4 md:px-8 border-t border-white/5">
+    <div class="max-w-6xl mx-auto cl-center">
+      <div class="text-center mb-6 reveal"><div class="em-tag">07 / Форматы</div></div>
+      <h2 class="cl-h2 has-sub reveal">Форматы работы</h2>
+      <p class="cl-sub text-[#9BA8A0] text-lg max-w-2xl reveal rd1">
+        Точную смету считаем после диагностики — половине компаний не нужен весь проект.<br>
+        Один договор, одна цена. Оплата — по графику этапов, а не всё вперёд.
+      </p>
+      <div class="grid md:grid-cols-3 gap-8 pt-4 fmt-grid">
+
+        <div class="glass p-8 reveal rd1">
+          <h3 class="font-bold mb-3 text-white text-lg">Сопровождение</h3>
+          <div class="text-[#5F6B64] text-[10px] uppercase tracking-wider mb-6 mono">Для тех, кто строит сам</div>
+          <p class="text-[#9BA8A0] text-sm leading-relaxed mb-6">
+            Еженедельная стратегическая сессия, разборы решений и контроль метрик. Внедряете своими руками — мы ведём по маршруту и не даём свернуть.
+          </p>
+          <div class="fmt-foot dash-top pt-4 text-[#5F6B64] text-[10px] uppercase tracking-wider mono">Ежемесячный формат</div>
+        </div>
+
+        <div class="our-side fmt-card p-8 reveal rd2">
+          <div class="fmt-badge mono">Чаще всего выбирают</div>
+          <h3 class="font-bold mb-3 text-white text-lg">Коммерческий блок · 90 дней</h3>
+          <div class="text-emerald-500 text-[10px] uppercase tracking-wider mb-6 mono">Флагман</div>
+          <p class="text-[#C4CFC8] text-sm leading-relaxed mb-6">
+            Все четыре этапа под ключ: архитектура, фундамент, люди через конкурс, разгон. Оплата поэтапно, каждый этап — по чек-листу приёмки. Результат — система, которой управляет ваш РОП.
+          </p>
+          <div class="fmt-foot dash-top pt-4 text-[#9BA8A0] text-[10px] uppercase tracking-wider mono">Оплата траншами по вехам приёмки</div>
+        </div>
+
+        <div class="glass p-8 reveal rd3">
+          <h3 class="font-bold mb-3 text-white text-lg">Под ключ+</h3>
+          <div class="text-[#5F6B64] text-[10px] uppercase tracking-wider mb-6 mono">Максимум скорости</div>
+          <p class="text-[#9BA8A0] text-sm leading-relaxed mb-6">
+            Флагман, расширенный найм — РОП и команда менеджеров — и три месяца сопровождения после сдачи системы.
+          </p>
+          <div class="fmt-foot dash-top pt-4 text-[#5F6B64] text-[10px] uppercase tracking-wider mono">Ограничено: 1 проект в квартал</div>
+        </div>
+
       </div>
     </div>
   </section>
