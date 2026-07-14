@@ -615,25 +615,17 @@ html, body { background: #0B0F0D; }
   .hw-live i { animation: none !important; }
 }
 
-/* ═══ ЛОГОТИПЫ КЛИЕНТОВ (Workstream C) — единая «стена логотипов» ═══ */
-.logo-strip { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 16px; }
-.logo-item {
-  display: flex; align-items: center; justify-content: center;
-  height: 72px; min-width: 150px; padding: 0 26px; border-radius: 14px;
-  background: rgba(255,255,255,.95);
-  box-shadow: 0 12px 30px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.6);
-  filter: grayscale(1); opacity: .8;
-  transition: filter .35s ease, opacity .35s ease, transform .35s ease, box-shadow .35s ease;
+/* ═══ ЛОГОТИП КЛИЕНТА В КАРТОЧКЕ КЕЙСА — монохромная угловая марка ═══ */
+.case-logo {
+  position: absolute; top: 30px; right: 30px; z-index: 2;
+  height: 24px; width: auto; max-width: 118px; object-fit: contain;
+  filter: brightness(0) invert(1); opacity: .42;
+  transition: opacity .35s ease, transform .35s ease;
+  pointer-events: none;
 }
-.logo-item:hover {
-  filter: none; opacity: 1; transform: translateY(-4px);
-  box-shadow: 0 18px 44px rgba(0,0,0,.5), 0 0 30px rgba(52,211,153,.1), inset 0 0 0 1px rgba(52,211,153,.35);
-}
-.logo-item img { height: 34px; width: auto; max-width: 160px; object-fit: contain; display: block; }
-.logo-item.lg-dark { background: rgba(255,255,255,.06); box-shadow: 0 12px 30px rgba(0,0,0,.35), inset 0 0 0 1px var(--cl-line); }
-.logo-item.lg-dark:hover { box-shadow: 0 18px 44px rgba(0,0,0,.5), 0 0 30px rgba(52,211,153,.12), inset 0 0 0 1px rgba(52,211,153,.4); }
-.logo-item.lg-dark img { height: 52px; max-width: 190px; }
-@media (max-width: 640px) { .logo-item { height: 60px; min-width: 130px; padding: 0 18px; } .logo-item img { height: 28px; } .logo-item.lg-dark img { height: 44px; } }
+.glass:hover .case-logo { opacity: .78; transform: translateY(-1px); }
+.case-logo.cl-mg { height: 30px; }
+@media (max-width: 640px) { .case-logo { top: 26px; right: 24px; height: 20px; max-width: 96px; } .case-logo.cl-mg { height: 26px; } }
 
 /* ═══ СТЕНА РЕЗУЛЬТАТОВ (Workstream C) ═══ */
 .results-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
@@ -795,18 +787,6 @@ html, body { background: #0B0F0D; }
         </div>
       </div>
 
-    </div>
-  </section>
-
-  <!-- ─── ЛОГОТИПЫ КЛИЕНТОВ ─── -->
-  <section class="py-12 px-4 md:px-8 border-t border-white/5">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center text-[10px] uppercase tracking-[.24em] text-[#5F6B64] mb-8 reveal">Строили и разгоняли продажи для</div>
-      <div class="logo-strip reveal rd1">
-        <span class="logo-item lg-dark"><img src="/clients/marketguru.jpeg" alt="MarketGuru" loading="lazy"></span>
-        <span class="logo-item"><img src="/clients/cdek.svg" alt="CDEK" loading="lazy"></span>
-        <span class="logo-item"><img src="/clients/unibox.png" alt="UniBox" loading="lazy"></span>
-      </div>
     </div>
   </section>
 
@@ -974,6 +954,7 @@ html, body { background: #0B0F0D; }
       <div class="grid md:grid-cols-3 gap-8">
 
         <div class="glass p-8 flex flex-col reveal rd1">
+          <img src="/clients/cdek.svg" alt="" class="case-logo" loading="lazy">
           <div class="case-index mb-5">Case 01 / Антикризис</div>
           <h3 class="text-xl font-bold mb-1">CDEK</h3>
           <div class="text-[#5F6B64] text-[11px] uppercase tracking-wider mb-6">Логистика · франчайзи-точка</div>
@@ -986,6 +967,7 @@ html, body { background: #0B0F0D; }
         </div>
 
         <div class="glass p-8 flex flex-col reveal rd2">
+          <img src="/clients/unibox.svg" alt="" class="case-logo" loading="lazy">
           <div class="case-index mb-5">Case 02 / С нуля</div>
           <h3 class="text-xl font-bold mb-1">UniBox</h3>
           <div class="text-[#5F6B64] text-[11px] uppercase tracking-wider mb-6">E-com · фулфилмент</div>
@@ -998,6 +980,7 @@ html, body { background: #0B0F0D; }
         </div>
 
         <div class="glass p-8 flex flex-col reveal rd3">
+          <img src="/clients/marketguru.svg" alt="" class="case-logo cl-mg" loading="lazy">
           <div class="case-index mb-5">Case 03 / Масштабирование</div>
           <h3 class="text-xl font-bold mb-1">MarketGuru</h3>
           <div class="text-[#5F6B64] text-[11px] uppercase tracking-wider mb-6">SaaS для селлеров</div>
