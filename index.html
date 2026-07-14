@@ -657,12 +657,6 @@ html, body { background: #0B0F0D; }
 }
 .founder-frame { position: relative; z-index: 1; border-radius: 16px;
   box-shadow: 0 30px 70px rgba(0,0,0,.5), 0 0 40px rgba(52,211,153,.08); }
-.founder-frame::before {
-  content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; z-index: 2;
-  background: linear-gradient(150deg, rgba(52,211,153,.6), rgba(52,211,153,.05) 45%, rgba(52,211,153,.35));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
-}
 
 /* ═══ СРАВНЕНИЕ: премиум иконки ═══ */
 .cmp-list { display: flex; flex-direction: column; gap: 15px; }
