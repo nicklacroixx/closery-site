@@ -1180,19 +1180,50 @@ html, body { background: #0B0F0D; }
   </section>
 
   <!-- ─── ФУТЕР ─── -->
-  <footer class="py-14 px-4 md:px-8 border-t border-white/5">
-    <div class="max-w-6xl mx-auto flex flex-col md:flex-row md:items-start md:justify-between gap-8">
-      <a href="#" onclick="event.preventDefault();window.scrollTo({top:0,behavior:'smooth'})" class="text-center md:text-left block">
-        <div class="logo-btn font-bold uppercase text-sm tracking-[.2em] mb-2" style="color:#fff"><img src="/mark-transparent.svg" alt="" width="18" height="18" style="flex:none">Closery</div>
-        <div class="text-[#5F6B64] text-[11px] uppercase tracking-[.22em]">Коммерческие блоки под ключ</div>
-      </a>
-      <div class="flex flex-col items-center md:items-end gap-4">
-        <div class="flex flex-col md:flex-row md:items-center gap-5 md:gap-8 text-center">
-          <a href="https://t.me/klimenko_prod" class="cl-foot text-xs uppercase tracking-[.18em] transition-colors">Telegram</a>
-          <a href="https://closery.ru/policy" class="cl-foot text-xs uppercase tracking-[.18em] transition-colors">Политика&nbsp;конфиденциальности</a>
+  <footer class="relative pt-16 pb-8 px-4 md:px-8 border-t border-white/5 overflow-hidden">
+    <div aria-hidden="true"
+         class="pointer-events-none select-none absolute left-1/2 bottom-[-0.12em] -translate-x-1/2 w-full text-center font-black uppercase leading-none whitespace-nowrap"
+         style="font-size:min(15vw,190px);letter-spacing:.02em;color:rgba(255,255,255,.025)">CLOSERY</div>
+
+    <div class="relative max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-[1.3fr_1fr_1fr] gap-12 md:gap-8">
+
+      <div class="text-center md:text-left">
+        <a href="#" onclick="event.preventDefault();window.scrollTo({top:0,behavior:'smooth'})" class="logo-btn font-bold uppercase text-sm tracking-[.2em] mb-3 inline-flex" style="color:#fff">
+          <img src="/mark-transparent.svg" alt="" width="18" height="18" style="flex:none">Closery
+        </a>
+        <div class="text-[#5F6B64] text-[11px] uppercase tracking-[.22em] mb-6">Коммерческие блоки под ключ</div>
+        <div class="flex flex-col items-center md:items-start gap-2.5">
+          <a href="mailto:privacy@closery.ru" class="cl-foot text-xs tracking-[.05em] transition-colors">privacy@closery.ru</a>
+          <a href="https://t.me/klimenko_prod" class="cl-foot text-xs tracking-[.05em] transition-colors">Telegram — @klimenko_prod</a>
         </div>
-        <span class="text-[#5F6B64] text-[11px] tracking-wider">© 2026 Closery. Все права защищены.</span>
       </div>
+
+      <div class="text-center md:text-left">
+        <div class="text-[#5F6B64] text-[10px] uppercase tracking-[.22em] mb-4">Навигация</div>
+        <div class="flex flex-col items-center md:items-start gap-2.5">
+          <a href="#method"     class="cl-foot text-xs uppercase tracking-[.1em] transition-colors">Технология</a>
+          <a href="#formats"    class="cl-foot text-xs uppercase tracking-[.1em] transition-colors">Форматы</a>
+          <a href="/dna"        class="cl-foot text-xs uppercase tracking-[.1em] transition-colors">ДНК</a>
+          <a href="#guarantee"  class="cl-foot text-xs uppercase tracking-[.1em] transition-colors">Гарантия</a>
+          <a href="#cases"      class="cl-foot text-xs uppercase tracking-[.1em] transition-colors">Опыт</a>
+          <a href="#founder"    class="cl-foot text-xs uppercase tracking-[.1em] transition-colors">Основатель</a>
+          <a href="/diagnostic" class="cl-foot text-xs uppercase tracking-[.1em] transition-colors">Диагностика</a>
+        </div>
+      </div>
+
+      <div class="text-center md:text-left">
+        <div class="text-[#5F6B64] text-[10px] uppercase tracking-[.22em] mb-4">Информация</div>
+        <div class="flex flex-col items-center md:items-start gap-2.5">
+          <a href="https://closery.ru/policy" class="cl-foot text-xs uppercase tracking-[.1em] transition-colors">Политика&nbsp;конфиденциальности</a>
+          <a href="https://closery.ru/policy" class="cl-foot text-xs uppercase tracking-[.1em] transition-colors">Публичная&nbsp;оферта</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="relative max-w-6xl mx-auto mt-12 pt-6 border-t border-white/5 flex flex-col md:flex-row md:items-center md:justify-between gap-3 text-center md:text-left">
+      <span class="text-[#5F6B64] text-[11px] tracking-wider">© 2026 Closery · ИП Клименко Николай Витальевич · ИНН 632200739609 · ОГРНИП 326632700116702 · г. Тольятти</span>
+      <a href="mailto:privacy@closery.ru" class="cl-foot text-[11px] tracking-wider transition-colors">privacy@closery.ru</a>
     </div>
   </footer>
 
@@ -1500,5 +1531,6 @@ html, body { background: #0B0F0D; }
 
 })();
 </script>
+<script src="/cookie-consent.js" defer></script>
 </body>
 </html>
