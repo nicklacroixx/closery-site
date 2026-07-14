@@ -624,8 +624,7 @@ html, body { background: #0B0F0D; }
   pointer-events: none;
 }
 .glass:hover .case-logo { opacity: .78; transform: translateY(-1px); }
-.case-logo.cl-mg { height: 30px; }
-@media (max-width: 640px) { .case-logo { top: 26px; right: 24px; height: 20px; max-width: 96px; } .case-logo.cl-mg { height: 26px; } }
+@media (max-width: 640px) { .case-logo { top: 26px; right: 24px; height: 20px; max-width: 96px; } }
 
 /* ═══ СТЕНА РЕЗУЛЬТАТОВ (Workstream C) ═══ */
 .results-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
@@ -980,7 +979,7 @@ html, body { background: #0B0F0D; }
         </div>
 
         <div class="glass p-8 flex flex-col reveal rd3">
-          <img src="/clients/marketguru.svg" alt="" class="case-logo cl-mg" loading="lazy">
+          <img src="/clients/marketguru.svg" alt="" class="case-logo" loading="lazy">
           <div class="case-index mb-5">Case 03 / Масштабирование</div>
           <h3 class="text-xl font-bold mb-1">MarketGuru</h3>
           <div class="text-[#5F6B64] text-[11px] uppercase tracking-wider mb-6">SaaS для селлеров</div>
