@@ -2,7 +2,30 @@
   'use strict';
 
   var STORAGE_KEY = 'cl-cookie-consent';
-  if (localStorage.getItem(STORAGE_KEY)) return;
+  var METRIKA_ID = 109790059;
+
+  /* Аналитика грузится только после согласия — как обещает п. 8.2 политики */
+  function loadMetrika() {
+    if (window._clMetrikaLoaded) return;
+    window._clMetrikaLoaded = true;
+    (function (m, e, t, r, i, k, a) {
+      m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments); };
+      m[i].l = 1 * new Date();
+      k = e.createElement(t); a = e.getElementsByTagName(t)[0];
+      k.async = 1; k.src = r; a.parentNode.insertBefore(k, a);
+    })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
+    window.ym(METRIKA_ID, 'init', {
+      clickmap: true,
+      trackLinks: true,
+      accurateTrackBounce: true,
+      webvisor: true
+    });
+  }
+
+  if (localStorage.getItem(STORAGE_KEY)) {
+    loadMetrika();
+    return;
+  }
 
   var style = document.createElement('style');
   style.textContent =
@@ -41,6 +64,7 @@
 
   document.getElementById('cl-cookie-accept').addEventListener('click', function () {
     localStorage.setItem(STORAGE_KEY, '1');
+    loadMetrika();
     bar.classList.add('cl-hide');
     document.body.style.paddingBottom = prevPaddingBottom;
     window.removeEventListener('resize', reserveSpace);

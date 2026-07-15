@@ -13,8 +13,8 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Closery — Отдел продаж под ключ за 90 дней</title>
-<meta name="description" content="Строим отдел продаж, который приносит прибыль и работает без вас: воронка и CRM, регламенты и мотивация, план и управление — и люди, отобранные на конкурсе вживую на вашем продукте. Гарантия 90 дней.">
+<title>Closery — Система продаж за 90 дней без риска найма</title>
+<meta name="description" content="РОП в найме обойдётся в 6–8 млн ₽ в год — без гарантий. Closery строит систему продаж, которая работает без собственника, за 90 дней: оплата по этапам, выход в любой момент. Вход — разбор с финмоделью потерь.">
 <link rel="canonical" href="https://closery.ru/">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0B0F0D">
@@ -28,14 +28,14 @@
 <meta property="og:site_name" content="Closery">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:url" content="https://closery.ru/">
-<meta property="og:title" content="Closery — Отдел продаж под ключ за 90 дней">
-<meta property="og:description" content="Строим отдел продаж, который приносит прибыль и работает без вас: воронка и CRM, регламенты и мотивация, конкурсный найм менеджеров. Гарантия 90 дней.">
+<meta property="og:title" content="Closery — Система продаж за 90 дней без риска найма">
+<meta property="og:description" content="РОП в найме обойдётся в 6–8 млн ₽ в год — без гарантий. Система продаж за 90 дней: оплата по этапам, выход в любой момент.">
 <meta property="og:image" content="https://closery.ru/mark-512.png">
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Closery — Отдел продаж под ключ за 90 дней">
-<meta name="twitter:description" content="Строим отдел продаж, который приносит прибыль и работает без вас. Гарантия 90 дней.">
+<meta name="twitter:title" content="Closery — Система продаж за 90 дней без риска найма">
+<meta name="twitter:description" content="РОП стоит 6–8 млн ₽ в год без гарантий. Система продаж за 90 дней — с оплатой по этапам и правом выхода.">
 <meta name="twitter:image" content="https://closery.ru/mark-512.png">
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -412,6 +412,39 @@ input:focus, textarea:focus {
 .cl-consent .cl-txt a { color: var(--cl-em) !important; text-decoration: underline !important; }
 .cl-consent.cl-invalid .cl-box { border-color: #f87171 !important; }
 
+/* ─── FAQ ─── */
+.faq-item { border-bottom: 1px solid rgba(255,255,255,0.07); }
+.faq-item summary {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: baseline; gap: 1.5rem;
+  padding: 1.75rem 0;
+  transition: color .2s ease;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary .faq-idx {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--cl-em-dim); font-size: 11px; letter-spacing: .1em; flex: none;
+  transition: color .25s ease;
+}
+.faq-item summary .faq-q {
+  color: var(--cl-text); font-weight: 600; font-size: 17px; line-height: 1.4; flex: 1;
+}
+.faq-item summary .faq-plus {
+  flex: none; color: var(--cl-faint); font-size: 20px; font-weight: 300; line-height: 1;
+  transition: transform .3s ease, color .25s ease;
+}
+.faq-item summary:hover .faq-plus,
+.faq-item summary:hover .faq-idx { color: var(--cl-em); }
+.faq-item[open] summary .faq-plus { transform: rotate(45deg); color: var(--cl-em); }
+.faq-item[open] summary .faq-idx { color: var(--cl-em); }
+.faq-item .faq-a {
+  padding: 0 3rem 1.9rem 0; margin-left: calc(1.5rem + 2.6em);
+  color: var(--cl-muted); font-size: 15px; line-height: 1.75; max-width: 44rem;
+}
+@media (max-width: 640px) {
+  .faq-item .faq-a { margin-left: 0; padding-right: 0; }
+}
+
 /* ─── НАВБАР ─── */
 .closery-land #cl-nav {
   position: fixed;
@@ -687,20 +720,19 @@ html, body { background: #0B0F0D; }
        class="logo-btn font-bold uppercase text-sm select-none"><img src="/mark-transparent.svg" alt="" width="18" height="18" style="flex:none">Closery</a>
 
     <div class="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-[.2em]">
-      <a href="#method"     class="nav-lnk">Технология</a>
-      <a href="#formats"    class="nav-lnk">Форматы</a>
+      <a href="#track"      class="nav-lnk">Трек</a>
+      <a href="#versus"     class="nav-lnk">Сравнение</a>
+      <a href="#method"     class="nav-lnk">Механизм</a>
+      <a href="#audit"      class="nav-lnk">Разбор</a>
       <a href="/dna"        class="nav-lnk">ДНК</a>
-      <a href="#guarantee"  class="nav-lnk">Гарантия</a>
-      <a href="#cases"      class="nav-lnk">Опыт</a>
       <a href="#founder"    class="nav-lnk">Основатель</a>
-      <a href="/diagnostic" class="nav-lnk nav-dna">Диагностика</a>
     </div>
 
     <div class="flex items-center gap-4">
       <a id="cl-nav-cta" href="#cta"
          class="cta-primary cta-ghost px-6 py-2 border border-white/20 text-[10px] font-bold uppercase tracking-widest
                 hover:bg-emerald-500 hover:border-emerald-500 transition-all">
-        Заявка
+        Записаться
       </a>
       <button id="cl-hamburger" aria-label="Меню" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -710,13 +742,12 @@ html, body { background: #0B0F0D; }
 
   <!-- Мобильное меню -->
   <div id="cl-mob-menu" role="navigation">
-    <a href="#method"     class="nav-lnk" onclick="closeMobMenu()">Технология</a>
-    <a href="#formats"    class="nav-lnk" onclick="closeMobMenu()">Форматы</a>
+    <a href="#track"      class="nav-lnk" onclick="closeMobMenu()">Трек</a>
+    <a href="#versus"     class="nav-lnk" onclick="closeMobMenu()">Сравнение</a>
+    <a href="#method"     class="nav-lnk" onclick="closeMobMenu()">Механизм</a>
+    <a href="#audit"      class="nav-lnk" onclick="closeMobMenu()">Разбор</a>
     <a href="/dna"        class="nav-lnk" onclick="closeMobMenu()">ДНК</a>
-    <a href="#guarantee"  class="nav-lnk" onclick="closeMobMenu()">Гарантия</a>
-    <a href="#cases"      class="nav-lnk" onclick="closeMobMenu()">Опыт</a>
     <a href="#founder"    class="nav-lnk" onclick="closeMobMenu()">Основатель</a>
-    <a href="/diagnostic" class="nav-lnk nav-dna" onclick="closeMobMenu()">Диагностика</a>
   </div>
 
   <!-- ─── ГЛАВНЫЙ ЭКРАН ─── -->
@@ -725,27 +756,24 @@ html, body { background: #0B0F0D; }
     <div class="max-w-7xl mx-auto relative z-10 w-full hero-grid">
 
       <div>
-        <div class="em-tag mb-8 reveal">Коммерческий блок под ключ · 90 дней</div>
+        <div class="em-tag mb-8 reveal">Система продаж · 90 дней · без риска найма</div>
         <h1 class="text-5xl md:text-6xl font-extrabold leading-[1.08] mb-10 hero-headline">
-          <span class="hero-line"><span>Строим отдел продаж,</span></span>
-          <span class="hero-line"><span>который приносит прибыль —</span></span>
-          <span class="hero-line"><span>и работает без вас</span></span>
+          <span class="hero-line"><span>Уберите себя</span></span>
+          <span class="hero-line"><span>из продаж —</span></span>
+          <span class="hero-line"><span>за 90 дней</span></span>
         </h1>
         <div class="text-lg text-[#9BA8A0] max-w-xl mb-12 leading-relaxed reveal rd2 space-y-5">
-          <p>За 90 дней собираем систему: воронка и CRM, регламенты и мотивация, план и управление — и люди, отобранные на конкурсе вживую на вашем продукте.</p>
-          <p>Не советы в презентации. Каждый этап сдаём по чек-листу приёмки: <span class="text-[#E8EFEA] font-semibold">этап не принят — не оплачен</span>.</p>
-          <p>Людей страхуем: не подошёл — заменим бесплатно.</p>
+          <p>Вилка простая: РОП в найме за <span class="mono text-[#E8EFEA]">6–8 млн ₽</span> в год — или система за <span class="mono text-[#E8EFEA]">90 дней</span>, за фикс.</p>
+          <p>РОП — это <span class="mono">2–4 месяца</span> подбора, адаптация до полугода и риск, что не приживётся. Система — <span class="text-[#E8EFEA] font-semibold">этап не принят — не оплачен</span>, выход после любого этапа.</p>
+          <p>Уровень подтверждён треком: <span class="text-[#E8EFEA]">CDEK · UniBox · MarketGuru</span>.</p>
         </div>
         <div class="reveal rd3 flex flex-wrap items-center gap-4">
           <a href="#cta"
              class="cta-primary cta-solid bg-emerald-500 px-10 py-5 font-bold uppercase tracking-widest text-[11px] hover:bg-white transition-all">
-            Получить разбор от основателя
-          </a>
-          <a href="/diagnostic"
-             class="cta-primary cta-ghost px-8 py-5 border border-white/20 font-bold uppercase tracking-widest text-[11px] hover:bg-emerald-500 hover:border-emerald-500 transition-all">
-            Пройти диагностику потерь →
+            Записаться на разбор — 50 000 ₽
           </a>
         </div>
+        <div class="mt-6 text-[#5F6B64] text-[11px] uppercase tracking-[.22em] mono reveal rd4">Три проекта в месяц · Отвечаю лично</div>
       </div>
 
       <!-- Живой виджет-«консоль» (эхо диагностики, иллюстративные цифры) -->
@@ -775,68 +803,125 @@ html, body { background: #0B0F0D; }
           <div class="hw-bar"><span class="n">Экономика</span><span class="t"><i data-w="62"></i></span><span class="v" data-target="62">0</span></div>
         </div>
         <div class="hw-foot">
-          <span class="hw-note">Пример. Ваши цифры<br>считает диагностика</span>
-          <a href="/diagnostic" class="hw-cta">Запустить сканер →</a>
+          <span class="hw-note">Пример отчёта. Ваши цифры<br>считаем на разборе</span>
+          <a href="#cta" class="hw-cta">Оставить заявку →</a>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- ─── СРАВНЕНИЕ ─── -->
-  <section id="comparison" class="section-padding px-4 md:px-8 border-t border-white/5">
+  <!-- ─── ТРЕК ─── -->
+  <section id="track" class="section-padding px-4 md:px-8 border-t border-white/5">
     <div class="max-w-6xl mx-auto cl-center">
-      <div class="text-center mb-6 reveal"><div class="em-tag">01 / Почему не работает по-старому</div></div>
+      <div class="text-center mb-6 reveal"><div class="em-tag">01 / Трек</div></div>
+      <h2 class="cl-h2 has-sub reveal">Такого трека нет ни у РОПов в найме,<br>ни у агентств</h2>
+      <p class="cl-sub text-[#9BA8A0] text-lg max-w-2xl reveal rd1">
+        Это карьерные результаты — роли коммерческого директора и руководителя продаж.<br>
+        Не кейсы агентства и не слайды. Цифры, которые можно проверить.
+      </p>
+      <div class="grid md:grid-cols-3 gap-8">
+
+        <div class="glass p-8 flex flex-col reveal rd1">
+          <img src="/clients/cdek.svg" alt="" class="case-logo" loading="lazy">
+          <div class="case-index mb-5">Роль / Руководитель продаж</div>
+          <h3 class="text-xl font-bold mb-1">CDEK</h3>
+          <div class="text-[#5F6B64] text-[11px] uppercase tracking-wider mb-6">Логистика · франчайзи-точка</div>
+          <div class="case-num">30-е → топ-5</div>
+          <div class="text-[#9BA8A0] text-[12px] mb-6 mt-1">место среди ~1000 франчайзи сети за 4,5 месяца</div>
+          <p class="text-[#9BA8A0] text-sm leading-relaxed mb-6">
+            Пересобраны система продаж и найм: с 6 человек в год — до конкурсного конвейера на 100+. Выручка точки удвоилась за 10 месяцев — следствие считаемых действий, а не «хорошего месяца».
+          </p>
+          <div class="case-transfer"><span class="arrow">→</span><span>В вашем бизнесе это модуль <b>«результат виден в цифрах каждый день»</b>.</span></div>
+        </div>
+
+        <div class="glass p-8 flex flex-col reveal rd2">
+          <img src="/clients/unibox.svg" alt="" class="case-logo" loading="lazy">
+          <div class="case-index mb-5">Роль / Руководитель продаж</div>
+          <h3 class="text-xl font-bold mb-1">UniBox</h3>
+          <div class="text-[#5F6B64] text-[11px] uppercase tracking-wider mb-6">E-com · фулфилмент</div>
+          <div class="case-num">1,5 → 12,3 млн</div>
+          <div class="text-[#9BA8A0] text-[12px] mb-6 mt-1">месячная выручка за 9 месяцев — рост ×8</div>
+          <p class="text-[#9BA8A0] text-sm leading-relaxed mb-6">
+            Из активов был только склад. Построен весь коммерческий контур: упаковка продукта, отдел из 8 человек за 90 дней, холодный лидген и партнёрский канал без рекламного бюджета.
+          </p>
+          <div class="case-transfer"><span class="arrow">→</span><span>Это ядро продукта Closery — <b>коммерческий контур с нуля за 90 дней</b>.</span></div>
+        </div>
+
+        <div class="glass p-8 flex flex-col reveal rd3">
+          <img src="/clients/marketguru.svg" alt="" class="case-logo" loading="lazy">
+          <div class="case-index mb-5">Роль / Коммерческий директор</div>
+          <h3 class="text-xl font-bold mb-1">MarketGuru</h3>
+          <div class="text-[#5F6B64] text-[11px] uppercase tracking-wider mb-6">SaaS для селлеров</div>
+          <div class="case-num">100 млн/мес</div>
+          <div class="text-[#9BA8A0] text-[12px] mb-6 mt-1">рекорд компании, не покорявшийся 3 года</div>
+          <p class="text-[#9BA8A0] text-sm leading-relaxed mb-6">
+            Выращены 3 РОПа и поставлена единая методология: конверсия отдела из Zoom-аудита в оплату — 34%, шесть месяцев подряд рекордов по выручке. Система работает без автора.
+          </p>
+          <div class="case-transfer"><span class="arrow">→</span><span>Та же механика — <b>из разбора в оплату</b> — строится в вашей воронке.</span></div>
+        </div>
+
+      </div>
+      <div class="max-w-3xl mx-auto mt-16 pt-10 text-left reveal rd3" style="border-top:1px solid rgba(52,211,153,.25)">
+        <div class="em-tag mb-6">Что это значит для вас</div>
+        <p class="text-2xl md:text-3xl font-extrabold text-white leading-snug mb-5">
+          Комдир с таким треком в найме —<br>
+          <span class="mono text-emerald-500">500 000+ ₽</span> в месяц.
+        </p>
+        <p class="text-[#9BA8A0] text-lg leading-relaxed">
+          Если найдёте. И если переманите.<br>
+          Здесь — тот же уровень: за <span class="mono text-[#E8EFEA]">90 дней</span>, за фикс, без риска найма.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── СРАВНЕНИЕ ─── -->
+  <section id="versus" class="section-padding px-4 md:px-8 border-t border-white/5">
+    <div class="max-w-6xl mx-auto cl-center">
+      <div class="text-center mb-6 reveal"><div class="em-tag">02 / Сравнение</div></div>
       <h2 class="cl-h2 reveal">
-        Штатный РОП и консультанты<br>не чинят продажи. Вот почему
+        РОП в найме —<br>или система за 90 дней
       </h2>
-      <div class="grid md:grid-cols-3 gap-6">
+      <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
 
         <div class="glass p-8 reveal rd1">
-          <h3 class="font-bold mb-8 text-[#8A968F] uppercase tracking-wider text-[10px]">Нанять РОПа в штат</h3>
+          <h3 class="font-bold mb-8 text-[#8A968F] uppercase tracking-wider text-[10px]">РОП в найме</h3>
           <div class="cmp-list text-[#9BA8A0]">
-            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>Искать 2–4 месяца, а ошибка выбора стоит полугода и сотен тысяч</span></div>
-            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>150–250 тыс. в месяц с налогами — вне зависимости от результата</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span><span class="mono text-[#E8EFEA]">6–8 млн ₽</span> в год: оклад 300–500 тыс., налоги, бонусы — вне зависимости от результата</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>2–4 месяца поиска и до полугода адаптации до первых результатов</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>Риск на вас: не приживётся — потеряны деньги, время и, бывает, команда</span></div>
             <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>Настраивает всё под себя и не документирует: уйдёт — система уйдёт с ним</span></div>
             <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>Проверить его уровень некому — собственник не РОП по профессии</span></div>
-            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>Один человек не заменит систему: без воронки и мотивации утонет и сильный</span></div>
           </div>
         </div>
 
-        <div class="glass p-8 reveal rd2">
-          <h3 class="font-bold mb-8 text-[#8A968F] uppercase tracking-wider text-[10px]">Консультанты и тренинги</h3>
-          <div class="cmp-list text-[#9BA8A0]">
-            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>Диагноз в красивой презентации — внедрять всё равно вам</span></div>
-            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>Не трогают CRM, регламенты и цифры руками — только «рекомендуют»</span></div>
-            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>Никого не нанимают: система без людей остаётся схемой на бумаге</span></div>
-            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>Гонорар за процесс: не взлетело — «вы плохо внедряли»</span></div>
-            <div class="cmp-row"><span class="cmp-ico cmp-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>После оплаты исчезают, ответственность размыта</span></div>
-          </div>
-        </div>
-
-        <div class="our-side p-8 reveal rd3">
-          <h3 class="font-bold mb-8 text-emerald-500 uppercase tracking-wider text-[10px]">Работа с&nbsp;&nbsp;<span class="text-white" style="letter-spacing:.2em">Closery</span></h3>
+        <div class="our-side p-8 reveal rd2">
+          <h3 class="font-bold mb-8 text-emerald-500 uppercase tracking-wider text-[10px]">Система за 90 дней</h3>
           <div class="cmp-list text-white">
-            <div class="cmp-row"><span class="cmp-ico cmp-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span>Строим руками: CRM, регламенты, мотивация, план — и сдаём по чек-листу</span></div>
-            <div class="cmp-row"><span class="cmp-ico cmp-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span>Людей ставим через конкурс: кандидаты продают ваш продукт вживую</span></div>
-            <div class="cmp-row"><span class="cmp-ico cmp-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span>Оплата поэтапно: этап не принят — не оплачен</span></div>
-            <div class="cmp-row"><span class="cmp-ico cmp-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span>Замена людей 3 месяца бесплатно и право выйти после любого этапа</span></div>
-            <div class="cmp-row"><span class="cmp-ico cmp-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span>Через 90 дней системой управляет ваш РОП, а не мы</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span><span class="mono text-emerald-500">~590 000 ₽</span> фикс за весь проект — меньше двух месяцев содержания РОПа</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span><span class="mono text-emerald-500">90 дней</span> до работающей системы — по графику вех, а не «как пойдёт»</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span>Риск на мне: этап не принят — не оплачен, выход после любого этапа</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span>Всё документировано: CRM, регламенты, мотивация, план — система остаётся у вас навсегда</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span>Уровень проверяется треком, а не собеседованием: CDEK, UniBox, MarketGuru</span></div>
           </div>
         </div>
 
       </div>
+      <p class="text-[#5F6B64] text-sm text-center mt-10 max-w-2xl mx-auto reveal rd3">
+        Консультанты и тренинги — не альтернатива: диагноз в презентации, внедрять всё равно вам. Здесь строят руками.
+      </p>
     </div>
   </section>
 
   <!-- ─── ТЕХНОЛОГИЯ: 90 ДНЕЙ ─── -->
   <section id="method" class="section-padding px-4 md:px-8">
     <div class="max-w-6xl mx-auto cl-center">
-      <div class="text-center mb-6 reveal"><div class="em-tag">02 / Технология</div></div>
+      <div class="text-center mb-6 reveal"><div class="em-tag">03 / Механизм</div></div>
       <h2 class="cl-h2 has-sub reveal">Как устроены 90 дней</h2>
       <p class="cl-sub text-[#9BA8A0] text-lg max-w-2xl reveal rd1">
         Четыре этапа. У каждого — измеримый результат и чек-лист приёмки.<br>
-        Один договор на весь проект; платежи привязаны к вехам, а не к обещаниям.
+        Платежи привязаны к вехам, а не к обещаниям. Не устроил этап — выходите.
       </p>
       <div class="grid md:grid-cols-2 gap-6 md:gap-10">
         <div class="glass p-8 reveal rd1">
@@ -863,48 +948,14 @@ html, body { background: #0B0F0D; }
     </div>
   </section>
 
-  <!-- ─── ДИАГНОСТИКА (МРТ) ─── -->
-  <section id="mri" class="section-padding px-4 md:px-8">
+  <!-- ─── СТРУКТУРА РИСКА ─── -->
+  <section id="guarantee" class="section-padding px-4 md:px-8">
     <div class="max-w-6xl mx-auto cl-center">
-      <div class="text-center mb-6 reveal"><div class="em-tag">03 / Диагностика · Бесплатно, без звонков</div></div>
-      <h2 class="cl-h2 has-sub reveal">Коммерческий МРТ: за 15 минут увидите,<br>сколько денег теряете</h2>
-      <p class="cl-sub text-[#9BA8A0] text-lg max-w-2xl reveal rd1">
-        Онлайн-диагностика шести систем бизнеса: маркетинг, продажи, команда, управление, экономика, стратегия. Отвечаете на вопросы — модель считает в реальном времени.
-      </p>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="glass p-8 reveal rd1">
-          <div class="case-num mb-4">0–100</div>
-          <h3 class="font-bold mb-3 text-white">Индекс зрелости</h3>
-          <p class="text-[#9BA8A0] text-sm leading-relaxed">Где ваш коммерческий блок относительно нормы рынка — по каждой из шести систем.</p>
-        </div>
-        <div class="glass p-8 reveal rd2">
-          <div class="case-num mb-4">₽/год</div>
-          <h3 class="font-bold mb-3 text-white">Потери в деньгах</h3>
-          <p class="text-[#9BA8A0] text-sm leading-relaxed">Финансовая модель считает недополученную прибыль по каждому найденному фактору — и цену каждого месяца ожидания.</p>
-        </div>
-        <div class="glass p-8 reveal rd3">
-          <div class="case-num mb-4">PDF</div>
-          <h3 class="font-bold mb-3 text-white">Отчёт остаётся у вас</h3>
-          <p class="text-[#9BA8A0] text-sm leading-relaxed">Главное ограничение роста, топ проблем с ценниками и рекомендации — в отчёте, который можно скачать и показать партнёру.</p>
-        </div>
-      </div>
-      <div class="text-center mt-12 reveal rd3">
-        <a href="/diagnostic"
-           class="cta-primary cta-solid bg-emerald-500 px-10 py-5 font-bold uppercase tracking-widest text-[11px] hover:bg-white transition-all">
-          Пройти диагностику →
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── ГАРАНТИЯ ─── -->
-  <section id="guarantee" class="section-padding px-4 md:px-8 border-t border-white/5">
-    <div class="max-w-6xl mx-auto cl-center">
-      <div class="text-center mb-6 reveal"><div class="em-tag">04 / Гарантия</div></div>
-      <h2 class="cl-h2 has-sub reveal">Гарантия</h2>
+      <div class="text-center mb-6 reveal"><div class="em-tag">Структура риска</div></div>
+      <h2 class="cl-h2 has-sub reveal">Вы не платите за обещания</h2>
       <p class="cl-sub text-[#9BA8A0] text-lg max-w-2xl reveal rd1">
         Выручку вам не гарантирует никто, кто не контролирует ваш продукт и цены. Кто обещает — уже заложил этот риск в цену вдвое.<br><br>
-        Мы письменно гарантируем то, что контролируем.
+        Я письменно гарантирую то, что контролирую.
       </p>
       <div class="grid md:grid-cols-3 gap-8">
 
@@ -920,7 +971,7 @@ html, body { background: #0B0F0D; }
           <div class="case-num mb-4">3 мес</div>
           <h3 class="font-bold mb-3 text-white">Бесплатная замена людей</h3>
           <p class="text-[#9BA8A0] text-sm leading-relaxed">
-            Нанятый через конкурс уходит или не справляется — подбираем замену за наш счёт, без доплат. Консультанты такого не дают: им нечем.
+            Нанятый через конкурс уходит или не справляется — подбираю замену за свой счёт, без доплат. Консультанты такого не дают: им нечем.
           </p>
         </div>
 
@@ -936,92 +987,41 @@ html, body { background: #0B0F0D; }
     </div>
   </section>
 
-  <!-- ─── КЕЙСЫ ─── -->
-  <section id="cases" class="section-padding px-4 md:px-8">
+  <!-- ─── РАЗБОР ─── -->
+  <section id="audit" class="section-padding px-4 md:px-8 border-t border-white/5">
     <div class="max-w-6xl mx-auto cl-center">
-      <div class="text-center mb-6 reveal"><div class="em-tag">05 / Опыт</div></div>
-      <h2 class="cl-h2 has-sub reveal">Три проекта. Три точки входа.<br>Одна методология</h2>
+      <div class="text-center mb-6 reveal"><div class="em-tag">04 / Разбор · 50 000 ₽</div></div>
+      <h2 class="cl-h2 has-sub reveal">Начните с разбора: где теряются деньги —<br>в цифрах, не в ощущениях</h2>
       <p class="cl-sub text-[#9BA8A0] text-lg max-w-2xl reveal rd1">
-        Кризис, ноль и масштабирование — построено руками той же системой:<br>цифры плюс люди. Не советами.
+        <span class="mono text-[#E8EFEA]">51 вопрос</span> по шести системам бизнеса: маркетинг, продажи, команда, управление, экономика, стратегия.<br>
+        Прохожу вместе с вами — на выходе финмодель, а не мнение.
       </p>
       <div class="grid md:grid-cols-3 gap-8">
-
-        <div class="glass p-8 flex flex-col reveal rd1">
-          <img src="/clients/cdek.svg" alt="" class="case-logo" loading="lazy">
-          <div class="case-index mb-5">Case 01 / Антикризис</div>
-          <h3 class="text-xl font-bold mb-1">CDEK</h3>
-          <div class="text-[#5F6B64] text-[11px] uppercase tracking-wider mb-6">Логистика · франчайзи-точка</div>
-          <div class="case-num">30-е → топ-5</div>
-          <div class="text-[#9BA8A0] text-[12px] mb-6 mt-1">место в рейтинге сети за 4,5 месяца</div>
-          <p class="text-[#9BA8A0] text-sm leading-relaxed mb-6">
-            Пересобрана система продаж и найм: с 6 человек в год — до конвейера на 100+. Результат стал следствием считаемых действий, а не «хорошего месяца». ×2 к выручке за 10 месяцев.
-          </p>
-          <div class="case-transfer"><span class="arrow">→</span><span>В вашем бизнесе это модуль <b>«результат виден в цифрах каждый день»</b>.</span></div>
+        <div class="glass p-8 reveal rd1">
+          <div class="case-num mb-4">51 вопрос</div>
+          <h3 class="font-bold mb-3 text-white">Полная картина</h3>
+          <p class="text-[#9BA8A0] text-sm leading-relaxed">Воронка, конверсии, экономика, команда и управление — вся коммерция компании на одном экране. Готовить ничего не нужно, только ваши цифры.</p>
         </div>
-
-        <div class="glass p-8 flex flex-col reveal rd2">
-          <img src="/clients/unibox.svg" alt="" class="case-logo" loading="lazy">
-          <div class="case-index mb-5">Case 02 / С нуля</div>
-          <h3 class="text-xl font-bold mb-1">UniBox</h3>
-          <div class="text-[#5F6B64] text-[11px] uppercase tracking-wider mb-6">E-com · фулфилмент</div>
-          <div class="case-num">1,5 → 12,3 млн</div>
-          <div class="text-[#9BA8A0] text-[12px] mb-6 mt-1">месячная выручка за 9 месяцев — рост ×8</div>
-          <p class="text-[#9BA8A0] text-sm leading-relaxed mb-6">
-            Из активов был только склад. Построен весь коммерческий контур: упаковка продукта, отдел из 8 человек за 90 дней, холодный лидген и партнёрский канал без рекламного бюджета.
-          </p>
-          <div class="case-transfer"><span class="arrow">→</span><span>Это ядро продукта Closery — <b>коммерческий блок с нуля за 90 дней</b>.</span></div>
+        <div class="glass p-8 reveal rd2">
+          <div class="case-num mb-4">₽/год</div>
+          <h3 class="font-bold mb-3 text-white">Финмодель потерь</h3>
+          <p class="text-[#9BA8A0] text-sm leading-relaxed">Сколько недополучаете в год по каждому найденному фактору — и во что обходится каждый месяц ожидания.</p>
         </div>
-
-        <div class="glass p-8 flex flex-col reveal rd3">
-          <img src="/clients/marketguru.svg" alt="" class="case-logo" loading="lazy">
-          <div class="case-index mb-5">Case 03 / Масштабирование</div>
-          <h3 class="text-xl font-bold mb-1">MarketGuru</h3>
-          <div class="text-[#5F6B64] text-[11px] uppercase tracking-wider mb-6">SaaS для селлеров</div>
-          <div class="case-num">100 млн</div>
-          <div class="text-[#9BA8A0] text-[12px] mb-6 mt-1">взята планка, не покорявшаяся компании 3 года</div>
-          <p class="text-[#9BA8A0] text-sm leading-relaxed mb-6">
-            Выращены 3 РОПа и поставлена единая методология: конверсия отдела из Zoom-аудита в оплату — 34%, шесть месяцев подряд рекордов по выручке. Система работает без автора.
-          </p>
-          <div class="case-transfer"><span class="arrow">→</span><span>Та же механика — <b>из диагностики в оплату</b> — строится в вашей воронке.</span></div>
+        <div class="glass p-8 reveal rd3">
+          <div class="case-num mb-4">PDF</div>
+          <h3 class="font-bold mb-3 text-white">План на 90 дней</h3>
+          <p class="text-[#9BA8A0] text-sm leading-relaxed">Что чинить первым и что это даст. Отчёт остаётся у вас — вне зависимости от того, работаем ли дальше.</p>
         </div>
-
       </div>
-    </div>
-  </section>
-
-  <!-- ─── СТЕНА РЕЗУЛЬТАТОВ ─── -->
-  <section id="results" class="section-padding px-4 md:px-8 border-t border-white/5">
-    <div class="max-w-6xl mx-auto cl-center">
-      <div class="text-center mb-6 reveal"><div class="em-tag">Результаты в цифрах</div></div>
-      <h2 class="cl-h2 has-sub reveal">След системы — суммарно</h2>
-      <p class="cl-sub text-[#9BA8A0] text-lg max-w-2xl reveal rd1">
-        Не обещания в презентации, а построенное руками по одной методологии: цифры плюс люди.
+      <p class="text-[#E8EFEA] text-center mt-12 leading-relaxed reveal rd3">
+        Разбор — <span class="mono font-bold">50 000 ₽</span>. При контракте на систему идут в зачёт.<br>
+        <span class="text-[#9BA8A0] text-sm">Формат и смету проекта определяем после разбора.</span>
       </p>
-      <div class="results-grid reveal rd1">
-        <div class="result-cell">
-          <div class="result-num"><span class="pre">≈</span><span data-target="1" data-suffix=" млрд ₽">0</span></div>
-          <div class="result-cap">Суммарная выручка построенных отделов</div>
-        </div>
-        <div class="result-cell">
-          <div class="result-num"><span data-target="8" data-suffix="×">0</span></div>
-          <div class="result-cap">Рост выручки UniBox за 9 месяцев</div>
-        </div>
-        <div class="result-cell">
-          <div class="result-num"><span data-target="100" data-suffix=" млн">0</span></div>
-          <div class="result-cap">Планка MarketGuru, не покорявшаяся 3 года</div>
-        </div>
-        <div class="result-cell">
-          <div class="result-num"><span data-target="12">0</span></div>
-          <div class="result-cap">Отделов продаж построено с нуля</div>
-        </div>
-        <div class="result-cell">
-          <div class="result-num"><span data-target="34" data-suffix="%">0</span></div>
-          <div class="result-cap">Конверсия из аудита в оплату</div>
-        </div>
-        <div class="result-cell">
-          <div class="result-num"><span data-target="90" data-suffix=" дней">0</span></div>
-          <div class="result-cap">Полный цикл коммерческого блока под ключ</div>
-        </div>
+      <div class="text-center mt-10 reveal rd3">
+        <a href="#cta"
+           class="cta-primary cta-solid bg-emerald-500 px-10 py-5 font-bold uppercase tracking-widest text-[11px] hover:bg-white transition-all">
+          Записаться на разбор →
+        </a>
       </div>
     </div>
   </section>
@@ -1030,11 +1030,11 @@ html, body { background: #0B0F0D; }
   <section id="founder" class="section-padding px-4 md:px-8 border-t border-white/5">
     <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
       <div class="reveal">
-        <div class="em-tag mb-6">06 / Основатель</div>
+        <div class="em-tag mb-6">05 / Основатель</div>
         <h2 class="cl-h2 reveal">Кто строит вашу систему</h2>
         <p class="text-[#9BA8A0] leading-relaxed mb-6">
-          Более 10 лет в продажах. Последние 5 — строю коммерческие блоки под ключ:
-          от воронки и CRM до людей и управления.<br><br>
+          Более 10 лет в продажах. Роли — коммерческий директор и руководитель продаж:
+          CDEK, UniBox, MarketGuru.<br><br>
           Лично выстроил и оптимизировал отделы продаж в самых разных сегментах —
           от высокотехнологичного IT-сектора до промышленного производства.
           На позиции выведено 8 РОПов и 2 коммерческих директора.
@@ -1046,16 +1046,16 @@ html, body { background: #0B0F0D; }
         </p>
         <div class="stat-row pt-6 border-t border-white/10">
           <div>
-            <div class="stat-num text-3xl md:text-4xl mb-1 whitespace-nowrap">≈1 млрд</div>
-            <div class="text-[#5F6B64] text-[10px] uppercase tracking-wider leading-snug">Выручка построенных<br>отделов</div>
+            <div class="stat-num text-3xl md:text-4xl mb-1 whitespace-nowrap">топ-5</div>
+            <div class="text-[#5F6B64] text-[10px] uppercase tracking-wider leading-snug">Филиал CDEK<br>в рейтинге сети</div>
           </div>
           <div style="text-align:center">
-            <div class="stat-num text-3xl md:text-4xl mb-1 stat-val" data-target="12">12</div>
-            <div class="text-[#5F6B64] text-[10px] uppercase tracking-wider leading-snug">Отделов продаж<br>построено</div>
+            <div class="stat-num text-3xl md:text-4xl mb-1 whitespace-nowrap">100 млн</div>
+            <div class="text-[#5F6B64] text-[10px] uppercase tracking-wider leading-snug">Рекорд MarketGuru<br>за месяц, ₽</div>
           </div>
           <div>
-            <div class="stat-num text-3xl md:text-4xl mb-1 whitespace-nowrap stat-val" data-target="5" data-suffix=" лет">5 лет</div>
-            <div class="text-[#5F6B64] text-[10px] uppercase tracking-wider leading-snug">Системно строю<br>команды</div>
+            <div class="stat-num text-3xl md:text-4xl mb-1 whitespace-nowrap">×8</div>
+            <div class="text-[#5F6B64] text-[10px] uppercase tracking-wider leading-snug">Рост выручки UniBox<br>за 9 месяцев</div>
           </div>
         </div>
       </div>
@@ -1080,43 +1080,47 @@ html, body { background: #0B0F0D; }
     </div>
   </section>
 
-  <!-- ─── ФОРМАТЫ ─── -->
-  <section id="formats" class="section-padding px-4 md:px-8 border-t border-white/5">
-    <div class="max-w-6xl mx-auto cl-center">
-      <div class="text-center mb-6 reveal"><div class="em-tag">07 / Форматы</div></div>
-      <h2 class="cl-h2 has-sub reveal">Форматы работы</h2>
-      <p class="cl-sub text-[#9BA8A0] text-lg max-w-2xl reveal rd1">
-        Точную смету считаем после диагностики — половине компаний не нужен весь проект.<br>
-        Один договор, одна цена. Оплата — по графику этапов, а не всё вперёд.
-      </p>
-      <div class="grid md:grid-cols-3 gap-8 pt-4 fmt-grid">
+  <!-- ─── FAQ ─── -->
+  <section id="faq" class="section-padding px-4 md:px-8 border-t border-white/5">
+    <div class="max-w-3xl mx-auto">
+      <div class="mb-6 reveal"><div class="em-tag">Вопросы</div></div>
+      <h2 class="cl-h2 reveal" style="text-align:left">Что спрашивают перед разбором</h2>
+      <div class="mt-12 reveal rd1">
 
-        <div class="glass p-8 reveal rd1">
-          <h3 class="font-bold mb-3 text-white text-lg">Сопровождение</h3>
-          <div class="text-[#5F6B64] text-[10px] uppercase tracking-wider mb-6 mono">Для тех, кто строит сам</div>
-          <p class="text-[#9BA8A0] text-sm leading-relaxed mb-6">
-            Еженедельная стратегическая сессия, разборы решений и контроль метрик. Внедряете своими руками — мы ведём по маршруту и не даём свернуть.
-          </p>
-          <div class="fmt-foot dash-top pt-4 text-[#5F6B64] text-[10px] uppercase tracking-wider mono">Ежемесячный формат</div>
-        </div>
+        <details class="faq-item">
+          <summary><span class="faq-idx">01</span><span class="faq-q">С какими компаниями вы работаете?</span><span class="faq-plus">+</span></summary>
+          <div class="faq-a">Производственные и B2B-компании с выручкой от <span class="mono">3 млн ₽</span> в месяц. Если ваш случай другой — обсудим на созвоне: беру не всех, и это взаимно честно.</div>
+        </details>
 
-        <div class="our-side fmt-card p-8 reveal rd2">
-          <h3 class="font-bold mb-3 text-white text-lg">Коммерческий блок · 90 дней</h3>
-          <div class="text-emerald-500 text-[10px] uppercase tracking-wider mb-6 mono">Флагман</div>
-          <p class="text-[#C4CFC8] text-sm leading-relaxed mb-6">
-            Все четыре этапа под ключ: архитектура, фундамент, люди через конкурс, разгон. Оплата поэтапно, каждый этап — по чек-листу приёмки. Результат — система, которой управляет ваш РОП.
-          </p>
-          <div class="fmt-foot dash-top pt-4 text-[#9BA8A0] text-[10px] uppercase tracking-wider mono">Оплата траншами по вехам приёмки</div>
-        </div>
+        <details class="faq-item">
+          <summary><span class="faq-idx">02</span><span class="faq-q">У нас нет отдела продаж вообще. Подойдёт?</span><span class="faq-plus">+</span></summary>
+          <div class="faq-a">Да. UniBox строился с нуля — из активов был только склад, через <span class="mono">9 месяцев</span> выручка выросла в <span class="mono">8 раз</span>. Этап «Люди через конкурс» закрывает найм: кандидаты продают ваш продукт вживую, вы видите навык до выхода человека.</div>
+        </details>
 
-        <div class="glass p-8 reveal rd3">
-          <h3 class="font-bold mb-3 text-white text-lg">Под ключ+</h3>
-          <div class="text-[#5F6B64] text-[10px] uppercase tracking-wider mb-6 mono">Максимум скорости</div>
-          <p class="text-[#9BA8A0] text-sm leading-relaxed mb-6">
-            Флагман, расширенный найм — РОП и команда менеджеров — и три месяца сопровождения после сдачи системы.
-          </p>
-          <div class="fmt-foot dash-top pt-4 text-[#5F6B64] text-[10px] uppercase tracking-wider mono">Ограничено: 1 проект в квартал</div>
-        </div>
+        <details class="faq-item">
+          <summary><span class="faq-idx">03</span><span class="faq-q">Что я получу за 50 000 ₽?</span><span class="faq-plus">+</span></summary>
+          <div class="faq-a"><span class="mono">51 вопрос</span> по шести системам бизнеса, финмодель потерь в рублях и план на <span class="mono">90 дней</span> — в PDF, который остаётся у вас. При контракте на систему эти <span class="mono">50 000 ₽</span> идут в зачёт.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary><span class="faq-idx">04</span><span class="faq-q">Сколько стоит проект целиком?</span><span class="faq-plus">+</span></summary>
+          <div class="faq-a">Ориентир — <span class="mono">~590 000 ₽</span> фикс за 90 дней, оплата по этапам. Точная смета — после разбора: половине компаний не нужен весь проект, и это выяснится до того, как вы заплатите за лишнее.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary><span class="faq-idx">05</span><span class="faq-q">Кто решает, принят этап или нет?</span><span class="faq-plus">+</span></summary>
+          <div class="faq-a">Вы — по чек-листу приёмки, который фиксируется в договоре до старта: сделки в CRM, подписанные регламенты, вышедшие люди, ритм отдела. Критерии измеримые, поэтому спорить не о чем: этап либо соответствует, либо нет — и тогда он не оплачивается.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary><span class="faq-idx">06</span><span class="faq-q">Вы гарантируете результат?</span><span class="faq-plus">+</span></summary>
+          <div class="faq-a">Выручку не гарантирует никто, кто не контролирует ваш продукт и цены, — кто обещает, тот закладывает риск в цену вдвое. Я гарантирую то, что контролирую: оплату по этапам, замену людей <span class="mono">3 месяца</span> бесплатно и выход из договора без штрафов.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary><span class="faq-idx">07</span><span class="faq-q">Кто будет делать работу?</span><span class="faq-plus">+</span></summary>
+          <div class="faq-a">Лично я — без передачи джунам и «команды аналитиков». Поэтому беру не больше трёх новых проектов в месяц.</div>
+        </details>
 
       </div>
     </div>
@@ -1125,11 +1129,11 @@ html, body { background: #0B0F0D; }
   <!-- ─── CTA ─── -->
   <section id="cta" class="py-24 px-4 md:px-8 text-center border-t border-white/5" style="background:linear-gradient(180deg, rgba(52,211,153,.05), rgba(52,211,153,.015))">
     <div class="max-w-xl mx-auto">
-      <div class="em-tag mb-6 reveal">08 / Старт</div>
-      <h2 class="cl-h2 reveal">Начнём с разбора<br>вашей воронки</h2>
+      <div class="em-tag mb-6 reveal">06 / Старт</div>
+      <h2 class="cl-h2 reveal">Запись на разбор</h2>
       <p class="text-[#9BA8A0] mb-12 reveal rd1">
-        Личный разбор от основателя в реальном времени: пройдём по вашим цифрам, покажу, где теряются деньги и что чинить первым.<br><br>
-        Заберёте пошаговый план в документе — он ваш вне зависимости от того, будем ли работать дальше.<br><br>
+        Разбор — <span class="mono text-[#E8EFEA]">50 000 ₽</span>: 51 вопрос, финмодель потерь и план на <span class="mono">90 дней</span> в PDF. При контракте на систему — в зачёт.<br><br>
+        Оставьте контакты — свяжусь, отвечу на вопросы и согласуем время.<br><br>
         Беру не больше трёх новых проектов в месяц.
       </p>
 
@@ -1171,7 +1175,7 @@ html, body { background: #0B0F0D; }
           <span class="cl-txt">Я даю согласие на обработку моих персональных данных и ознакомлен(а) с <a href="/policy" target="_blank" onclick="event.stopPropagation()">Политикой обработки персональных данных</a></span>
         </label>
 
-        <button id="cl-submit" type="button">Забронировать разбор</button>
+        <button id="cl-submit" type="button">Записаться на разбор</button>
         <div id="cl-msg"></div>
 
       </div>
@@ -1185,7 +1189,7 @@ html, body { background: #0B0F0D; }
 
       <a href="#" onclick="event.preventDefault();window.scrollTo({top:0,behavior:'smooth'})" class="text-center md:text-left block">
         <div class="logo-btn font-bold uppercase text-sm tracking-[.2em] mb-2" style="color:#fff"><img src="/mark-transparent.svg" alt="" width="18" height="18" style="flex:none">Closery</div>
-        <div class="text-[#5F6B64] text-[11px] uppercase tracking-[.22em]">Коммерческие блоки под ключ</div>
+        <div class="text-[#5F6B64] text-[11px] uppercase tracking-[.22em]">Так продают лидеры</div>
       </a>
 
       <div class="flex flex-col items-center md:items-end gap-4">
@@ -1193,7 +1197,7 @@ html, body { background: #0B0F0D; }
           <a href="mailto:privacy@closery.ru" class="cl-foot text-xs tracking-[.05em] transition-colors">privacy@closery.ru</a>
           <a href="https://t.me/klimenko_prod" class="cl-foot text-xs uppercase tracking-[.18em] transition-colors">Telegram</a>
           <a href="https://closery.ru/policy" class="cl-foot text-xs uppercase tracking-[.18em] transition-colors">Политика&nbsp;конфиденциальности</a>
-          <a href="https://closery.ru/policy" class="cl-foot text-xs uppercase tracking-[.18em] transition-colors">Публичная&nbsp;оферта</a>
+          <a href="https://closery.ru/offer" class="cl-foot text-xs uppercase tracking-[.18em] transition-colors">Публичная&nbsp;оферта</a>
         </div>
         <span class="text-[#5F6B64] text-[11px] tracking-wider text-center md:text-right">© 2026 Closery · ИП Клименко Николай Витальевич · ИНН 632200739609 · ОГРНИП 326632700116702 · г. Тольятти</span>
       </div>
@@ -1443,7 +1447,7 @@ html, body { background: #0B0F0D; }
     consentEl.checked = false;
     consentLabel.classList.remove('cl-invalid');
     btnEl.disabled    = false;
-    btnEl.textContent = 'Забронировать разбор';
+    btnEl.textContent = 'Записаться на разбор';
   }
 
   btnEl.addEventListener('click', function () {
@@ -1498,7 +1502,7 @@ html, body { background: #0B0F0D; }
     })
     .catch(function () {
       btnEl.disabled    = false;
-      btnEl.textContent = 'Забронировать разбор';
+      btnEl.textContent = 'Записаться на разбор';
       showMsg('Ошибка отправки. Напишите нам напрямую в Telegram', 'error');
     });
   });
