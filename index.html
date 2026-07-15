@@ -594,7 +594,6 @@ html, body { background: #0B0F0D; }
 }
 
 /* Магнитная кнопка */
-.cta-solid { will-change: transform; }
 
 /* ═══ ГЕРОЙ-ВИДЖЕТ «КОНСОЛЬ» (Workstream B) ═══ */
 .hero-grid { display: grid; grid-template-columns: minmax(0,1fr); gap: 3rem; align-items: center; }
@@ -722,7 +721,7 @@ html, body { background: #0B0F0D; }
     <div class="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-[.2em]">
       <a href="#track"      class="nav-lnk">Трек</a>
       <a href="#versus"     class="nav-lnk">Сравнение</a>
-      <a href="#method"     class="nav-lnk">Механизм</a>
+      <a href="#method"     class="nav-lnk">Методология</a>
       <a href="#audit"      class="nav-lnk">Разбор</a>
       <a href="/dna"        class="nav-lnk">ДНК</a>
       <a href="#founder"    class="nav-lnk">Основатель</a>
@@ -744,7 +743,7 @@ html, body { background: #0B0F0D; }
   <div id="cl-mob-menu" role="navigation">
     <a href="#track"      class="nav-lnk" onclick="closeMobMenu()">Трек</a>
     <a href="#versus"     class="nav-lnk" onclick="closeMobMenu()">Сравнение</a>
-    <a href="#method"     class="nav-lnk" onclick="closeMobMenu()">Механизм</a>
+    <a href="#method"     class="nav-lnk" onclick="closeMobMenu()">Методология</a>
     <a href="#audit"      class="nav-lnk" onclick="closeMobMenu()">Разбор</a>
     <a href="/dna"        class="nav-lnk" onclick="closeMobMenu()">ДНК</a>
     <a href="#founder"    class="nav-lnk" onclick="closeMobMenu()">Основатель</a>
@@ -763,8 +762,8 @@ html, body { background: #0B0F0D; }
           <span class="hero-line"><span>за 90 дней</span></span>
         </h1>
         <div class="text-lg text-[#9BA8A0] max-w-xl mb-12 leading-relaxed reveal rd2 space-y-5">
-          <p>Вилка простая: РОП в найме за <span class="mono text-[#E8EFEA]">6–8 млн ₽</span> в год — или система за <span class="mono text-[#E8EFEA]">90 дней</span>, за фикс.</p>
-          <p>РОП — это <span class="mono">2–4 месяца</span> подбора, адаптация до полугода и риск, что не приживётся. Система — <span class="text-[#E8EFEA] font-semibold">этап не принят — не оплачен</span>, выход после любого этапа.</p>
+          <p>Вилка простая: РОП в найме за <span class="mono text-[#E8EFEA]">6–8 млн ₽</span> в год — или система за <span class="mono text-[#E8EFEA]">90 дней</span>.</p>
+          <p>РОП — это <span class="mono">2–4 месяца</span> подбора, адаптация до полугода и риск, что не приживётся. Система начинает продавать с первого месяца — и остаётся у вас навсегда.</p>
           <p>Уровень подтверждён треком: <span class="text-[#E8EFEA]">CDEK · UniBox · MarketGuru</span>.</p>
         </div>
         <div class="reveal rd3 flex flex-wrap items-center gap-4">
@@ -824,7 +823,7 @@ html, body { background: #0B0F0D; }
 
         <div class="glass p-8 flex flex-col reveal rd1">
           <img src="/clients/cdek.svg" alt="" class="case-logo" loading="lazy">
-          <div class="case-index mb-5">Роль / Руководитель продаж</div>
+          <div class="case-index mb-5">Роль / Коммерческий директор</div>
           <h3 class="text-xl font-bold mb-1">CDEK</h3>
           <div class="text-[#5F6B64] text-[11px] uppercase tracking-wider mb-6">Логистика · франчайзи-точка</div>
           <div class="case-num">30-е → топ-5</div>
@@ -837,7 +836,7 @@ html, body { background: #0B0F0D; }
 
         <div class="glass p-8 flex flex-col reveal rd2">
           <img src="/clients/unibox.svg" alt="" class="case-logo" loading="lazy">
-          <div class="case-index mb-5">Роль / Руководитель продаж</div>
+          <div class="case-index mb-5">Роль / Коммерческий директор</div>
           <h3 class="text-xl font-bold mb-1">UniBox</h3>
           <div class="text-[#5F6B64] text-[11px] uppercase tracking-wider mb-6">E-com · фулфилмент</div>
           <div class="case-num">1,5 → 12,3 млн</div>
@@ -850,7 +849,7 @@ html, body { background: #0B0F0D; }
 
         <div class="glass p-8 flex flex-col reveal rd3">
           <img src="/clients/marketguru.svg" alt="" class="case-logo" loading="lazy">
-          <div class="case-index mb-5">Роль / Коммерческий директор</div>
+          <div class="case-index mb-5">Роль / Руководитель продаж</div>
           <h3 class="text-xl font-bold mb-1">MarketGuru</h3>
           <div class="text-[#5F6B64] text-[11px] uppercase tracking-wider mb-6">SaaS для селлеров</div>
           <div class="case-num">100 млн/мес</div>
@@ -899,7 +898,7 @@ html, body { background: #0B0F0D; }
         <div class="our-side p-8 reveal rd2">
           <h3 class="font-bold mb-8 text-emerald-500 uppercase tracking-wider text-[10px]">Система за 90 дней</h3>
           <div class="cmp-list text-white">
-            <div class="cmp-row"><span class="cmp-ico cmp-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span><span class="mono text-emerald-500">~590 000 ₽</span> фикс за весь проект — меньше двух месяцев содержания РОПа</span></div>
+            <div class="cmp-row"><span class="cmp-ico cmp-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span>Фикс за весь проект — кратно меньше года содержания РОПа, оплата по этапам</span></div>
             <div class="cmp-row"><span class="cmp-ico cmp-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span><span class="mono text-emerald-500">90 дней</span> до работающей системы — по графику вех, а не «как пойдёт»</span></div>
             <div class="cmp-row"><span class="cmp-ico cmp-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span>Риск на мне: этап не принят — не оплачен, выход после любого этапа</span></div>
             <div class="cmp-row"><span class="cmp-ico cmp-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span>Всё документировано: CRM, регламенты, мотивация, план — система остаётся у вас навсегда</span></div>
@@ -917,7 +916,7 @@ html, body { background: #0B0F0D; }
   <!-- ─── ТЕХНОЛОГИЯ: 90 ДНЕЙ ─── -->
   <section id="method" class="section-padding px-4 md:px-8">
     <div class="max-w-6xl mx-auto cl-center">
-      <div class="text-center mb-6 reveal"><div class="em-tag">03 / Механизм</div></div>
+      <div class="text-center mb-6 reveal"><div class="em-tag">03 / Методология</div></div>
       <h2 class="cl-h2 has-sub reveal">Как устроены 90 дней</h2>
       <p class="cl-sub text-[#9BA8A0] text-lg max-w-2xl reveal rd1">
         Четыре этапа. У каждого — измеримый результат и чек-лист приёмки.<br>
@@ -1014,8 +1013,8 @@ html, body { background: #0B0F0D; }
         </div>
       </div>
       <p class="text-[#E8EFEA] text-center mt-12 leading-relaxed reveal rd3">
-        Разбор — <span class="mono font-bold">50 000 ₽</span>. При контракте на систему идут в зачёт.<br>
-        <span class="text-[#9BA8A0] text-sm">Формат и смету проекта определяем после разбора.</span>
+        При контракте на систему стоимость разбора идёт в зачёт.<br>
+        <span class="text-[#9BA8A0] text-sm">Смету проекта определяем после разбора.</span>
       </p>
       <div class="text-center mt-10 reveal rd3">
         <a href="#cta"
@@ -1089,22 +1088,22 @@ html, body { background: #0B0F0D; }
 
         <details class="faq-item">
           <summary><span class="faq-idx">01</span><span class="faq-q">С какими компаниями вы работаете?</span><span class="faq-plus">+</span></summary>
-          <div class="faq-a">Производственные и B2B-компании с выручкой от <span class="mono">3 млн ₽</span> в месяц. Если ваш случай другой — обсудим на созвоне: беру не всех, и это взаимно честно.</div>
+          <div class="faq-a">Производственные и B2B-компании с выручкой от 3 млн ₽ в месяц. Если ваш случай другой — обсудим на созвоне: беру не всех, и это взаимно честно.</div>
         </details>
 
         <details class="faq-item">
           <summary><span class="faq-idx">02</span><span class="faq-q">У нас нет отдела продаж вообще. Подойдёт?</span><span class="faq-plus">+</span></summary>
-          <div class="faq-a">Да. UniBox строился с нуля — из активов был только склад, через <span class="mono">9 месяцев</span> выручка выросла в <span class="mono">8 раз</span>. Этап «Люди через конкурс» закрывает найм: кандидаты продают ваш продукт вживую, вы видите навык до выхода человека.</div>
+          <div class="faq-a">Да. UniBox строился с нуля — из активов был только склад, через 9 месяцев выручка выросла в 8 раз. Этап «Люди через конкурс» закрывает найм: кандидаты продают ваш продукт вживую, вы видите навык до выхода человека.</div>
         </details>
 
         <details class="faq-item">
-          <summary><span class="faq-idx">03</span><span class="faq-q">Что я получу за 50 000 ₽?</span><span class="faq-plus">+</span></summary>
-          <div class="faq-a"><span class="mono">51 вопрос</span> по шести системам бизнеса, финмодель потерь в рублях и план на <span class="mono">90 дней</span> — в PDF, который остаётся у вас. При контракте на систему эти <span class="mono">50 000 ₽</span> идут в зачёт.</div>
+          <summary><span class="faq-idx">03</span><span class="faq-q">Что входит в разбор?</span><span class="faq-plus">+</span></summary>
+          <div class="faq-a">51 вопрос по шести системам бизнеса, финмодель потерь в рублях и план на 90 дней — в PDF, который остаётся у вас. При контракте на систему стоимость разбора идёт в зачёт.</div>
         </details>
 
         <details class="faq-item">
           <summary><span class="faq-idx">04</span><span class="faq-q">Сколько стоит проект целиком?</span><span class="faq-plus">+</span></summary>
-          <div class="faq-a">Ориентир — <span class="mono">~590 000 ₽</span> фикс за 90 дней, оплата по этапам. Точная смета — после разбора: половине компаний не нужен весь проект, и это выяснится до того, как вы заплатите за лишнее.</div>
+          <div class="faq-a">Зависит от объёма — смету считаю после разбора, когда видно, что именно нужно строить. Половине компаний не нужен весь проект, и это выяснится до того, как вы заплатите за лишнее. Оплата — фикс, по этапам.</div>
         </details>
 
         <details class="faq-item">
@@ -1114,7 +1113,7 @@ html, body { background: #0B0F0D; }
 
         <details class="faq-item">
           <summary><span class="faq-idx">06</span><span class="faq-q">Вы гарантируете результат?</span><span class="faq-plus">+</span></summary>
-          <div class="faq-a">Выручку не гарантирует никто, кто не контролирует ваш продукт и цены, — кто обещает, тот закладывает риск в цену вдвое. Я гарантирую то, что контролирую: оплату по этапам, замену людей <span class="mono">3 месяца</span> бесплатно и выход из договора без штрафов.</div>
+          <div class="faq-a">Выручку не гарантирует никто, кто не контролирует ваш продукт и цены, — кто обещает, тот закладывает риск в цену вдвое. Я гарантирую то, что контролирую: оплату по этапам, замену людей 3 месяца бесплатно и выход из договора без штрафов.</div>
         </details>
 
         <details class="faq-item">
@@ -1132,7 +1131,7 @@ html, body { background: #0B0F0D; }
       <div class="em-tag mb-6 reveal">06 / Старт</div>
       <h2 class="cl-h2 reveal">Запись на разбор</h2>
       <p class="text-[#9BA8A0] mb-12 reveal rd1">
-        Разбор — <span class="mono text-[#E8EFEA]">50 000 ₽</span>: 51 вопрос, финмодель потерь и план на <span class="mono">90 дней</span> в PDF. При контракте на систему — в зачёт.<br><br>
+        Разбор — это видеосозвон по вашим цифрам: 51 вопрос, финмодель потерь и план на 90 дней в PDF, который остаётся у вас.<br><br>
         Оставьте контакты — свяжусь, отвечу на вопросы и согласуем время.<br><br>
         Беру не больше трёх новых проектов в месяц.
       </p>
@@ -1336,16 +1335,6 @@ html, body { background: #0B0F0D; }
       card.style.setProperty('--sy', ((e.clientY - r.top) / r.height * 100) + '%');
     }, { passive: true });
 
-    // Магнитные кнопки
-    document.querySelectorAll('.cta-solid').forEach(function (btn) {
-      btn.addEventListener('mousemove', function (e) {
-        var r = btn.getBoundingClientRect();
-        var mx = e.clientX - r.left - r.width / 2;
-        var my = e.clientY - r.top - r.height / 2;
-        btn.style.transform = 'translate(' + mx * 0.18 + 'px,' + my * 0.28 + 'px)';
-      });
-      btn.addEventListener('mouseleave', function () { btn.style.transform = ''; });
-    });
   }
 
   /* ─── ГЕРОЙ-ВИДЖЕТ: анимация «сканирования» (Workstream B) ─── */
