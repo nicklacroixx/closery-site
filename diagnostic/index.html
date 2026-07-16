@@ -330,7 +330,8 @@ kbd{border:1px solid var(--line);border-bottom-width:2px;padding:1px 6px;font-si
   }
   @page{margin:0; size:A4}
   body{background:var(--pr-paper)!important;background-image:none!important;color:var(--pr-ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .topbar,.shell,.toast,.modal-bg{display:none!important}
+  #cl-nav,#cl-mob-menu,.shell,.toast,.modal-bg{display:none!important;position:static!important}
+  body::after{display:none!important}
   .print-report{display:block;font-family:var(--font-body);color:var(--pr-ink)}
 
   /* ── Страница и общая структура ── */
@@ -1062,8 +1063,8 @@ const FinModel = {
       return {
         ratio, estMonthly, statedMonthly: revenue,
         text: ratio > 1
-          ? `Указанная выручка (${Fmt.money(revenue)}/мес) в ${ratio.toFixed(0)}× больше, чем даёт воронка новых лидов (${Fmt.money(leads)} лидов × ${conv}% × ${Fmt.money(check)} ≈ ${Fmt.money(estMonthly)}/мес). Разница за счёт повторных продаж возможна, но не в такое число раз — проверьте, не перепутана ли выручка за месяц с выручкой за год, или единицы измерения.`
-          : `Указанная выручка (${Fmt.money(revenue)}/мес) МЕНЬШЕ, чем должна давать одна только воронка новых лидов (${Fmt.money(leads)} лидов × ${conv}% × ${Fmt.money(check)} ≈ ${Fmt.money(estMonthly)}/мес). Это логически невозможно — проверьте лиды, конверсию, средний чек и выручку.`
+          ? `Указанная выручка (${Fmt.money(revenue)}/мес) в ${ratio.toFixed(0)}× больше, чем даёт воронка новых лидов (${leads} лидов × ${conv}% × ${Fmt.money(check)} ≈ ${Fmt.money(estMonthly)}/мес). Разница за счёт повторных продаж возможна, но не в такое число раз — проверьте, не перепутана ли выручка за месяц с выручкой за год, или единицы измерения.`
+          : `Указанная выручка (${Fmt.money(revenue)}/мес) МЕНЬШЕ, чем должна давать одна только воронка новых лидов (${leads} лидов × ${conv}% × ${Fmt.money(check)} ≈ ${Fmt.money(estMonthly)}/мес). Это логически невозможно — проверьте лиды, конверсию, средний чек и выручку.`
       };
     }
     return null;
