@@ -1931,10 +1931,80 @@ const Storage = {
   },
   clear(){ try{ localStorage.removeItem(C.STORAGE_KEY); }catch(e){} }
 };
+// Временный помощник для тестов: ?test=1 в URL сразу заполняет анкету
+// правдоподобными случайными данными и открывает финальный экран —
+// чтобы не проходить 45 вопросов заново при каждом обновлении страницы.
+// Безопасно для прод-пользователей: активируется только по явному параметру.
+const TestFill = {
+  companies: ['БукетЛенд','ТехноСклад','Атлант Логистик','Смарт Офис','Юнибокс','Гринхаус','Вектор Строй','Прайм Медиа'],
+  niches: ['Продажа цветов','Оптовая торговля стройматериалами','Логистика и доставка','B2B-услуги для офисов','E-com фулфилмент','Ландшафтный дизайн','Клининг для бизнеса','Digital-агентство'],
+  pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; },
+  int(min,max){ return Math.floor(min + Math.random()*(max-min+1)); },
+  textPool: ['Работаем с 2019 года, команда растёт постепенно.', 'Пока не сформулировано чётко.', 'Качество и скорость обработки заказа.'],
+  random(){
+    const a = {};
+    for (const q of QUESTIONS){
+      if (q.when && !q.when(a)) continue;
+      switch(q.type){
+        case 'text':
+          a[q.id] = q.id === 'company' ? this.pick(this.companies) : q.id === 'niche' ? this.pick(this.niches) : q.id === 'site' ? '' : 'Тест';
+          break;
+        case 'textarea':
+          a[q.id] = Math.random() > 0.3 ? this.pick(this.textPool) : '';
+          break;
+        case 'select':
+          a[q.id] = this.pick(q.options).v;
+          break;
+        case 'yesno':
+          a[q.id] = Math.random() > 0.45 ? 'yes' : 'no';
+          break;
+        case 'chips':
+          a[q.id] = q.options.filter(()=>Math.random() > 0.55).map(o=>o.v);
+          if (!a[q.id].length) a[q.id] = [this.pick(q.options).v];
+          break;
+        case 'percent':
+          a[q.id] = q.id === 'conversion' ? this.int(6,32) : q.id === 'repeat_pct' ? this.int(5,42) : q.id === 'margin' ? this.int(15,55) : this.int(50,150);
+          break;
+        case 'money':
+          if (q.id === 'avg_check') a[q.id] = this.int(2,50) * 1000;
+          else if (q.id === 'revenue') {
+            const leads = Number(a.leads_month)||20, conv = Number(a.conversion)||15, check = Number(a.avg_check)||10000;
+            const funnelMonthly = leads*conv/100*check;
+            a[q.id] = Math.round(funnelMonthly * (0.9 + Math.random()*4));
+          }
+          else if (q.id === 'profit') a[q.id] = Math.round(Number(a.revenue||100000) * (0.04 + Math.random()*0.22));
+          else if (Math.random() > 0.4) a[q.id] = this.int(1,80) * 1000;
+          else a[q.id] = '';
+          break;
+        case 'number':
+          if (q.id === 'leads_month') a[q.id] = this.int(4,180);
+          else if (q.id === 'managers') a[q.id] = this.int(0,12);
+          else if (q.id === 'headcount') a[q.id] = this.int(2,40);
+          else if (q.id === 'dialogs') a[q.id] = this.int(5,150);
+          else a[q.id] = this.int(1,20);
+          break;
+        default: break;
+      }
+    }
+    return a;
+  },
+  run(){
+    State.answers = this.random();
+    State.finished = true;
+    Storage.save();
+    document.getElementById('introScreen').style.display = 'none';
+    Final.show();
+  }
+};
 const App = {
   init(){
     Dashboard.init();
     FlowUI.init();
+
+    if (new URLSearchParams(location.search).get('test') === '1'){
+      TestFill.run();
+      return;
+    }
 
     document.getElementById('btnStart').onclick = ()=>{ Storage.clear(); State.reset(); FlowUI.start(); };
     document.getElementById('modalClose').onclick = ()=>document.getElementById('modalBg').classList.remove('open');
