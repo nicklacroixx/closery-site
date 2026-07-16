@@ -18,7 +18,7 @@
 <meta name="twitter:title" content="Closery — Коммерческий МРТ бизнеса">
 <meta name="twitter:description" content="Бесплатная диагностика коммерческого блока за 15 минут.">
 <meta name="twitter:image" content="https://closery.ru/mark-512.png">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet"><style>
 :root{
   --font-display:'Plus Jakarta Sans',sans-serif;
   --font-body:'Plus Jakarta Sans',sans-serif;
@@ -244,6 +244,10 @@ kbd{border:1px solid var(--line);border-bottom-width:2px;padding:1px 6px;font-si
 .loss-panel:hover{border-color:rgba(248,113,113,.5)}
 .loss-num{font-weight:800;font-size:clamp(28px,2.6vw,36px);color:var(--bad);letter-spacing:-.01em;line-height:1.1;text-shadow:0 0 24px rgba(248,113,113,.35)}
 .loss-sub{font-size:12px;color:var(--ink-2);margin-top:6px}
+.sanity-warn{margin-top:10px;padding:9px 11px;border-radius:10px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.35);font-size:11.5px;line-height:1.5;color:#fcd34d}
+.sanity-warn b{color:#fde68a}
+.sanity-warn.crit{background:rgba(248,113,113,.1);border-color:rgba(248,113,113,.4);color:#fca5a5}
+.sanity-warn.crit b{color:#fecaca}
 .loss-factors{margin-top:14px;display:flex;flex-direction:column;gap:7px}
 .loss-factor{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;color:var(--ink-2);border-top:1px dashed rgba(255,255,255,.08);padding-top:7px}
 .loss-factor b{color:var(--bad);font-weight:700;white-space:nowrap}
@@ -319,52 +323,130 @@ kbd{border:1px solid var(--line);border-bottom-width:2px;padding:1px 6px;font-si
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 .print-report{display:none}
 @media print{
-  @page{margin:12mm}
-  body{background:#fff!important;background-image:none!important;color:#16242E;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  :root{
+    --pr-paper:#FAFAF7; --pr-ink:#1A1D1B; --pr-ink-2:#5B655F; --pr-ink-3:#8B958E;
+    --pr-line:#E1E0DA; --pr-accent:#1E7A57; --pr-accent-soft:#EAF2ED;
+    --pr-bad:#A3271E; --pr-bad-soft:#F7EBE9; --pr-serif:'Fraunces',serif;
+  }
+  @page{margin:0; size:A4}
+  body{background:var(--pr-paper)!important;background-image:none!important;color:var(--pr-ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .topbar,.shell,.toast,.modal-bg{display:none!important}
-  .print-report{display:block;font-family:var(--font-body)}
-  .pr-page{page-break-after:always}
+  .print-report{display:block;font-family:var(--font-body);color:var(--pr-ink)}
+
+  /* ── Страница и общая структура ── */
+  .pr-page{page-break-after:always;background:var(--pr-paper);padding:16mm 16mm 14mm;min-height:277mm;box-sizing:border-box;display:flex;flex-direction:column;position:relative}
   .pr-page:last-child{page-break-after:auto}
-  .pr-band{background:#000;color:#fff;border-radius:16px;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-  .pr-band .logo{font-family:var(--font-display);font-weight:700;font-size:15px;letter-spacing:.06em}
-  .pr-band .logo span{display:block;font-family:var(--font-mono);font-weight:400;font-size:9px;letter-spacing:.24em;color:#6EE7B7;margin-top:5px}
-  .pr-band .date{font-family:var(--font-mono);font-size:9.5px;color:#9FB3BC;text-align:right;letter-spacing:.08em;line-height:1.7}
-  .pr-h1{font-family:var(--font-display);font-size:25px;font-weight:700;margin:0 0 4px}
-  .pr-sub{color:#5F7480;font-size:12px;margin-bottom:18px;font-family:var(--font-mono)}
-  .pr-hero{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;border:1px solid #DDE6E8;border-radius:16px;padding:22px 26px;margin-bottom:16px;background:#F5F9F9}
+  .pr-body{flex:1;display:flex;flex-direction:column;justify-content:center}
+  .pr-eyebrow{font-family:var(--font-body);font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--pr-accent)}
+
+  /* ── Обложка (страница 1) ── */
+  .pr-cover{padding:0;background:linear-gradient(155deg,#0C120F,#161D19 55%,#0C120F)}
+  .pr-cover .pr-cover-in{padding:22mm 18mm;height:277mm;box-sizing:border-box;display:flex;flex-direction:column;color:#fff;position:relative}
+  .pr-cover-top{display:flex;justify-content:space-between;align-items:flex-start}
+  .pr-cover-logo{font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:.05em}
+  .pr-cover-logo span{display:block;font-size:8.5px;font-weight:500;letter-spacing:.26em;color:#7FD9A8;margin-top:6px}
+  .pr-cover-meta{text-align:right;font-size:9.5px;color:#9FB0A7;letter-spacing:.05em;line-height:1.8}
+  .pr-cover-mid{flex:1;display:flex;flex-direction:column;justify-content:center;margin:20mm 0}
+  .pr-cover-kicker{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#7FD9A8;margin-bottom:16px}
+  .pr-cover-title{font-family:var(--pr-serif);font-weight:600;font-size:40px;line-height:1.12;letter-spacing:-.01em;margin-bottom:18px;max-width:150mm}
+  .pr-cover-company{font-family:var(--pr-serif);font-weight:400;font-style:italic;font-size:22px;color:#C9D6CE}
+  .pr-cover-sub{margin-top:6px;font-size:11px;color:#8FA096;letter-spacing:.03em}
+  .pr-cover-bottom{border-top:1px solid rgba(255,255,255,.14);padding-top:16px;display:flex;justify-content:space-between;align-items:flex-end}
+  .pr-cover-index{display:flex;align-items:baseline;gap:10px}
+  .pr-cover-index b{font-family:var(--pr-serif);font-size:34px;font-weight:600}
+  .pr-cover-index span{font-size:10px;color:#9FB0A7;letter-spacing:.04em;max-width:110px;line-height:1.4}
+  .pr-cover-confid{font-size:8.5px;color:#6E7D74;letter-spacing:.05em;max-width:140px;text-align:right;line-height:1.6}
+
+  /* ── Повторяющаяся шапка/подвал внутренних страниц ── */
+  .pr-h{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--pr-line);padding-bottom:10px;margin-bottom:20px}
+  .pr-h-l{display:flex;align-items:baseline;gap:9px}
+  .pr-h-l b{font-family:var(--font-display);font-weight:800;font-size:11px;letter-spacing:.03em}
+  .pr-h-l span{font-size:9.5px;color:var(--pr-ink-3);letter-spacing:.03em}
+  .pr-h-r{font-size:9px;color:var(--pr-ink-3);letter-spacing:.06em;text-transform:uppercase}
+  .pr-f{margin-top:auto;padding-top:12px;border-top:1px solid var(--pr-line);display:flex;justify-content:space-between;font-size:8px;color:var(--pr-ink-3);letter-spacing:.04em}
+
+  /* ── Типографика разделов ── */
+  .pr-tag{font-size:9.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--pr-accent);margin-bottom:8px}
+  .pr-title{font-family:var(--pr-serif);font-weight:600;font-size:25px;letter-spacing:-.01em;margin-bottom:6px;line-height:1.15}
+  .pr-lede{font-size:12px;color:var(--pr-ink-2);max-width:150mm;margin-bottom:20px;line-height:1.55}
+
+  /* ── Executive summary ── */
+  .pr-sum-grid{display:grid;grid-template-columns:120px 1fr;gap:24px;align-items:center;margin-bottom:20px}
   .pr-gauge{width:120px;height:120px;position:relative;flex:none}
   .pr-gauge svg{transform:rotate(-90deg);display:block}
-  .pr-gauge b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:30px;font-weight:900}
-  .pr-kicker{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.22em;color:#8AA0AA;margin-bottom:5px;text-transform:uppercase}
-  .pr-verdict{font-family:var(--font-display);font-weight:700;font-size:17px;margin-bottom:6px}
-  .pr-vdesc{font-size:12px;color:#4E626D;max-width:440px}
-  .pr-constraint{margin-top:10px;font-size:11.5px;color:#33454F;border-top:1px dashed #D6E0E3;padding-top:9px}
-  .pr-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .pr-card{border:1px solid #DDE6E8;border-radius:14px;padding:16px 18px;background:#fff}
-  .pr-h2{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#1E7A57;margin:0 0 12px;display:flex;align-items:center;gap:8px}
-  .pr-h2::after{content:"";flex:1;height:1px;background:#DDE6E8}
-  .pr-bars>div{font-size:11px;margin:0 0 9px;color:#4E626D;font-weight:600}
-  .pr-bars b{font-family:var(--font-mono);float:right}
-  .pr-bar{height:7px;background:#EDF2F3;border-radius:99px;margin-top:4px;clear:both}
+  .pr-gauge b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--pr-serif);font-size:32px;font-weight:600}
+  .pr-verdict{font-family:var(--font-display);font-weight:800;font-size:16px;margin-bottom:5px}
+  .pr-vdesc{font-size:11.5px;color:var(--pr-ink-2);line-height:1.55;max-width:135mm}
+  .pr-quote{font-family:var(--pr-serif);font-style:italic;font-size:15px;line-height:1.5;color:var(--pr-ink);border-left:2px solid var(--pr-accent);padding:2px 0 2px 16px;margin:18px 0 20px}
+  .pr-stat-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:6px}
+  .pr-stat{border:1px solid var(--pr-line);border-radius:3px;padding:14px 16px}
+  .pr-stat .k{font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--pr-ink-3);margin-bottom:6px}
+  .pr-stat .v{font-family:var(--pr-serif);font-size:22px;font-weight:600}
+  .pr-stat.bad .v{color:var(--pr-bad)}
+  .pr-stat.good .v{color:var(--pr-accent)}
+  .pr-stat .d{font-size:9.5px;color:var(--pr-ink-3);margin-top:3px}
+
+  /* ── Карточки / панели ── */
+  .pr-card{border:1px solid var(--pr-line);border-radius:3px;padding:18px 20px;background:#fff}
+  .pr-h2{font-family:var(--font-body);font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--pr-ink);margin:0 0 14px;display:flex;align-items:center;gap:8px}
+  .pr-h2::after{content:"";flex:1;height:1px;background:var(--pr-line)}
+  .pr-h2 i{color:var(--pr-accent);font-style:normal}
+  .pr-grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+  /* ── Системы бизнеса (bar chart) ── */
+  .pr-bars>div{margin-bottom:13px}
+  .pr-bars .lbl{display:flex;justify-content:space-between;font-size:11px;color:var(--pr-ink);font-weight:600;margin-bottom:5px}
+  .pr-bars .lbl b{font-family:var(--pr-serif);font-weight:600;font-size:13px}
+  .pr-bar{height:5px;background:#EFEEE9;border-radius:99px}
   .pr-bar i{display:block;height:100%;border-radius:99px}
-  .pr-loss-card{border:1px solid #fecaca;border-radius:14px;padding:16px 18px;background:#fef2f2}
-  .pr-loss-card .pr-h2{color:#dc2626}
-  .pr-loss-card .pr-h2::after{background:#fecaca}
-  .pr-loss-num{font-family:var(--font-mono);font-size:22px;font-weight:700;color:#dc2626;margin-bottom:4px}
-  .pr-frow{display:flex;justify-content:space-between;gap:10px;font-size:11px;color:#4E626D;border-top:1px dashed #fecaca;padding:6px 0 0;margin-top:6px}
-  .pr-frow b{font-family:var(--font-mono);color:#dc2626;font-weight:600;white-space:nowrap}
-  .pr-grow .pr-frow{border-color:#d1fae5}
-  .pr-grow .pr-frow b{color:#1E7A57}
+
+  /* ── Строки с точечным лидером (финмодель) ── */
+  .pr-ledger{list-style:none;margin:0;padding:0}
+  .pr-ledger li{display:flex;justify-content:space-between;align-items:baseline;gap:14px;font-size:11px;color:var(--pr-ink-2);padding:8px 0;border-bottom:1px dotted var(--pr-line)}
+  .pr-ledger li:last-child{border-bottom:none}
+  .pr-ledger .lbl{flex:1 1 auto;min-width:0;color:var(--pr-ink);font-weight:500}
+  .pr-ledger b{font-family:var(--pr-serif);font-size:12.5px;font-weight:600;white-space:nowrap;flex:0 0 auto}
+  .pr-ledger.bad b{color:var(--pr-bad)}
+  .pr-ledger.good b{color:var(--pr-accent)}
+  .pr-ledger-total{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;padding-top:12px;border-top:1px solid var(--pr-ink)}
+  .pr-ledger-total span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--pr-ink-3)}
+  .pr-ledger-total b{font-family:var(--pr-serif);font-size:19px;font-weight:600}
+  .pr-ledger-total.bad b{color:var(--pr-bad)}
+  .pr-ledger-total.good b{color:var(--pr-accent)}
+
+  /* ── Нумерованные списки (проблемы / рекомендации) ── */
   .pr-list{list-style:none;margin:0;padding:0}
-  .pr-list li{display:flex;gap:10px;font-size:11.5px;color:#33454F;margin-bottom:9px;line-height:1.5}
-  .pr-list .n{font-family:var(--font-mono);font-size:9.5px;color:#1E7A57;border:1px solid #a7f3d0;border-radius:6px;min-width:21px;height:21px;display:flex;align-items:center;justify-content:center;flex:none;margin-top:1px}
-  .pr-list.pr-red .n{color:#dc2626;border-color:#fecaca}
-  .pr-cta{background:#000;color:#fff;border-radius:16px;padding:22px 26px;margin-top:14px;position:relative;overflow:hidden}
-  .pr-cta::after{content:"";position:absolute;top:-30px;right:-30px;width:130px;height:130px;border-radius:50%;background:rgba(52,211,153,.2)}
-  .pr-cta h3{font-family:var(--font-display);font-size:15px;font-weight:700;margin:0 0 7px}
-  .pr-cta h3 span{color:#6EE7B7}
-  .pr-cta p{font-size:11.5px;margin:0;color:#C6D4DA;max-width:560px}
-  .pr-foot{margin-top:16px;font-size:8.5px;color:#8AA0AA;border-top:1px solid #E2EAEC;padding-top:8px;font-family:var(--font-mono);letter-spacing:.04em}
+  .pr-list li{display:flex;gap:12px;font-size:11.5px;color:var(--pr-ink-2);margin-bottom:14px;line-height:1.5}
+  .pr-list li:last-child{margin-bottom:0}
+  .pr-list b.hd{color:var(--pr-ink);font-weight:600}
+  .pr-list .n{font-family:var(--pr-serif);font-size:12px;font-weight:600;color:var(--pr-accent);border:1px solid var(--pr-accent);border-radius:50%;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex:none;margin-top:1px}
+  .pr-list.pr-red .n{color:var(--pr-bad);border-color:var(--pr-bad)}
+  .pr-list .money{color:var(--pr-bad);font-weight:700;font-family:var(--pr-serif)}
+  .pr-list .detail{display:block;color:var(--pr-ink-3);font-size:10px;margin-top:3px;line-height:1.5}
+
+  /* ── Кейсы / доказательства ── */
+  .pr-cases{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .pr-case{border:1px solid var(--pr-line);border-radius:3px;padding:14px 15px}
+  .pr-case b{display:block;font-family:var(--pr-serif);font-size:20px;font-weight:600;color:var(--pr-accent);margin-bottom:6px}
+  .pr-case span{display:block;font-size:10px;color:var(--pr-ink-2);line-height:1.5}
+  .pr-case small{display:block;margin-top:8px;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--pr-ink-3)}
+
+  /* ── Приложение: полный лог ── */
+  .pr-log{columns:2;column-gap:22px;font-size:9.5px;color:var(--pr-ink-2);line-height:1.6}
+  .pr-log div{break-inside:avoid;margin-bottom:7px;padding-left:12px;position:relative}
+  .pr-log div::before{content:"";position:absolute;left:0;top:6px;width:4px;height:4px;border-radius:50%;background:var(--pr-ink-3)}
+  .pr-log div.bad::before{background:var(--pr-bad)}
+  .pr-log div.warn::before{background:#B8863A}
+
+  /* ── Финальная страница / CTA ── */
+  .pr-back{background:linear-gradient(155deg,#0C120F,#161D19 55%,#0C120F);color:#fff}
+  .pr-back .pr-cover-in{justify-content:center}
+  .pr-back-title{font-family:var(--pr-serif);font-weight:600;font-size:30px;line-height:1.2;max-width:140mm;margin-bottom:16px}
+  .pr-back-title i{color:#7FD9A8;font-style:normal}
+  .pr-back-text{font-size:12px;color:#AEBCB3;max-width:130mm;line-height:1.6;margin-bottom:26px}
+  .pr-back-contact{display:flex;gap:28px;border-top:1px solid rgba(255,255,255,.14);padding-top:18px}
+  .pr-back-contact div .k{font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:#7FD9A8;margin-bottom:5px}
+  .pr-back-contact div .v{font-size:12px;color:#fff}
 }
 </style><script src="https://cdn.tailwindcss.com"></script></head><body><nav id="cl-nav" class="w-full px-8 py-6 flex justify-between items-center">
   <a href="/" class="logo-btn font-bold uppercase text-sm select-none"><img src="/mark-transparent.svg" alt="" width="18" height="18" style="flex:none">Closery</a>
@@ -393,13 +475,16 @@ kbd{border:1px solid var(--line);border-bottom-width:2px;padding:1px 6px;font-si
   <a href="/#founder"    onclick="clCloseMob()">Основатель</a>
   <a href="/diagnostic"  class="nav-dna" onclick="clCloseMob()">Диагностика</a>
 </div>
-<div class="shell"><main class="flow" id="flow"><!-- Intro --><section class="intro" id="introScreen"><div class="eyebrow">Диагностика коммерческого блока</div><h1>Сколько денег ваш бизнес <em>теряет прямо сейчас</em> — в цифрах, за 15 минут</h1><p>Коммерческий МРТ просканирует маркетинг, продажи, команду, управление и экономику вашей компании. По ходу ответов система в реальном времени считает индекс зрелости, находит главное ограничение роста и оценивает недополученную прибыль.</p><div class="intro-meta"><div><b>15–20 мин</b>время диагностики</div><div><b>6 систем</b>бизнеса под сканером</div><div><b>₽ в год</b>оценка потерь и потенциала</div></div><div style="display:flex;gap:12px;flex-wrap:wrap"><button class="btn-primary" id="btnStart">Начать сканирование →</button></div></section><!-- Question card renders here --><section id="questionScreen" style="display:none"><div class="section-tag" id="sectionTag"></div><div id="cardHost"></div><div class="insight" id="insightBox"></div></section><!-- Final screen --><section class="final" id="finalScreen"></section></main><!-- ================= DASHBOARD ================= --><aside class="dash" id="dash"><div class="panel"><div class="panel-h">Индекс коммерческой зрелости <span class="live-dot"></span></div><div class="gauge-wrap"><div class="gauge"><svg viewBox="0 0 160 160"><circle class="track" cx="80" cy="80" r="70"></circle><circle class="scanline" cx="80" cy="80" r="70" id="scanLine"></circle><circle class="val" cx="80" cy="80" r="70" id="gaugeVal"></circle></svg><div class="gauge-num"><b id="indexNum">—</b><span>из 100</span></div></div><div class="gauge-side"><div class="verdict" id="indexVerdict">Сканер готов</div><p id="indexDesc">Отвечайте на вопросы — индекс и оценки систем будут пересчитываться после каждого ответа.</p></div></div></div><div class="panel loss-panel"><div class="panel-h">Потенциально теряете</div><div class="loss-num" id="lossNum">— ₽/год</div><div class="loss-sub" id="lossSub">Оценка недополученной прибыли по финансовой модели. Уточняется с каждым ответом.</div><div class="loss-factors" id="lossFactors"></div></div><div class="constraint-card"><div class="panel-h">Главное ограничение роста</div><div class="constraint-name" id="constraintName">Определяется…</div><div class="constraint-why" id="constraintWhy">Нужно больше данных для постановки диагноза.</div></div><div class="panel"><div class="panel-h">Системы бизнеса</div><div class="cat-rows" id="catRows"></div></div><div class="panel"><div class="panel-h">Находки сканера <span class="find-count" id="findCount"></span></div><div id="findRows"><div class="empty-note">// пока чисто</div></div></div><div class="panel"><div class="panel-h">Потенциал роста</div><div class="growth-rows" id="growthRows"><div class="empty-note">// появится после блока «Финансы»</div></div></div></aside></div><div class="modal-bg" id="modalBg"><div class="modal"><h3 id="modalTitle"></h3><p id="modalText"></p><pre id="modalPre"></pre><div class="q-nav"><span class="spacer"></span><button class="btn-ghost" id="modalCopy">Скопировать JSON</button><button class="btn-primary" id="modalClose">Закрыть</button></div></div></div><div class="toast" id="toast"></div><div class="print-report" id="printReport"></div><script>
+<div class="shell"><main class="flow" id="flow"><!-- Intro --><section class="intro" id="introScreen"><div class="eyebrow">Диагностика коммерческого блока</div><h1>Сколько денег ваш бизнес <em>теряет прямо сейчас</em> — в цифрах, за 15 минут</h1><p>Коммерческий МРТ просканирует маркетинг, продажи, команду, управление и экономику вашей компании. По ходу ответов система в реальном времени считает индекс зрелости, находит главное ограничение роста и оценивает недополученную прибыль.</p><div class="intro-meta"><div><b>15–20 мин</b>время диагностики</div><div><b>6 систем</b>бизнеса под сканером</div><div><b>₽ в год</b>оценка потерь и потенциала</div></div><div style="display:flex;gap:12px;flex-wrap:wrap"><button class="btn-primary" id="btnStart">Начать сканирование →</button></div></section><!-- Question card renders here --><section id="questionScreen" style="display:none"><div class="section-tag" id="sectionTag"></div><div id="cardHost"></div><div class="insight" id="insightBox"></div></section><!-- Final screen --><section class="final" id="finalScreen"></section></main><!-- ================= DASHBOARD ================= --><aside class="dash" id="dash"><div class="panel"><div class="panel-h">Индекс коммерческой зрелости <span class="live-dot"></span></div><div class="gauge-wrap"><div class="gauge"><svg viewBox="0 0 160 160"><circle class="track" cx="80" cy="80" r="70"></circle><circle class="scanline" cx="80" cy="80" r="70" id="scanLine"></circle><circle class="val" cx="80" cy="80" r="70" id="gaugeVal"></circle></svg><div class="gauge-num"><b id="indexNum">—</b><span>из 100</span></div></div><div class="gauge-side"><div class="verdict" id="indexVerdict">Сканер готов</div><p id="indexDesc">Отвечайте на вопросы — индекс и оценки систем будут пересчитываться после каждого ответа.</p></div></div></div><div class="panel loss-panel"><div class="panel-h">Потенциально теряете</div><div class="loss-num" id="lossNum">— ₽/год</div><div class="loss-sub" id="lossSub">Оценка недополученной прибыли по финансовой модели. Уточняется с каждым ответом.</div><div class="sanity-warn" id="sanityWarn" style="display:none"></div><div class="loss-factors" id="lossFactors"></div></div><div class="constraint-card"><div class="panel-h">Главное ограничение роста</div><div class="constraint-name" id="constraintName">Определяется…</div><div class="constraint-why" id="constraintWhy">Нужно больше данных для постановки диагноза.</div></div><div class="panel"><div class="panel-h">Системы бизнеса</div><div class="cat-rows" id="catRows"></div></div><div class="panel"><div class="panel-h">Находки сканера <span class="find-count" id="findCount"></span></div><div id="findRows"><div class="empty-note">// пока чисто</div></div></div><div class="panel"><div class="panel-h">Потенциал роста</div><div class="growth-rows" id="growthRows"><div class="empty-note">// появится после блока «Финансы»</div></div></div></aside></div><div class="modal-bg" id="modalBg"><div class="modal"><h3 id="modalTitle"></h3><p id="modalText"></p><pre id="modalPre"></pre><div class="q-nav"><span class="spacer"></span><button class="btn-ghost" id="modalCopy">Скопировать JSON</button><button class="btn-primary" id="modalClose">Закрыть</button></div></div></div><div class="toast" id="toast"></div><div class="print-report" id="printReport"></div><script>
 const ClsMRI = (() => {
 'use strict';
 const C = {
   STORAGE_KEY : 'closery_mri_v1',
   BOOKING_URL : 'https://t.me/klimenko_prod',
   MONTHS      : 12,
+  DIAG_PRICE  : 50000,
+  SANITY_RATIO_UP  : 20,
+  SANITY_RATIO_DOWN: 0.9,
   BM: {
     CONV_TARGET   : 20,
     REPEAT_TARGET : 30,
@@ -778,6 +863,11 @@ const QUESTIONS = [
   { id:'blocker', section:'strategy', type:'textarea', optional:true,
     title:'Что конкретно мешает решить эту проблему?',
     sub:'Почему она до сих пор не решена.' },
+  { id:'prior_spend', section:'strategy', type:'money', optional:true, unit:'₽',
+    title:'Сколько уже потратили на попытки решить эту проблему?',
+    sub:'Агентства, консультанты, найм, курсы — суммарно. Если не пробовали — оставьте пусто.',
+    score:v => (v && Number(v) > 0) ? [{cat:'strategy', delta:-4}] : [],
+    insight:v => (v && Number(v) > 0) ? {tone:'bad', text:`<b>Уже потрачено ${Fmt.money(Number(v))}</b> без результата. Это не аргумент «подождать ещё» — это аргумент сменить подход, а не пробовать шестой раз то же самое.`} : null },
   { id:'if_nothing', section:'strategy', type:'select',
     title:'Что будет, если ничего не менять ближайший год?',
     options:[
@@ -956,6 +1046,38 @@ const FinModel = {
   },
   totalLoss(){ return this.losses().reduce((s,f)=>s+f.val,0); },
 
+  // Проверка на вменяемость: заявленная выручка vs выручка, посчитанная по воронке
+  // новых лидов (лиды × конверсия × чек). Общая выручка компании ЗАКОННО больше
+  // этой оценки (повторные продажи, рекомендации, старые клиенты — всё это в
+  // total revenue, но не в потоке новых лидов), поэтому верхний порог широкий.
+  // А вот меньше оценки воронки выручка быть НЕ МОЖЕТ — это логическое противоречие,
+  // порог снизу узкий. Цель — ловить реальные опечатки (лишний ноль, месяц/год),
+  // а не нормальную разницу между «новыми» и «всеми» деньгами бизнеса.
+  consistency(){
+    const {leads, conv, check, revenue} = this.base();
+    if (revenue === null || leads === null || conv === null || check === null) return null;
+    const estMonthly = leads * conv / 100 * check;
+    if (estMonthly <= 0 || revenue <= 0) return null;
+    const ratio = revenue / estMonthly;
+    if (ratio >= C.SANITY_RATIO_UP || ratio <= C.SANITY_RATIO_DOWN){
+      return {
+        ratio, estMonthly, statedMonthly: revenue,
+        text: ratio > 1
+          ? `Указанная выручка (${Fmt.money(revenue)}/мес) в ${ratio.toFixed(0)}× больше, чем даёт воронка новых лидов (${Fmt.money(leads)} лидов × ${conv}% × ${Fmt.money(check)} ≈ ${Fmt.money(estMonthly)}/мес). Разница за счёт повторных продаж возможна, но не в такое число раз — проверьте, не перепутана ли выручка за месяц с выручкой за год, или единицы измерения.`
+          : `Указанная выручка (${Fmt.money(revenue)}/мес) МЕНЬШЕ, чем должна давать одна только воронка новых лидов (${Fmt.money(leads)} лидов × ${conv}% × ${Fmt.money(check)} ≈ ${Fmt.money(estMonthly)}/мес). Это логически невозможно — проверьте лиды, конверсию, средний чек и выручку.`
+      };
+    }
+    return null;
+  },
+
+  // Сигнал для оператора (не для клиентского PDF): если потери меньше цены самой
+  // диагностики — с таким выводом честно продать 50к нельзя, это повод либо
+  // перепроверить ввод, либо признать, что клиент не по чеку.
+  belowPrice(){
+    const total = this.totalLoss();
+    return total > 0 && total < C.DIAG_PRICE;
+  },
+
   potential(){
     const {leads, conv, check, m, repeat} = this.base();
     const out = [];
@@ -1120,7 +1242,8 @@ const Dashboard = {
       indexDesc:$('indexDesc'), catRows:$('catRows'), constraintName:$('constraintName'),
       constraintWhy:$('constraintWhy'), lossNum:$('lossNum'), lossFactors:$('lossFactors'),
       growthRows:$('growthRows'), lossSub:$('lossSub'),
-      findRows:$('findRows'), findCount:$('findCount')
+      findRows:$('findRows'), findCount:$('findCount'),
+      sanityWarn:$('sanityWarn')
     };
     const CIRC = 2*Math.PI*70;
     this.els.gaugeVal.style.strokeDasharray = CIRC;
@@ -1172,6 +1295,19 @@ const Dashboard = {
       this.tween(this.animState.loss, total, 900, v => this.els.lossNum.textContent = Fmt.moneyYear(v));
       this.animState.loss = total;
       this.els.lossSub.innerHTML = `≈ <b class="sc-bad">${Fmt.money(total/12)}</b> каждый месяц, пока система не меняется. Недополученная валовая прибыль против рыночных норм.`;
+    }
+    const consist = FinModel.consistency();
+    const belowPrice = FinModel.belowPrice();
+    if (consist){
+      this.els.sanityWarn.className = 'sanity-warn crit';
+      this.els.sanityWarn.innerHTML = `<b>⚠ Цифры не сходятся.</b> ${consist.text}`;
+      this.els.sanityWarn.style.display = '';
+    } else if (belowPrice && State.finished){
+      this.els.sanityWarn.className = 'sanity-warn';
+      this.els.sanityWarn.innerHTML = `<b>⚠ Ниже цены диагностики.</b> Посчитанные потери (${Fmt.moneyYear(total)}) меньше стоимости разбора (${Fmt.money(C.DIAG_PRICE)}). Либо перепроверьте ввод, либо этот клиент — не по чеку.`;
+      this.els.sanityWarn.style.display = '';
+    } else {
+      this.els.sanityWarn.style.display = 'none';
     }
     const lf = this.els.lossFactors;
     lf.innerHTML = FinModel.losses().slice(0,5)
@@ -1615,39 +1751,142 @@ const Final = {
 const Report = {
   printPDF(){
     const idx = Scoring.index(true) ?? 0;
+    const zone = Scoring.zone(idx);
+    const [verdictTxt, verdictDesc] = Scoring.verdict(idx);
     const c = Constraint.detect();
+    const losses = FinModel.losses();
     const loss = FinModel.totalLoss();
     const pot = FinModel.potential();
+    const potTotal = pot.reduce((s,p)=>s+p.val,0);
+    const consist = FinModel.consistency();
     const cats = Scoring.categories();
-    const date = new Date().toLocaleDateString('ru-RU');
-    const company = FlowUI.esc(State.answers.company || '—');
-    const zc = v => v >= 80 ? '#1E7A57' : v >= 60 ? '#d97706' : '#dc2626';
+    const probs = Problems.top(6);
+    const recs = Recs.build();
+    const date = new Date().toLocaleDateString('ru-RU', {day:'numeric', month:'long', year:'numeric'});
+    const company = FlowUI.esc(State.answers.company || 'Ваша компания');
+    const niche = FlowUI.esc(State.answers.niche || '—');
+    const zc = v => v >= 80 ? 'var(--pr-accent)' : v >= 60 ? '#B8863A' : 'var(--pr-bad)';
     const CIRC = (2 * Math.PI * 52);
     const audience = {b2b:'B2B', b2c:'B2C', mixed:'B2B + B2C'}[State.answers.audience] || '—';
-    const band = `<div class="pr-band"><div class="logo">CLOSERY<span>COMMERCIAL MRI</span></div><div class="date">ДИАГНОСТИКА КОММЕРЧЕСКОГО БЛОКА<br>${date}</div></div>`;
-    document.getElementById('printReport').innerHTML = `
-      <div class="pr-page">
-        ${band}
-        <div class="pr-h1">${company}</div><div class="pr-sub">ниша: ${FlowUI.esc(State.answers.niche || '—')} · аудитория: ${audience}</div><div class="pr-hero"><div class="pr-gauge"><svg width="120" height="120" viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="#E4ECEC" stroke-width="11"/><circle cx="60" cy="60" r="52" fill="none" stroke="${zc(idx)}" stroke-width="11" stroke-linecap="round"
-                stroke-dasharray="${CIRC.toFixed(1)}" stroke-dashoffset="${(CIRC * (1 - idx/100)).toFixed(1)}"/></svg><b style="color:${zc(idx)}">${idx}</b></div><div><div class="pr-kicker">Индекс коммерческой зрелости · ${idx} из 100</div><div class="pr-verdict">${Scoring.verdict(idx)[0]}</div><div class="pr-vdesc">${Scoring.verdict(idx)[1]}</div>
-            ${c ? `<div class="pr-constraint"><b style="color:#dc2626">Главное ограничение — ${c.name.toLowerCase()}.</b> ${c.why}</div>` : ''}
-          </div></div><div class="pr-grid"><div class="pr-card"><div class="pr-h2">Системы бизнеса</div><div class="pr-bars">${Object.entries(CAT_LABELS).map(([k,l])=>{
-              const cc = cats[k];
-              return `<div>${l}<b style="color:${cc.touched?zc(cc.score):'#8AA0AA'}">${cc.touched?cc.score:'—'}</b><div class="pr-bar"><i style="width:${cc.touched?cc.score:0}%;background:${zc(cc.score)}"></i></div></div>`;
-            }).join('')}</div></div><div class="pr-loss-card"><div class="pr-h2">Потенциально теряете</div><div class="pr-loss-num">${loss > 0 ? Fmt.moneyYear(loss) : 'потери не выявлены'}</div>
-            ${loss > 0 ? `<div style="font-size:11px;color:#4E626D;margin-bottom:2px">≈ <b style="color:#dc2626">${Fmt.money(loss/12)}</b> каждый месяц, пока система не меняется</div>` : ''}
-            ${FinModel.losses().slice(0,6).map(f=>`<div class="pr-frow"><span>${f.label}</span><b>−${Fmt.money(f.val)}</b></div>`).join('')}
-          </div></div></div><div class="pr-page">
-        ${band}
-        <div class="pr-grid"><div class="pr-card pr-grow"><div class="pr-h2">Потенциал роста</div>
-            ${pot.length ? pot.map(p=>`<div class="pr-frow"><span>${p.label}</span><b>+${Fmt.moneyYear(p.val)}</b></div>`).join('')
-              : '<div style="font-size:11.5px;color:#8AA0AA">Недостаточно данных для расчёта.</div>'}
-          </div><div class="pr-card"><div class="pr-h2">Главные проблемы</div><ul class="pr-list pr-red">${Problems.top(5).map((p,i)=>`<li><span class="n">${i+1}</span><span><b>${p.title}</b>${p.money?` — <b style="color:#dc2626">−${Fmt.money(p.money)}/год</b>`:''}${p.detail?`<br><span style="color:#6b7280;font-size:10.5px">${p.detail}</span>`:''}</span></li>`).join('') || '<li>Критичных проблем не обнаружено.</li>'}</ul></div></div><div class="pr-card" style="margin-top:14px"><div class="pr-h2">Рекомендации: с чего начинать</div><ul class="pr-list">${Recs.build().map((r,i)=>`<li><span class="n">${i+1}</span><span>${r}</span></li>`).join('')}</ul></div>
-        ${(()=>{ const fl = Feedback.collect().sort((x,y)=>(x.tone==='bad'?0:1)-(y.tone==='bad'?0:1));
-          return fl.length ? `<div class="pr-card" style="margin-top:14px"><div class="pr-h2">Полный лог сканера · ${fl.length}</div><div style="columns:2;column-gap:26px;font-size:10.5px;color:#4b5563;line-height:1.55">
-            ${fl.map(f=>`<div style="break-inside:avoid;margin-bottom:7px"><span style="color:${f.tone==='bad'?'#dc2626':'#d97706'}">●</span> ${f.text}</div>`).join('')}
-          </div></div>` : ''; })()}
-        <div class="pr-cta"><h3>Следующий шаг — <span>стратегическая сессия Closery</span></h3><p>Детальный разбор вашей воронки и план: как закрыть найденные потери и превратить потенциал роста в выручку. Свяжитесь с нами, чтобы забронировать время.</p></div><div class="pr-foot">Отчёт сформирован автоматически · Closery Commercial MRI · Оценки потерь и потенциала — модельные, на основе введённых данных и рыночных бенчмарков</div></div>`;
+    const a = State.answers;
+
+    const feedAll = Feedback.collect().sort((x,y)=>(x.tone==='bad'?0:1)-(y.tone==='bad'?0:1));
+    const goalTxt = {x2:'вырасти в 1.5–2 раза', x3:'вырасти в 3+ раза', system:'выйти из операционки', survive:'стабилизироваться'}[a.year_goal];
+    const probTxt = {leads:'мало лидов', conv:'лиды есть — продажи не закрываются', people:'некому продавать', owner:'всё замкнуто на вас лично', money:'выручка есть — прибыли нет', chaos:'хаос в процессах'}[a.main_problem];
+    let quote = '';
+    if (goalTxt || probTxt){
+      const parts = [];
+      if (goalTxt) parts.push(`вашей целью на год вы назвали «${goalTxt}»`);
+      if (probTxt) parts.push(`главной проблемой — «${probTxt}»`);
+      quote = `Это не наши слова — это ваши ответы: ${parts.join(', ')}.` + (loss>0 ? ` Разрыв между целью и текущей точкой стоит ≈ ${Fmt.money(loss/12)} каждый месяц.` : '');
+    }
+
+    const pageHead = (n, label) => `<div class="pr-h"><div class="pr-h-l"><b>CLOSERY</b><span>COMMERCIAL MRI · ${company}</span></div><div class="pr-h-r">${String(n).padStart(2,'0')} / ${label}</div></div>`;
+    const pageFoot = (n) => `<div class="pr-f"><span>Диагностика подготовлена ${date}</span><span>Страница ${n} из ${TOTAL_PAGES}</span></div>`;
+
+    const hasLog = feedAll.length > 0;
+    const TOTAL_PAGES = 6 + (hasLog ? 1 : 0);
+
+    // ── Страница 1 — обложка ──
+    const p1 = `<div class="pr-page pr-cover"><div class="pr-cover-in">
+      <div class="pr-cover-top"><div class="pr-cover-logo">CLOSERY<span>COMMERCIAL MRI</span></div><div class="pr-cover-meta">${date}<br>Коммерческий архитектор</div></div>
+      <div class="pr-cover-mid">
+        <div class="pr-cover-kicker">Диагностика коммерческого блока</div>
+        <div class="pr-cover-title">Где именно и сколько теряет ваш бизнес — в цифрах, а не на словах</div>
+        <div class="pr-cover-company">${company}</div>
+        <div class="pr-cover-sub">ниша: ${niche} · аудитория: ${audience}</div>
+      </div>
+      <div class="pr-cover-bottom">
+        <div class="pr-cover-index"><b style="color:${zc(idx)}">${idx}</b><span>индекс коммерческой зрелости из 100 · ${verdictTxt.toLowerCase()}</span></div>
+        <div class="pr-cover-confid">Подготовлено персонально для ${company}. Документ содержит коммерческую оценку и не подлежит распространению третьим лицам.</div>
+      </div>
+    </div></div>`;
+
+    // ── Страница 2 — executive summary ──
+    const p2 = `<div class="pr-page">${pageHead(1,'EXECUTIVE SUMMARY')}<div class="pr-body">
+      <div class="pr-tag">Итог диагностики</div>
+      <div class="pr-title">${verdictTxt}</div>
+      <div class="pr-lede">${verdictDesc}${c ? ` Главное ограничение роста — <b>${c.name.toLowerCase()}</b>: ${c.why}` : ''}</div>
+      <div class="pr-sum-grid">
+        <div class="pr-gauge"><svg width="120" height="120" viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="#EFEEE9" stroke-width="10"/><circle cx="60" cy="60" r="52" fill="none" stroke="${zc(idx)}" stroke-width="10" stroke-linecap="round"
+              stroke-dasharray="${CIRC.toFixed(1)}" stroke-dashoffset="${(CIRC * (1 - idx/100)).toFixed(1)}"/></svg><b style="color:${zc(idx)}">${idx}</b></div>
+        <div><div class="pr-stat-row">
+          <div class="pr-stat bad"><div class="k">Потенциальные потери</div><div class="v">${loss>0?Fmt.moneyYear(loss):'—'}</div>${loss>0?`<div class="d">≈ ${Fmt.money(loss/12)} каждый месяц ожидания</div>`:''}</div>
+          <div class="pr-stat good"><div class="k">Потенциал роста</div><div class="v">${potTotal>0?'+'+Fmt.moneyYear(potTotal):'—'}</div><div class="d">при устранении найденных причин</div></div>
+        </div></div>
+      </div>
+      ${quote ? `<div class="pr-quote">${quote}</div>` : ''}
+      <div class="pr-card"><div class="pr-h2">Три главные причины <i>·</i></div><ul class="pr-list pr-red">${probs.slice(0,3).map((p,i)=>`<li><span class="n">${i+1}</span><span><b class="hd">${p.title}</b>${p.money?` — <span class="money">−${Fmt.money(p.money)}/год</span>`:''}</span></li>`).join('') || '<li>Критичных причин не обнаружено — редкий случай.</li>'}</ul></div>
+    </div>${pageFoot(1)}</div>`;
+
+    // ── Страница 3 — системы бизнеса ──
+    const p3 = `<div class="pr-page">${pageHead(2,'СИСТЕМЫ БИЗНЕСА')}<div class="pr-body">
+      <div class="pr-tag">Диагностика по системам</div>
+      <div class="pr-title">Шесть систем, которые определяют рост</div>
+      <div class="pr-lede">Каждая система оценена независимо. Слабое место здесь — не повод для вины, а точка приложения усилий с наибольшей отдачей.</div>
+      <div class="pr-grid2">
+        <div class="pr-card"><div class="pr-h2">Оценка по системам <i>·</i></div><div class="pr-bars">${Object.entries(CAT_LABELS).map(([k,l])=>{
+            const cc = cats[k];
+            return `<div><div class="lbl">${l}<b style="color:${cc.touched?zc(cc.score):'#B8C0B9'}">${cc.touched?cc.score:'—'}</b></div><div class="pr-bar"><i style="width:${cc.touched?cc.score:0}%;background:${zc(cc.score)}"></i></div></div>`;
+          }).join('')}</div></div>
+        <div class="pr-card"><div class="pr-h2">Главные находки <i>·</i></div><ul class="pr-list pr-red">${probs.slice(0,4).map((p,i)=>`<li><span class="n">${i+1}</span><span><b class="hd">${p.title}</b>${p.money?` — <span class="money">−${Fmt.money(p.money)}/год</span>`:''}${p.detail?`<span class="detail">${p.detail}</span>`:''}</span></li>`).join('') || '<li>Критичных находок нет.</li>'}</ul></div>
+      </div>
+    </div>${pageFoot(2)}</div>`;
+
+    // ── Страница 4 — финансовая модель ──
+    const p4 = `<div class="pr-page">${pageHead(3,'ФИНАНСОВАЯ МОДЕЛЬ')}<div class="pr-body">
+      <div class="pr-tag">Цена бездействия</div>
+      <div class="pr-title">Во что это обходится в рублях</div>
+      <div class="pr-lede">Модель считает разрыв между текущими показателями и рыночной нормой — по вашим же цифрам: чек, конверсия, маржа, объём лидов.</div>
+      ${consist ? `<div class="pr-lede" style="color:var(--pr-bad);border:1px dashed var(--pr-bad);padding:10px 14px;border-radius:3px">⚠ Для проверки: расчётная выручка по воронке заметно расходится с указанной. Рекомендуем сверить цифры на сессии.</div>` : ''}
+      <div class="pr-grid2">
+        <div class="pr-card"><div class="pr-h2">Потери <i>·</i></div><ul class="pr-ledger bad">${losses.length ? losses.map(f=>`<li><span class="lbl">${f.label}</span><b>−${Fmt.money(f.val)}</b></li>`).join('') : '<li><span class="lbl">Потерь не выявлено</span></li>'}</ul>
+          ${loss>0?`<div class="pr-ledger-total bad"><span>Итого в год</span><b>−${Fmt.money(loss)}</b></div>`:''}
+        </div>
+        <div class="pr-card"><div class="pr-h2">Потенциал роста <i>·</i></div><ul class="pr-ledger good">${pot.length ? pot.map(p=>`<li><span class="lbl">${p.label}</span><b>+${Fmt.moneyYear(p.val)}</b></li>`).join('') : '<li><span class="lbl">Недостаточно данных</span></li>'}</ul>
+          ${potTotal>0?`<div class="pr-ledger-total good"><span>Итого в год</span><b>+${Fmt.moneyYear(potTotal)}</b></div>`:''}
+        </div>
+      </div>
+    </div>${pageFoot(3)}</div>`;
+
+    // ── Страница 5 — рекомендации и доказательства ──
+    const p5 = `<div class="pr-page">${pageHead(4,'ROADMAP')}<div class="pr-body">
+      <div class="pr-tag">С чего начинать</div>
+      <div class="pr-title">Порядок действий по приоритету</div>
+      <div class="pr-card" style="margin-bottom:16px"><div class="pr-h2">Рекомендации <i>·</i></div><ul class="pr-list">${recs.map((r,i)=>`<li><span class="n">${i+1}</span><span>${r}</span></li>`).join('')}</ul></div>
+      <div class="pr-tag" style="margin-top:6px">Почему нам можно верить</div>
+      <div class="pr-title" style="font-size:19px;margin-bottom:12px">Методология проверена в бою</div>
+      <div class="pr-cases">
+        <div class="pr-case"><b>×2</b><span>выручка филиала СДЭК за 6 месяцев — филиал вернулся в топ-5 сети</span><small>Логистика · B2B/B2C</small></div>
+        <div class="pr-case"><b>100 млн</b><span>планка MarketGuru, не покорявшаяся 3 года, взята новой связкой РОПов</span><small>IT-платформа · SaaS</small></div>
+        <div class="pr-case"><b>12.5 млн</b><span>выручка UNIBOX с нуля за 8 месяцев — отдел построен с чистого листа</span><small>Фулфилмент</small></div>
+      </div>
+    </div>${pageFoot(4)}</div>`;
+
+    // ── Страница 6 (опционально) — приложение: полный лог ──
+    const pLog = hasLog ? `<div class="pr-page">${pageHead(5,'ПРИЛОЖЕНИЕ')}<div class="pr-body">
+      <div class="pr-tag">Приложение</div>
+      <div class="pr-title" style="font-size:19px">Полный лог сканера · ${feedAll.length} наблюдени${feedAll.length%10===1&&feedAll.length%100!==11?'е':[2,3,4].includes(feedAll.length%10)&&![12,13,14].includes(feedAll.length%100)?'я':'й'}</div>
+      <div class="pr-lede">Все сигналы, найденные системой по ходу диагностики — от критичных до второстепенных.</div>
+      <div class="pr-card"><div class="pr-log">${feedAll.map(f=>`<div class="${f.tone}">${f.text}</div>`).join('')}</div></div>
+    </div>${pageFoot(5)}</div>` : '';
+
+    // ── Последняя страница — CTA ──
+    const pCta = `<div class="pr-page pr-back"><div class="pr-cover-in">
+      <div class="pr-cover-top"><div class="pr-cover-logo">CLOSERY<span>COMMERCIAL MRI</span></div><div class="pr-cover-meta">${date}</div></div>
+      <div class="pr-cover-mid">
+        <div class="pr-cover-kicker">Следующий шаг</div>
+        <div class="pr-back-title">Диагностика показала <i>где</i>. Стратегическая сессия покажет <i>как</i>.</div>
+        <div class="pr-back-text">На сессии разбираем вашу воронку в деталях и собираем план: как закрыть найденные потери и превратить потенциал роста в выручку. Оплата по этапам — не устроил результат, выходите без штрафов.</div>
+      </div>
+      <div class="pr-back-contact">
+        <div><div class="k">Записаться</div><div class="v">${C.BOOKING_URL.replace('https://','')}</div></div>
+        <div><div class="k">Сайт</div><div class="v">closery.ru</div></div>
+        <div><div class="k">Основатель</div><div class="v">Николай Клименко</div></div>
+      </div>
+    </div></div>`;
+
+    document.getElementById('printReport').innerHTML = p1 + p2 + p3 + p4 + p5 + pLog + pCta;
     window.print();
   }
 };
