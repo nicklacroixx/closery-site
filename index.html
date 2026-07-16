@@ -592,6 +592,11 @@ html, body { background: #0B0F0D; }
 @media (max-width: 640px) {
   .hero-line > span { background: none; -webkit-text-fill-color: var(--cl-text); color: var(--cl-text); }
 }
+/* На 2-колоночной сетке (lg+) левая колонка ýже — держим все три строки в один ряд */
+@media (min-width: 1024px) {
+  .hero-headline { font-size: clamp(2.3rem, 3.6vw, 2.9rem); }
+  .hero-line > span { white-space: nowrap; }
+}
 
 /* Магнитная кнопка */
 
@@ -871,12 +876,11 @@ html, body { background: #0B0F0D; }
         </div>
       </div>
 
-      <div class="max-w-4xl mx-auto mt-6 reveal rd3">
-        <div class="our-side p-8 md:p-10 text-center">
-          <p class="text-white text-xl md:text-2xl font-extrabold leading-snug">
-            Мы устраняем причины, из-за которых бизнес не растёт.
-          </p>
-        </div>
+      <div class="max-w-2xl mx-auto mt-12 reveal rd3 text-center">
+        <div class="mx-auto mb-6" style="width:40px;height:2px;background:linear-gradient(90deg, transparent, rgba(52,211,153,.8), transparent);"></div>
+        <p class="text-white text-2xl md:text-3xl font-extrabold leading-snug tracking-tight">
+          Мы устраняем причины,<br class="hidden md:block"> из-за которых бизнес не растёт.
+        </p>
       </div>
 
     </div>
