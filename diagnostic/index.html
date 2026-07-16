@@ -334,24 +334,24 @@ kbd{border:1px solid var(--line);border-bottom-width:2px;padding:1px 6px;font-si
   .print-report{display:block;font-family:var(--font-body);color:var(--pr-ink)}
 
   /* ── Страница и общая структура ── */
-  .pr-page{page-break-after:always;background:var(--pr-paper);padding:16mm 16mm 14mm;min-height:277mm;box-sizing:border-box;display:flex;flex-direction:column;position:relative}
+  .pr-page{page-break-after:always;background:var(--pr-paper);padding:16mm 16mm 14mm;min-height:277mm;box-sizing:border-box;position:relative}
   .pr-page:last-child{page-break-after:auto}
-  .pr-body{flex:1;display:flex;flex-direction:column;justify-content:center}
+  .pr-body{}
   .pr-eyebrow{font-family:var(--font-body);font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--pr-accent)}
 
   /* ── Обложка (страница 1) ── */
   .pr-cover{padding:0;background:linear-gradient(155deg,#0C120F,#161D19 55%,#0C120F)}
-  .pr-cover .pr-cover-in{padding:22mm 18mm;height:277mm;box-sizing:border-box;display:flex;flex-direction:column;color:#fff;position:relative}
-  .pr-cover-top{display:flex;justify-content:space-between;align-items:flex-start}
+  .pr-cover .pr-cover-in{height:277mm;box-sizing:border-box;color:#fff;position:relative}
+  .pr-cover-top{position:absolute;top:22mm;left:18mm;right:18mm;display:flex;justify-content:space-between;align-items:flex-start}
   .pr-cover-logo{font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:.05em}
   .pr-cover-logo span{display:block;font-size:8.5px;font-weight:500;letter-spacing:.26em;color:#7FD9A8;margin-top:6px}
   .pr-cover-meta{text-align:right;font-size:9.5px;color:#9FB0A7;letter-spacing:.05em;line-height:1.8}
-  .pr-cover-mid{flex:1;display:flex;flex-direction:column;justify-content:center;margin:20mm 0}
+  .pr-cover-mid{position:absolute;top:112mm;left:18mm;right:18mm}
   .pr-cover-kicker{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#7FD9A8;margin-bottom:16px}
   .pr-cover-title{font-family:var(--pr-serif);font-weight:600;font-size:40px;line-height:1.12;letter-spacing:-.01em;margin-bottom:18px;max-width:150mm}
   .pr-cover-company{font-family:var(--pr-serif);font-weight:400;font-style:italic;font-size:22px;color:#C9D6CE}
   .pr-cover-sub{margin-top:6px;font-size:11px;color:#8FA096;letter-spacing:.03em}
-  .pr-cover-bottom{border-top:1px solid rgba(255,255,255,.14);padding-top:16px;display:flex;justify-content:space-between;align-items:flex-end}
+  .pr-cover-bottom{position:absolute;bottom:22mm;left:18mm;right:18mm;border-top:1px solid rgba(255,255,255,.14);padding-top:16px;display:flex;justify-content:space-between;align-items:flex-end}
   .pr-cover-index{display:flex;align-items:baseline;gap:10px}
   .pr-cover-index b{font-family:var(--pr-serif);font-size:34px;font-weight:600}
   .pr-cover-index span{font-size:10px;color:#9FB0A7;letter-spacing:.04em;max-width:110px;line-height:1.4}
@@ -363,7 +363,7 @@ kbd{border:1px solid var(--line);border-bottom-width:2px;padding:1px 6px;font-si
   .pr-h-l b{font-family:var(--font-display);font-weight:800;font-size:11px;letter-spacing:.03em}
   .pr-h-l span{font-size:9.5px;color:var(--pr-ink-3);letter-spacing:.03em}
   .pr-h-r{font-size:9px;color:var(--pr-ink-3);letter-spacing:.06em;text-transform:uppercase}
-  .pr-f{margin-top:auto;padding-top:12px;border-top:1px solid var(--pr-line);display:flex;justify-content:space-between;font-size:8px;color:var(--pr-ink-3);letter-spacing:.04em}
+  .pr-f{margin-top:28mm;padding-top:12px;border-top:1px solid var(--pr-line);display:flex;justify-content:space-between;font-size:8px;color:var(--pr-ink-3);letter-spacing:.04em}
 
   /* ── Типографика разделов ── */
   .pr-tag{font-size:9.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--pr-accent);margin-bottom:8px}
@@ -440,7 +440,6 @@ kbd{border:1px solid var(--line);border-bottom-width:2px;padding:1px 6px;font-si
 
   /* ── Финальная страница / CTA ── */
   .pr-back{background:linear-gradient(155deg,#0C120F,#161D19 55%,#0C120F);color:#fff}
-  .pr-back .pr-cover-in{justify-content:center}
   .pr-back-title{font-family:var(--pr-serif);font-weight:600;font-size:30px;line-height:1.2;max-width:140mm;margin-bottom:16px}
   .pr-back-title i{color:#7FD9A8;font-style:normal}
   .pr-back-text{font-size:12px;color:#AEBCB3;max-width:130mm;line-height:1.6;margin-bottom:26px}
@@ -1879,7 +1878,7 @@ const Report = {
         <div class="pr-back-title">Диагностика показала <i>где</i>. Стратегическая сессия покажет <i>как</i>.</div>
         <div class="pr-back-text">На сессии разбираем вашу воронку в деталях и собираем план: как закрыть найденные потери и превратить потенциал роста в выручку. Оплата по этапам — не устроил результат, выходите без штрафов.</div>
       </div>
-      <div class="pr-back-contact">
+      <div class="pr-cover-bottom pr-back-contact" style="border-top:1px solid rgba(255,255,255,.14)">
         <div><div class="k">Записаться</div><div class="v">${C.BOOKING_URL.replace('https://','')}</div></div>
         <div><div class="k">Сайт</div><div class="v">closery.ru</div></div>
         <div><div class="k">Основатель</div><div class="v">Николай Клименко</div></div>
