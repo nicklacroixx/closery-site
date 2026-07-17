@@ -304,22 +304,8 @@ kbd{border:1px solid var(--line);border-bottom-width:2px;padding:1px 6px;font-si
 .cta-panel h3{font-weight:800;font-size:clamp(19px,2.4vw,26px);margin-bottom:12px;color:#fff;position:relative}
 .cta-panel p{color:var(--ink-2);max-width:540px;margin:0 auto 26px;position:relative}
 .final-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative}
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
-.modal-bg.open{display:flex}
-.modal{background:#0a0a0a;border:1px solid var(--line);max-width:640px;width:100%;max-height:80vh;overflow:auto;padding:28px;box-shadow:var(--shadow)}
-.modal h3{font-size:17px;font-weight:800;margin-bottom:10px;color:#fff}
-.modal p{font-size:13.5px;color:var(--ink-2);margin-bottom:14px}
-.modal pre{background:#000;border:1px solid var(--line-soft);padding:16px;font-family:ui-monospace,Menlo,monospace;font-size:11px;overflow:auto;max-height:320px;color:var(--ink-2)}
-.modal .q-nav{margin-top:18px}
 .sc-good{color:var(--good)!important}.sc-warn{color:var(--warn)!important}.sc-bad{color:var(--bad)!important}
 .bg-good{background:var(--good)!important}.bg-warn{background:var(--warn)!important}.bg-bad{background:var(--bad)!important}
-.toast{
-  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);opacity:0;
-  background:#0a0a0a;border:1px solid rgba(52,211,153,.4);color:var(--ink);
-  padding:13px 22px;font-size:12px;font-weight:700;letter-spacing:.04em;z-index:2000;
-  transition:all .35s var(--ease);box-shadow:0 0 24px rgba(52,211,153,.15);
-}
-.toast.show{transform:translateX(-50%);opacity:1}
 .find-count{font-size:9px;color:var(--bad);letter-spacing:.1em}
 .find-row{display:flex;gap:9px;font-size:12px;line-height:1.45;color:var(--ink-2);padding:8px 0;border-top:1px dashed rgba(255,255,255,.06);align-items:flex-start;animation:cardIn .4s var(--ease)}
 .find-row:first-child{border-top:none;padding-top:0}
@@ -349,7 +335,7 @@ kbd{border:1px solid var(--line);border-bottom-width:2px;padding:1px 6px;font-si
   }
   @page{margin:0; size:A4}
   body{background:var(--pr-paper)!important;background-image:none!important;color:var(--pr-ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  #cl-nav,#cl-mob-menu,.shell,.toast,.modal-bg{display:none!important;position:static!important}
+  #cl-nav,#cl-mob-menu,.shell{display:none!important;position:static!important}
   body::after{display:none!important}
   .print-report{display:block;font-family:var(--font-body);color:var(--pr-ink)}
 
@@ -467,7 +453,7 @@ kbd{border:1px solid var(--line);border-bottom-width:2px;padding:1px 6px;font-si
   .pr-back-contact div .k{font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:#7FD9A8;margin-bottom:5px}
   .pr-back-contact div .v{font-size:12px;color:#fff}
 }
-</style><script src="https://cdn.tailwindcss.com"></script></head><body><nav id="cl-nav" class="w-full px-8 py-6 flex justify-between items-center">
+</style><link rel="stylesheet" href="/tailwind.css"></head><body><nav id="cl-nav" class="w-full px-8 py-6 flex justify-between items-center">
   <a href="/" class="logo-btn font-bold uppercase text-sm select-none"><img src="/mark-transparent.svg" alt="" width="18" height="18" style="flex:none">Closery</a>
   <div class="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-[.2em]">
     <a href="/#method"     class="nav-lnk">Технология</a>
@@ -494,7 +480,7 @@ kbd{border:1px solid var(--line);border-bottom-width:2px;padding:1px 6px;font-si
   <a href="/#founder"    onclick="clCloseMob()">Основатель</a>
   <a href="/diagnostic"  class="nav-dna" onclick="clCloseMob()">Диагностика</a>
 </div>
-<div class="shell"><main class="flow" id="flow"><!-- Intro --><section class="intro" id="introScreen"><div class="eyebrow">Диагностика коммерческого блока</div><h1>Сколько денег ваш бизнес <em>теряет прямо сейчас</em> — в цифрах, за 15 минут</h1><p>Коммерческий МРТ просканирует маркетинг, продажи, команду, управление и экономику вашей компании. По ходу ответов система в реальном времени считает индекс зрелости, находит главное ограничение роста и оценивает недополученную прибыль.</p><div class="intro-meta"><div><b>15–20 мин</b>время диагностики</div><div><b>6 систем</b>бизнеса под сканером</div><div><b>₽ в год</b>оценка потерь и потенциала</div></div><div style="display:flex;gap:12px;flex-wrap:wrap"><button class="btn-primary" id="btnStart">Начать сканирование →</button></div></section><!-- Question card renders here --><section id="questionScreen" style="display:none"><div style="position:relative;display:inline-block"><div class="section-tag" id="sectionTag"></div><div class="section-nav" id="sectionNav"></div></div><div id="cardHost"></div><div class="insight" id="insightBox"></div></section><!-- Final screen --><section class="final" id="finalScreen"></section></main><!-- ================= DASHBOARD ================= --><aside class="dash" id="dash"><div class="panel"><div class="panel-h">Индекс коммерческой зрелости <span class="live-dot"></span></div><div class="gauge-wrap"><div class="gauge"><svg viewBox="0 0 160 160"><circle class="track" cx="80" cy="80" r="70"></circle><circle class="scanline" cx="80" cy="80" r="70" id="scanLine"></circle><circle class="val" cx="80" cy="80" r="70" id="gaugeVal"></circle></svg><div class="gauge-num"><b id="indexNum">—</b><span>из 100</span></div></div><div class="gauge-side"><div class="verdict" id="indexVerdict">Сканер готов</div><p id="indexDesc">Отвечайте на вопросы — индекс и оценки систем будут пересчитываться после каждого ответа.</p></div></div></div><div class="panel loss-panel"><div class="panel-h">Потенциально теряете</div><div class="loss-num" id="lossNum">— ₽/год</div><div class="loss-sub" id="lossSub">Оценка недополученной прибыли по финансовой модели. Уточняется с каждым ответом.</div><div class="sanity-warn" id="sanityWarn" style="display:none"></div><div class="loss-factors" id="lossFactors"></div></div><div class="constraint-card"><div class="panel-h">Главное ограничение роста</div><div class="constraint-name" id="constraintName">Определяется…</div><div class="constraint-why" id="constraintWhy">Нужно больше данных для постановки диагноза.</div></div><div class="panel"><div class="panel-h">Системы бизнеса</div><div class="cat-rows" id="catRows"></div></div><div class="panel"><div class="panel-h">Находки сканера <span class="find-count" id="findCount"></span></div><div id="findRows"><div class="empty-note">// пока чисто</div></div></div><div class="panel"><div class="panel-h">Потенциал роста</div><div class="growth-rows" id="growthRows"><div class="empty-note">// появится после блока «Финансы»</div></div></div></aside></div><div class="modal-bg" id="modalBg"><div class="modal"><h3 id="modalTitle"></h3><p id="modalText"></p><pre id="modalPre"></pre><div class="q-nav"><span class="spacer"></span><button class="btn-ghost" id="modalCopy">Скопировать JSON</button><button class="btn-primary" id="modalClose">Закрыть</button></div></div></div><div class="toast" id="toast"></div><div class="print-report" id="printReport"></div><script>
+<div class="shell"><main class="flow" id="flow"><!-- Intro --><section class="intro" id="introScreen"><div class="eyebrow">Диагностика коммерческого блока</div><h1>Сколько денег ваш бизнес <em>теряет прямо сейчас</em> — в цифрах, за 15 минут</h1><p>Коммерческий МРТ просканирует маркетинг, продажи, команду, управление и экономику вашей компании. По ходу ответов система в реальном времени считает индекс зрелости, находит главное ограничение роста и оценивает недополученную прибыль.</p><div class="intro-meta"><div><b>15–20 мин</b>время диагностики</div><div><b>6 систем</b>бизнеса под сканером</div><div><b>₽ в год</b>оценка потерь и потенциала</div></div><div style="display:flex;gap:12px;flex-wrap:wrap"><button class="btn-primary" id="btnStart">Начать сканирование →</button></div></section><!-- Question card renders here --><section id="questionScreen" style="display:none"><div style="position:relative;display:inline-block"><div class="section-tag" id="sectionTag"></div><div class="section-nav" id="sectionNav"></div></div><div id="cardHost"></div><div class="insight" id="insightBox"></div></section><!-- Final screen --><section class="final" id="finalScreen"></section></main><!-- ================= DASHBOARD ================= --><aside class="dash" id="dash"><div class="panel"><div class="panel-h">Индекс коммерческой зрелости <span class="live-dot"></span></div><div class="gauge-wrap"><div class="gauge"><svg viewBox="0 0 160 160"><circle class="track" cx="80" cy="80" r="70"></circle><circle class="scanline" cx="80" cy="80" r="70" id="scanLine"></circle><circle class="val" cx="80" cy="80" r="70" id="gaugeVal"></circle></svg><div class="gauge-num"><b id="indexNum">—</b><span>из 100</span></div></div><div class="gauge-side"><div class="verdict" id="indexVerdict">Сканер готов</div><p id="indexDesc">Отвечайте на вопросы — индекс и оценки систем будут пересчитываться после каждого ответа.</p></div></div></div><div class="panel loss-panel"><div class="panel-h">Потенциально теряете</div><div class="loss-num" id="lossNum">— ₽/год</div><div class="loss-sub" id="lossSub">Оценка недополученной прибыли по финансовой модели. Уточняется с каждым ответом.</div><div class="sanity-warn" id="sanityWarn" style="display:none"></div><div class="loss-factors" id="lossFactors"></div></div><div class="constraint-card"><div class="panel-h">Главное ограничение роста</div><div class="constraint-name" id="constraintName">Определяется…</div><div class="constraint-why" id="constraintWhy">Нужно больше данных для постановки диагноза.</div></div><div class="panel"><div class="panel-h">Системы бизнеса</div><div class="cat-rows" id="catRows"></div></div><div class="panel"><div class="panel-h">Находки сканера <span class="find-count" id="findCount"></span></div><div id="findRows"><div class="empty-note">// пока чисто</div></div></div><div class="panel"><div class="panel-h">Потенциал роста</div><div class="growth-rows" id="growthRows"><div class="empty-note">// появится после блока «Финансы»</div></div></div></aside></div><div class="print-report" id="printReport"></div><script>
 const ClsMRI = (() => {
 'use strict';
 const C = {
@@ -1814,11 +1800,10 @@ const Final = {
           ${loss>0?`<div class="loss-sub">≈ <b class="sc-bad">${Fmt.money(loss/12)}</b> каждый месяц ожидания</div>`:''}
           <div class="loss-factors">${FinModel.losses().slice(0,4).map(f=>`<div class="loss-factor"><span>${f.label}</span><b>−${Fmt.money(f.val)}</b></div>`).join('')}</div></div><div class="panel"><div class="panel-h">Потенциал роста${potTotal>0?` · до +${Fmt.moneyYear(potTotal)}`:''}</div><div class="growth-rows">${pot.map(p=>`<div class="growth-row"><span>${p.label}</span><b>+${Fmt.moneyYear(p.val)}</b></div>`).join('')||'<div class="empty-note">// недостаточно данных</div>'}</div></div></div><div class="panel" style="margin-bottom:22px"><div class="panel-h">Рекомендации: с чего начинать</div><ul class="list-num rec-list">${recs.map((r,i)=>`<li><span class="n">${i+1}</span><span>${r}</span></li>`).join('')}</ul></div>
       ${feedAll.length ? `<div class="panel" style="margin-bottom:22px"><div class="panel-h">Полный лог сканера · ${feedAll.length} наход${feedAll.length%10===1&&feedAll.length%100!==11?'ка':[2,3,4].includes(feedAll.length%10)&&![12,13,14].includes(feedAll.length%100)?'ки':'ок'}</div><div class="find-grid">${feedAll.map(f=>`<div class="find-row"><span class="find-dot ${f.tone}"></span><span>${f.text}</span></div>`).join('')}</div></div>` : ''}
-      <div class="panel" style="margin-bottom:22px"><div class="panel-h">Методология проверена в бою</div><div class="cases-grid"><div><b>×2</b><span>выручка филиала СДЭК за 6 месяцев — филиал вернулся в топ-5 сети</span><small>Логистика · B2B/B2C</small></div><div><b>100 млн</b><span>планка MarketGuru, не покорявшаяся 3 года, взята новой связкой РОПов</span><small>IT-платформа · SaaS</small></div><div><b>12.5 млн</b><span>выручка UNIBOX с нуля за 8 месяцев — отдел построен с чистого листа</span><small>Фулфилмент</small></div></div></div><div class="cta-panel"><h3>Следующий шаг</h3><p>Диагностика показала, где бизнес теряет деньги. На стратегической сессии Closery мы разберём вашу воронку в деталях и соберём план: как закрыть эти дыры и превратить потенциал роста в выручку.</p><div class="final-actions"><button class="btn-primary" id="btnBook">Записаться на стратегическую сессию →</button><button class="btn-ghost" id="btnPDF">Скачать PDF-отчёт</button><button class="btn-ghost" id="btnAI">Получить AI-анализ</button><button class="btn-ghost" id="btnRestart">Пройти заново</button></div></div>`;
+      <div class="panel" style="margin-bottom:22px"><div class="panel-h">Методология проверена в бою</div><div class="cases-grid"><div><b>×2</b><span>выручка филиала СДЭК за 6 месяцев — филиал вернулся в топ-5 сети</span><small>Логистика · B2B/B2C</small></div><div><b>100 млн</b><span>планка MarketGuru, не покорявшаяся 3 года, взята новой связкой РОПов</span><small>IT-платформа · SaaS</small></div><div><b>12.5 млн</b><span>выручка UNIBOX с нуля за 8 месяцев — отдел построен с чистого листа</span><small>Фулфилмент</small></div></div></div><div class="cta-panel"><h3>Следующий шаг</h3><p>Диагностика показала, где бизнес теряет деньги. На стратегической сессии Closery мы разберём вашу воронку в деталях и соберём план: как закрыть эти дыры и превратить потенциал роста в выручку.</p><div class="final-actions"><button class="btn-primary" id="btnBook">Записаться на стратегическую сессию →</button><button class="btn-ghost" id="btnPDF">Скачать PDF-отчёт</button><button class="btn-ghost" id="btnRestart">Пройти заново</button></div></div>`;
     el.classList.add('visible');
     window.scrollTo({top:0, behavior:'smooth'});
     document.getElementById('btnPDF').onclick = ()=>Report.printPDF();
-    document.getElementById('btnAI').onclick = ()=>AIExport.open();
     document.getElementById('btnBook').onclick = ()=>window.open(C.BOOKING_URL, '_blank');
     document.getElementById('btnRestart').onclick = ()=>{ if(confirm('Начать диагностику заново? Текущие ответы будут удалены.')){ Storage.clear(); location.reload(); } };
   }
@@ -1965,35 +1950,6 @@ const Report = {
     window.print();
   }
 };
-const AIExport = {
-  payload(){
-    return {
-      meta: { product:'Closery Commercial MRI', version:1, generated_at:new Date().toISOString() },
-      company: { name:State.answers.company||null, site:State.answers.site||null, niche:State.answers.niche||null },
-      answers: State.answers,
-      computed: {
-        maturity_index: Scoring.index(),
-        category_scores: Object.fromEntries(Object.entries(Scoring.categories()).map(([k,c])=>[k,c.touched?c.score:null])),
-        data_coverage_pct: Scoring.coverage(),
-        main_constraint: Constraint.detect(),
-        annual_lost_profit_rub: FinModel.totalLoss(),
-        loss_factors: FinModel.losses(),
-        growth_potential: FinModel.potential(),
-        top_problems: Problems.top(5),
-        recommendations: Recs.build()
-      },
-      llm_task: 'Ты — senior-консультант по построению отделов продаж. На основе данных диагностики подготовь развёрнутый стратегический разбор: диагноз, приоритеты на 90 дней, риски бездействия, план внедрения.'
-    };
-  },
-  open(){
-    const json = JSON.stringify(this.payload(), null, 2);
-    App.openModal(
-      'AI-анализ: данные готовы к отправке',
-      'Архитектура подготовлена: этот JSON будет отправляться в GPT-эндпоинт для развёрнутого консалтингового разбора. API пока не подключён — ниже полный пакет данных.',
-      json
-    );
-  }
-};
 // Каждая диагностика получает свой ID в URL (?id=…) с первого ответа —
 // прогресс живёт в localStorage под этим ID, а не в одном общем слоте.
 // Обновление страницы (или случайно закрытая вкладка) не сбрасывает
@@ -2132,25 +2088,6 @@ const App = {
     }
 
     document.getElementById('btnStart').onclick = ()=>{ Storage.clear(); Session.clearUrl(); State.reset(); FlowUI.start(); };
-    document.getElementById('modalClose').onclick = ()=>document.getElementById('modalBg').classList.remove('open');
-    document.getElementById('modalBg').onclick = e=>{ if(e.target.id==='modalBg') e.target.classList.remove('open'); };
-    document.getElementById('modalCopy').onclick = ()=>{
-      navigator.clipboard.writeText(document.getElementById('modalPre').textContent)
-        .then(()=>this.toast('JSON скопирован в буфер'));
-    };
-  },
-  openModal(title, text, pre){
-    document.getElementById('modalTitle').textContent = title;
-    document.getElementById('modalText').textContent = text;
-    document.getElementById('modalPre').textContent = pre;
-    document.getElementById('modalBg').classList.add('open');
-  },
-  toast(msg){
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    clearTimeout(this._toastT);
-    this._toastT = setTimeout(()=>t.classList.remove('show'), 2600);
   }
 };
 document.addEventListener('DOMContentLoaded', ()=>App.init());
