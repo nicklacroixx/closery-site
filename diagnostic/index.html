@@ -1616,6 +1616,7 @@ const FlowUI = {
     this.render();
   },
   start(){
+    Session.ensure();
     State.started = true;
     this.els.insight.style.display = 'none';
     this.els.intro.style.display = 'none';
@@ -1758,6 +1759,7 @@ const FlowUI = {
         const vis = State.visibleQuestions();
         const pos = vis.findIndex(x=>x.id===q.id);
         State.cursor = pos+1;
+        Storage.save();
         this.render();
       }, 240);
     };
@@ -1992,17 +1994,46 @@ const AIExport = {
     );
   }
 };
+// Каждая диагностика получает свой ID в URL (?id=…) с первого ответа —
+// прогресс живёт в localStorage под этим ID, а не в одном общем слоте.
+// Обновление страницы (или случайно закрытая вкладка) не сбрасывает
+// анкету: та же ссылка восстанавливает ровно то место, где остановились.
+// Плюс можно параллельно вести несколько клиентов в разных вкладках,
+// не затирая прогресс друг друга.
+const Session = {
+  id: null,
+  ensure(){
+    if (this.id) return this.id;
+    const url = new URL(location.href);
+    let id = url.searchParams.get('id');
+    if (!id){
+      id = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+      url.searchParams.set('id', id);
+      history.replaceState(null, '', url);
+    }
+    this.id = id;
+    return id;
+  },
+  fromUrl(){ return new URL(location.href).searchParams.get('id'); },
+  clearUrl(){
+    const url = new URL(location.href);
+    url.searchParams.delete('id');
+    history.replaceState(null, '', url);
+    this.id = null;
+  }
+};
 const Storage = {
+  key(id){ return C.STORAGE_KEY + '_' + (id || Session.ensure()); },
   save(){
-    try{ localStorage.setItem(C.STORAGE_KEY, JSON.stringify({
+    try{ localStorage.setItem(this.key(), JSON.stringify({
       answers:State.answers, cursor:State.cursor, started:State.started, finished:State.finished
     })); }catch(e){  }
   },
-  load(){
-    try{ const raw = localStorage.getItem(C.STORAGE_KEY); return raw ? JSON.parse(raw) : null; }
+  load(id){
+    try{ const raw = localStorage.getItem(this.key(id)); return raw ? JSON.parse(raw) : null; }
     catch(e){ return null; }
   },
-  clear(){ try{ localStorage.removeItem(C.STORAGE_KEY); }catch(e){} }
+  clear(){ try{ localStorage.removeItem(this.key()); }catch(e){} }
 };
 // Временный помощник для тестов: ?test=1 в URL сразу заполняет анкету
 // правдоподобными случайными данными и открывает финальный экран —
@@ -2079,7 +2110,28 @@ const App = {
       return;
     }
 
-    document.getElementById('btnStart').onclick = ()=>{ Storage.clear(); State.reset(); FlowUI.start(); };
+    const urlId = Session.fromUrl();
+    if (urlId){
+      const saved = Storage.load(urlId);
+      if (saved && saved.answers && Object.keys(saved.answers).length){
+        Session.id = urlId;
+        State.answers = saved.answers;
+        State.cursor = saved.cursor || 0;
+        State.started = true;
+        State.finished = !!saved.finished;
+        document.getElementById('introScreen').style.display = 'none';
+        if (State.finished){
+          Final.show();
+        } else {
+          FlowUI.els.qScreen.style.display = 'block';
+          FlowUI.render();
+        }
+      } else {
+        Session.clearUrl();
+      }
+    }
+
+    document.getElementById('btnStart').onclick = ()=>{ Storage.clear(); Session.clearUrl(); State.reset(); FlowUI.start(); };
     document.getElementById('modalClose').onclick = ()=>document.getElementById('modalBg').classList.remove('open');
     document.getElementById('modalBg').onclick = e=>{ if(e.target.id==='modalBg') e.target.classList.remove('open'); };
     document.getElementById('modalCopy').onclick = ()=>{
