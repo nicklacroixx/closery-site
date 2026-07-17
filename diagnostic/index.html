@@ -77,6 +77,7 @@ body.cl-menu-open{overflow:hidden}
 @media(max-width:768px){#cl-hamburger{display:flex}}
 @media(max-width:400px){#cl-nav-cta{display:none !important}}
 .shell{max-width:1360px;margin:0 auto;padding:28px;display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:28px;align-items:start}
+.shell.no-dash{grid-template-columns:1fr}
 @media(max-width:1024px){.shell{grid-template-columns:1fr}}
 @media(max-width:640px){.shell{padding:16px}}
 .intro{padding:64px 8px 24px;max-width:780px;position:relative}
@@ -1763,6 +1764,13 @@ const Final = {
     State.finished = true;
     Storage.save();
     FlowUI.els.qScreen.style.display = 'none';
+    // Финальный экран — самодостаточный, у него свои панели с теми же цифрами.
+    // Живой дашборд справа (.dash) после этого момента больше не обновляется
+    // (Dashboard.update() зовёт только вопросный флоу), так и остаётся пустым
+    // призраком — на мобильной раскладке он съезжает под финальный экран
+    // и путает. Прячем его насовсем, как только диагностика завершена.
+    const dash = document.getElementById('dash');
+    if (dash){ dash.style.display = 'none'; dash.parentElement.classList.add('no-dash'); }
     FlowUI.progress();
     const idx = Scoring.index(true) ?? 0;
     const zone = Scoring.zone(idx);
