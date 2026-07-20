@@ -1208,6 +1208,18 @@ html, body { background: #0B0F0D; }
         Берём не больше трёх новых проектов в месяц.
       </p>
 
+      <!-- Форма временно отключена (форма писала данные напрямую на сервер за пределами РФ —
+           убрана до переезда на RU-хостинг приёмника, см. /Users/outme/Documents/closery_lead_receiver).
+           Разметка старой формы сохранена ниже в комментарии для быстрого возврата. -->
+      <div id="cl-form-wrap" class="glass p-8 flex flex-col gap-4 reveal rd2">
+        <a href="https://t.me/klimenko_prod" target="_blank" rel="noopener"
+           style="display:block;text-align:center;background:#34D399;color:#07110C;font-weight:700;
+                  font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:16px 26px;
+                  border-radius:2px;text-decoration:none !important;">
+          Записаться на разбор в Telegram
+        </a>
+      </div>
+      <!--
       <div id="cl-form-wrap" class="glass p-8 flex flex-col gap-4 reveal rd2">
 
         <div class="cl-field">
@@ -1250,6 +1262,7 @@ html, body { background: #0B0F0D; }
         <div id="cl-msg"></div>
 
       </div>
+      -->
 
     </div>
   </section>
@@ -1459,6 +1472,10 @@ html, body { background: #0B0F0D; }
   var consentEl    = document.getElementById('cl-consent');
   var consentLabel = document.getElementById('cl-consent-label');
   var hpEl         = document.getElementById('cl-hp');
+
+  // Форма временно отключена в разметке (см. комментарий у #cl-form-wrap) — поля отсутствуют,
+  // дальнейший код формы просто не выполняется, пока форма не вернётся.
+  if (!btnEl) return;
 
   function showMsg(text, type) {
     msgEl.textContent   = text;
